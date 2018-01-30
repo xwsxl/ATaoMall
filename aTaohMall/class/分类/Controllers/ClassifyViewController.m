@@ -314,6 +314,10 @@
                 }else
                 {
                     HeaderIV.frame=CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0);
+                    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
+                    HeaderIV.userInteractionEnabled=YES;
+                    tap.numberOfTapsRequired=1;
+                    [HeaderIV addGestureRecognizer:tap];
                     [HeaderIV sd_setImageWithURL:KNSURL(model.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
                 }
                 [self.DataSource addObject:model];
@@ -495,6 +499,7 @@
 
     [_tableView registerNib:[UINib nibWithNibName:@"FenLeiHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"FenLeiHeaderView"];
     HeaderIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
+
     _tableView.tableHeaderView=HeaderIV;
 
 }
@@ -515,6 +520,10 @@
     CGFloat height=0;
     if (!([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"])) {
         UIImageView *headerIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
+        UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
+        headerIV.userInteractionEnabled=YES;
+        tap.numberOfTapsRequired=1;
+        [headerIV addGestureRecognizer:tap];
         [headerIV sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
         [_RemenScroll addSubview:headerIV];
         height +=15+(kScreenWidth-Width(80)-30)*96/264.0;
@@ -710,6 +719,16 @@
 //顶部banner
 -(void)clickBanner:(UIButton *)sender
 {
+
+    YTGoodsDetailViewController *vc=[[YTGoodsDetailViewController alloc] init];
+    vc.ID=_DataModel.gid;
+    vc.gid=_DataModel.gid;
+    [self.navigationController pushViewController:vc animated:NO];
+
+    self.navigationController.navigationBar.hidden=YES;
+
+    self.tabBarController.tabBar.hidden=YES;
+    
 
 }
 /*******************************************************      协议方法       ******************************************************/
