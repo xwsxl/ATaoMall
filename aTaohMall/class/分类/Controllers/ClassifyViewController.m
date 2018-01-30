@@ -82,6 +82,7 @@
 
     NSString *selectStr;
     NSInteger selectIndex;
+    UIView *_slidView;
 
     
 }
@@ -125,7 +126,7 @@
     view1.backgroundColor=RGB(250, 250, 250);
     [self.view addSubview:view1];
 
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(50, 25+KSafeTopHeight, [UIScreen mainScreen].bounds.size.width-100, 28)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(Width(15), 25+KSafeTopHeight, [UIScreen mainScreen].bounds.size.width-Width(30), 28)];
     searchView.backgroundColor = RGB(237, 237, 237);
     searchView.layer.cornerRadius  = 3;
     searchView.layer.masksToBounds = YES;
@@ -140,11 +141,11 @@
     [searchView addGestureRecognizer:imgRecongnizer];
 
 
-    UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-100-(size.width+14+5))/2, 7, 14, 14)];
+    UIImageView *imgView=[[UIImageView alloc] initWithFrame:CGRectMake((kScreenWidth-Width(30)-(size.width+14+5))/2, 7, 14, 14)];
     imgView.image=[UIImage imageNamed:@"xl-Search Icon"];
     [searchView addSubview:imgView];
 
-    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-100-(size.width+14+5))/2+14+5, 7, size.width, 14)];
+    UILabel *label=[[UILabel alloc] initWithFrame:CGRectMake((kScreenWidth-Width(30)-(size.width+14+5))/2+14+5, 7, size.width, 14)];
     label.text=str;
     //  label.textAlignment=NSTextAlignmentCenter;
     label.font = [UIFont fontWithName:@"PingFang-SC-Regular" size:14];
@@ -402,17 +403,17 @@
     CGFloat bheight = ([UIScreen mainScreen].bounds.size.height-108)/12;
 
     _titleScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight,Width(80), [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight-1-49-KSafeAreaBottomHeight)];
-    _titleScroll.contentSize = CGSizeMake(Width(80), _datasArray.count*(bheight+1));
+    _titleScroll.contentSize = CGSizeMake(Width(80), _datasArray.count*(bheight));
+    _titleScroll.bounces=NO;
     //Button的高
-
 
 
     //创建左边的按钮
 
     for (int i=0; i<_datasArray.count; i++) {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, bheight*i+i, Width(80), bheight)];
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, bheight*i, Width(80)-1, bheight)];
 
-        UIImageView *fenge = [[UIImageView alloc] initWithFrame:CGRectMake(Width(80)-1, bheight*i+i, 1, bheight+1)];
+        UIImageView *fenge = [[UIImageView alloc] initWithFrame:CGRectMake(Width(80)-1, bheight*i, 1, bheight+1)];
         fenge.image = [UIImage imageNamed:@"分割线YT"];
 
 
@@ -426,15 +427,13 @@
         [btn setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] forState:0];
         [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         btn.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13];
-        [btn setBackgroundImage:[UIImage imageNamed:@""] forState:0];
 
 
         if ([selectStr isEqualToString:@""]) {
             selectIndex=0;
             if (i==0) {
-                fenge.image = [UIImage imageNamed:@""];
-                [btn setBackgroundImage:[UIImage imageNamed:@"选中框new"] forState:0];
-                [btn setTitleColor:[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0] forState:0];
+
+            [btn setTitleColor:[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0] forState:0];
 
             self.classId=model.GoodsId;
             [self getForYouSelectData];
@@ -443,12 +442,11 @@
         {
 
             if ([model.name isEqualToString:selectStr]) {
-                fenge.image = [UIImage imageNamed:@""];
-                [btn setBackgroundImage:[UIImage imageNamed:@"选中框new"] forState:0];
                 [btn setTitleColor:[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0] forState:0];
                 self.classId=model.GoodsId;
                 [self getRightSencondCateData];
                 selectIndex=i;
+
             }
 
         }
@@ -458,7 +456,12 @@
 
 
     }
-
+    if (!_slidView) {
+        _slidView=[[UIView alloc] init];
+        [_slidView setBackgroundColor:[UIColor redColor]];
+    }
+    [_titleScroll addSubview:_slidView];
+     [_slidView setFrame:CGRectMake(0, bheight*selectIndex+(bheight-20)/2, 3, 20)];
     _titleScroll.showsVerticalScrollIndicator = NO;
 
     [self.view addSubview:_titleScroll];
@@ -567,7 +570,7 @@
         [_RemenScroll addSubview:but];
 
     }
-    height+=((_DataModel.SmallClass_list.count+1)/3)*(5+14+Width(65)+Width(20));
+    height+=((_DataModel.SmallClass_list.count+2)/3)*(5+14+Width(65)+Width(20));
     }
 
     if (_DataModel.SelectedBrand_list.count>0) {
@@ -608,8 +611,7 @@
             [but addTarget:self action:@selector(clickDP:) forControlEvents:UIControlEventTouchUpInside];
             [_RemenScroll addSubview:but];
         }
-
-            height+=((_DataModel.SelectedBrand_list.count+1)/3)*(5+14+Width(65)+Width(20));
+            height+=((_DataModel.SelectedBrand_list.count+2)/3)*(5+14+Width(65)+Width(20));
 
     }
 
@@ -841,19 +843,13 @@
 {
     selectIndex=index;
     for (NSInteger i = 0; i <_datasArray.count; i ++) {
-        UIImageView *fenge = (UIImageView *)[self.view viewWithTag:200+i];
-        fenge.image = [UIImage imageNamed:@"分割线YT"];
-
         UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
-        [button setBackgroundImage:[UIImage imageNamed:@""] forState:0];
         [button setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] forState:0];
-
-
         if (selectIndex ==i) {
-            fenge.image = [UIImage imageNamed:@""];
-            [button setBackgroundImage:[UIImage imageNamed:@"选中框new"] forState:0];
             [button setTitleColor:[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0] forState:0];
         }
+        CGFloat bheight = ([UIScreen mainScreen].bounds.size.height-108)/12;
+        [_slidView setFrame:CGRectMake(0, bheight*selectIndex+(bheight-20)/2, 3, 20)];
     }
 
     if (selectIndex==0) {

@@ -71,12 +71,12 @@
 @interface NewLookAllViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
 
-    UIImageView *soldImgView;
+  //  UIImageView *soldImgView;
     UILabel *soldLabel;
     UILabel *newLabel;
-    UIImageView *newImgView;
+  //  UIImageView *newImgView;
     UILabel *priceLabel;
-    UIImageView *priceLabelImgView;
+  //  UIImageView *priceLabelImgView;
     UIImageView *priceselectImgView;
     UILabel *selectLabel;
     UIImageView *selectLabelImgView;
@@ -109,9 +109,10 @@
     UIImageView *line;
 
     NSInteger totalCount;
-
+    UIButton *rightBut;
     BOOL IsShowGongGe;
 
+     UIButton *_zhiding;
 }
 
 @property (nonatomic,strong)DJRefresh *refresh;
@@ -170,7 +171,21 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MGMine:) name:@"MGMine" object:nil];
 
+    /*
+     置顶按钮
+     */
+    _zhiding=[UIButton buttonWithType:UIButtonTypeCustom];
+    _zhiding.hidden=YES;
 
+    _zhiding.frame=CGRectMake(self.view.frame.size.width-44, self.view.frame.size.height-120+KSafeAreaBottomHeight, 44, 44);
+    //        _zhiding.backgroundColor=[UIColor orangeColor];
+    [_zhiding setBackgroundImage:[UIImage imageNamed:@"置顶"] forState:0];
+    _zhiding.layer.masksToBounds = YES;
+    _zhiding.layer.cornerRadius = _zhiding.bounds.size.width*0.5;
+
+    [_zhiding addTarget:self action:@selector(gotoYT) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view addSubview:_zhiding];
 }
 
 /*******************************************************      数据请求       ******************************************************/
@@ -334,7 +349,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
     [titleView addSubview:label];
 
-    UIButton *rightBut=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightBut=[UIButton buttonWithType:UIButtonTypeCustom];
     rightBut.frame=CGRectMake(kScreenWidth-15-17, KSafeAreaTopNaviHeight-10-17, 17, 17);
     [rightBut setImage:KImage(@"xl-btn-change2") forState:UIControlStateNormal];
     [rightBut addTarget:self action:@selector(rightButClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -373,9 +388,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 -(void)soldBtnClick
 {
     priceButton.selected=NO;
-    soldImgView.image = [UIImage imageNamed:@"下划线new"];
-    newImgView.image = [UIImage imageNamed:@""];
-    priceLabelImgView.image = [UIImage imageNamed:@""];
+//    soldImgView.image = [UIImage imageNamed:@"下划线new"];
+//    newImgView.image = [UIImage imageNamed:@""];
+//    priceLabelImgView.image = [UIImage imageNamed:@""];
     priceselectImgView.image = [UIImage imageNamed:@"升降序"];
     //    selectLabelImgView.image = [UIImage imageNamed:@""];
     //    selectImgView.image = [UIImage imageNamed:@"筛选"];
@@ -413,9 +428,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
 
     priceButton.selected=NO;
-    soldImgView.image = [UIImage imageNamed:@""];
-    newImgView.image = [UIImage imageNamed:@"下划线new"];
-    priceLabelImgView.image = [UIImage imageNamed:@""];
+//    soldImgView.image = [UIImage imageNamed:@""];
+//    newImgView.image = [UIImage imageNamed:@"下划线new"];
+//    priceLabelImgView.image = [UIImage imageNamed:@""];
     priceselectImgView.image = [UIImage imageNamed:@"升降序"];
     //    selectLabelImgView.image = [UIImage imageNamed:@""];
     //    selectImgView.image = [UIImage imageNamed:@"筛选"];
@@ -445,9 +460,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 {
     sender.selected=!sender.selected;
 
-    soldImgView.image = [UIImage imageNamed:@""];
-    newImgView.image = [UIImage imageNamed:@""];
-    priceLabelImgView.image = [UIImage imageNamed:@"下划线new"];
+//    soldImgView.image = [UIImage imageNamed:@""];
+//    newImgView.image = [UIImage imageNamed:@""];
+//    priceLabelImgView.image = [UIImage imageNamed:@"下划线new"];
 
     if (sender.selected) {
 
@@ -558,9 +573,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     soldLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
     [sold addSubview:soldLabel];
 
-    soldImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
-    soldImgView.image = [UIImage imageNamed:@"下划线new"];
-    [sold addSubview:soldImgView];
+//    soldImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
+//    soldImgView.image = [UIImage imageNamed:@"下划线new"];
+//    [sold addSubview:soldImgView];
 
     UIButton *soldButton = [UIButton buttonWithType:UIButtonTypeCustom];
     soldButton.frame = CGRectMake(0, 0, Weight, 44);
@@ -578,9 +593,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     newLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
     [new addSubview:newLabel];
 
-    newImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
-    newImgView.image = [UIImage imageNamed:@""];
-    [new addSubview:newImgView];
+//    newImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
+//    newImgView.image = [UIImage imageNamed:@""];
+//    [new addSubview:newImgView];
 
     UIButton *newButton = [UIButton buttonWithType:UIButtonTypeCustom];
     newButton.frame = CGRectMake(0, 0, Weight, 44);
@@ -600,9 +615,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     priceLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
     [price addSubview:priceLabel];
 
-    priceLabelImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2+5, 42, 50, 2)];
-    priceLabelImgView.image = [UIImage imageNamed:@""];
-    [price addSubview:priceLabelImgView];
+//    priceLabelImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2+5, 42, 50, 2)];
+//    priceLabelImgView.image = [UIImage imageNamed:@""];
+//    [price addSubview:priceLabelImgView];
 
     priceselectImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2+45, 18.5, 7, 10)];
     priceselectImgView.image = [UIImage imageNamed:@"升降序"];
@@ -692,7 +707,26 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 -(void)rightButClick:(UIButton *)sender
 {
     IsShowGongGe=!IsShowGongGe;
+    if (IsShowGongGe) {
+        [rightBut setImage:KImage(@"xl-btn-change") forState:UIControlStateNormal];
+    }else
+    {
+        [rightBut setImage:KImage(@"xl-btn-change2") forState:UIControlStateNormal];
+    }
     [_collectionView reloadData];
+}
+//回到顶部
+-(void)gotoYT
+{
+    titleView.hidden=NO;
+    selectView.hidden=NO;
+    line.hidden=NO;
+
+    selectView.frame=CGRectMake(0, KSafeAreaTopNaviHeight, kScreenWidth, 44);
+    _collectionView.frame =CGRectMake(0, KSafeAreaTopNaviHeight+44, self.view.bounds.size.width, self.view.bounds.size.height-KSafeAreaTopNaviHeight-44);
+
+    [_collectionView setContentOffset:CGPointZero animated:YES];
+    
 }
 
 /*******************************************************      协议方法       ******************************************************/
@@ -820,6 +854,21 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     }else if(velocity == 0){
         //停止拖拽
     }
+
+    NSInteger currentPage = scrollView.contentOffset.y / [UIScreen mainScreen].bounds.size.height;
+
+    //划过一页也就是在第三页开始显示的时候显示置顶按钮
+    if (currentPage >= 1) {
+
+        _zhiding.hidden=NO;
+
+    }else{
+
+        _zhiding.hidden=YES;
+
+    }
+
+
 }
 
 //回显通知
