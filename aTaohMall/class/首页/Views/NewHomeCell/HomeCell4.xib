@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="itk-4I-6s9" customClass="HomeCell4">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="itk-4I-6s9" id="jc5-6N-R1Z">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="热门商品" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mC-s2-PLw">
+                        <rect key="frame" x="45" y="10" width="73" height="20"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="Psb-tZ-R0J"/>
+                            <constraint firstAttribute="height" constant="20" id="XCW-6q-9av"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Lz-hT-JOW">
+                        <rect key="frame" x="200" y="9" width="110" height="22"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="7m4-jv-9zG"/>
+                            <constraint firstAttribute="width" constant="110" id="yek-Km-B9f"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <inset key="titleEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="83" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="查看全部 " image="分类右键.png">
+                            <color key="titleColor" red="0.27058823529999998" green="0.27058823529999998" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="热门.png" translatesAutoresizingMaskIntoConstraints="NO" id="JOY-n7-Alo">
+                        <rect key="frame" x="14" y="9" width="23" height="23"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="HBn-3j-AZB"/>
+                            <constraint firstAttribute="height" constant="23" id="zNt-2B-Rdh"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="5Lz-hT-JOW" firstAttribute="top" secondItem="jc5-6N-R1Z" secondAttribute="top" constant="9" id="4Gv-CO-YW8"/>
+                    <constraint firstItem="JOY-n7-Alo" firstAttribute="leading" secondItem="jc5-6N-R1Z" secondAttribute="leadingMargin" constant="6" id="8MZ-Bc-J9E"/>
+                    <constraint firstItem="JOY-n7-Alo" firstAttribute="top" secondItem="jc5-6N-R1Z" secondAttribute="topMargin" constant="1" id="Z5B-Cz-afz"/>
+                    <constraint firstAttribute="trailing" secondItem="5Lz-hT-JOW" secondAttribute="trailing" constant="10" id="d8W-zT-y6R"/>
+                    <constraint firstItem="7mC-s2-PLw" firstAttribute="leading" secondItem="JOY-n7-Alo" secondAttribute="trailing" constant="8" id="jsx-x1-TUl"/>
+                    <constraint firstItem="7mC-s2-PLw" firstAttribute="top" secondItem="jc5-6N-R1Z" secondAttribute="topMargin" constant="2" id="nTA-LV-yZF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="TypeImageView" destination="JOY-n7-Alo" id="Oj3-fD-etp"/>
+                <outlet property="TypeLookAllButton" destination="5Lz-hT-JOW" id="bKa-46-A8G"/>
+                <outlet property="TypeNameLabel" destination="7mC-s2-PLw" id="cpq-H8-Oci"/>
+            </connections>
+            <point key="canvasLocation" x="75.5" y="323"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="分类右键.png" width="22" height="22"/>
+        <image name="热门.png" width="35" height="46"/>
+    </resources>
+</document>

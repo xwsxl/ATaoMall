@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="CjM-ef-s6G" customClass="HomeLookFooter">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zy6-ai-EsU" userLabel="正在加载时的提示">
+                    <rect key="frame" x="83" y="11" width="154" height="22"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="suM-fh-qOS">
+                            <rect key="frame" x="20" y="1" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="d8j-V8-WgP"/>
+                                <constraint firstAttribute="height" constant="20" id="gxQ-hY-K8N"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="玩命加载中…" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qm4-iH-rVA">
+                            <rect key="frame" x="45" y="0.0" width="110" height="21"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="110" id="7Oi-8c-izP"/>
+                                <constraint firstAttribute="height" constant="21" id="Ox2-jK-GvM"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <accessibility key="accessibilityConfiguration" label=""/>
+                    <constraints>
+                        <constraint firstItem="suM-fh-qOS" firstAttribute="leading" secondItem="Zy6-ai-EsU" secondAttribute="leading" constant="20" id="HP7-gD-cYZ"/>
+                        <constraint firstItem="qm4-iH-rVA" firstAttribute="centerX" secondItem="Zy6-ai-EsU" secondAttribute="centerX" constant="23" id="Imq-oH-Vig"/>
+                        <constraint firstItem="suM-fh-qOS" firstAttribute="top" secondItem="Zy6-ai-EsU" secondAttribute="top" constant="1" id="NDw-Fg-LzZ"/>
+                        <constraint firstItem="qm4-iH-rVA" firstAttribute="centerY" secondItem="Zy6-ai-EsU" secondAttribute="centerY" id="Rze-WE-ewM"/>
+                        <constraint firstAttribute="height" constant="22" id="diS-J0-ugz"/>
+                        <constraint firstAttribute="bottom" secondItem="suM-fh-qOS" secondAttribute="bottom" constant="1" id="pgm-Uj-bEB"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSN-l9-9G9">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="ZRK-tg-BKQ"/>
+                    </constraints>
+                    <state key="normal" title="点击加载更多">
+                        <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loadMoreBtnClick:" destination="CjM-ef-s6G" eventType="touchUpInside" id="edU-9m-NbS"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Zy6-ai-EsU" firstAttribute="top" secondItem="CjM-ef-s6G" secondAttribute="top" constant="11" id="14V-iO-RJY"/>
+                <constraint firstItem="ZSN-l9-9G9" firstAttribute="leading" secondItem="CjM-ef-s6G" secondAttribute="leading" id="GXH-m6-f3V"/>
+                <constraint firstAttribute="bottom" secondItem="Zy6-ai-EsU" secondAttribute="bottom" constant="11" id="M9W-hd-fXn"/>
+                <constraint firstAttribute="trailing" secondItem="ZSN-l9-9G9" secondAttribute="trailing" id="PEg-1T-vJW"/>
+                <constraint firstAttribute="trailing" secondItem="Zy6-ai-EsU" secondAttribute="trailing" constant="83" id="URT-JL-TgI"/>
+                <constraint firstItem="Zy6-ai-EsU" firstAttribute="leading" secondItem="CjM-ef-s6G" secondAttribute="leading" constant="83" id="nFM-z6-ttP"/>
+                <constraint firstItem="ZSN-l9-9G9" firstAttribute="top" secondItem="CjM-ef-s6G" secondAttribute="top" id="vcp-1j-MKi"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="loadMoreBtn" destination="ZSN-l9-9G9" id="PS2-1R-b7f"/>
+                <outlet property="moreView" destination="Zy6-ai-EsU" id="qsR-86-J5w"/>
+            </connections>
+            <point key="canvasLocation" x="133" y="61"/>
+        </view>
+    </objects>
+</document>

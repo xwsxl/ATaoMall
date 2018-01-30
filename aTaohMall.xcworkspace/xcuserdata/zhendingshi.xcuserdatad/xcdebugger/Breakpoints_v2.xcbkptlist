@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/GaoJiView.m"
+            timestampString = "522577914.874025"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
+            landmarkName = "-getSelectStationAndSitType"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/GaoJiView.m"
+            timestampString = "522577914.874025"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
+            landmarkName = "-getSelectStationAndSitType2"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/&#x706b;&#x8f66;&#x7968;&#x8be6;&#x60c5;/&#x8f66;&#x6b21;&#x8be6;&#x60c5;/TrainYuDingViewController.m"
+            timestampString = "522235531.062896"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "664"
+            endingLineNumber = "664"
+            landmarkName = "-Price:ZW:Array:Is_accept_standing:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/&#x706b;&#x8f66;&#x7968;&#x8be6;&#x60c5;/&#x8f66;&#x6b21;&#x8be6;&#x60c5;/TrainAddView.m"
+            timestampString = "522148268.556847"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "-getDatas"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/TrainNumberViewController.m"
+            timestampString = "523954370.719086"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1359"
+            endingLineNumber = "1359"
+            landmarkName = "-CheXingString:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/&#x706b;&#x8f66;&#x7968;&#x8be6;&#x60c5;/&#x8f66;&#x6b21;&#x8be6;&#x60c5;/TrainYuDingViewController.m"
+            timestampString = "522584417.912168"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "873"
+            endingLineNumber = "873"
+            landmarkName = "-AddBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = ""
+            moduleName = "">
+            <Locations>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x8fdd;&#x7ae0;&#x67e5;&#x8be2;/Controller/AddCarVC.m"
+            timestampString = "527138038.842641"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "888"
+            endingLineNumber = "888"
+            landmarkName = "-editCar:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x8fdd;&#x7ae0;&#x67e5;&#x8be2;/Controller/ATHBreakRulesOrderDetailViewController.m"
+            timestampString = "523972236.303215"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-getDatas"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x706b;&#x8f66;&#x7968;&#x9884;&#x8ba2;/TrainNumberViewController.m"
+            timestampString = "523954370.719086"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1057"
+            endingLineNumber = "1057"
+            landmarkName = "-RedButtonBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aTaohMall/class/&#x9996;&#x9875;/Controllers/&#x4fbf;&#x6c11;&#x670d;&#x52a1;/Controllers/&#x98de;&#x673a;&#x7968;&#x9884;&#x8ba2;/AirPlaneBackDetailViewController.m"
+            timestampString = "527075922.164747"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1328"
+            endingLineNumber = "1328"
+            landmarkName = "-getPriceChange"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

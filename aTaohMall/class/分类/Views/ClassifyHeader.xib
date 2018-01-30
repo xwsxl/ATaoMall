@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ClassifyHeader">
+            <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="图文用品" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ns6-Da-qt2">
+                    <rect key="frame" x="40" y="10" width="55" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Gs1-Ge-udt"/>
+                        <constraint firstAttribute="width" constant="55" id="e2f-eN-lfe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="au5-Ep-at8">
+                    <rect key="frame" x="140" y="10" width="70" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="1vG-3d-v6p"/>
+                        <constraint firstAttribute="height" constant="20" id="yiX-3E-afX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="查看全部 &gt;">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="图书音像.png" translatesAutoresizingMaskIntoConstraints="NO" id="Dgx-BQ-8CS">
+                    <rect key="frame" x="12" y="12" width="19" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="19" id="NBb-Nx-r0L"/>
+                        <constraint firstAttribute="height" constant="15" id="UA6-6L-4wd"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Ns6-Da-qt2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Fvl-DJ-CT0"/>
+                <constraint firstItem="Dgx-BQ-8CS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="Qdf-DT-YBu"/>
+                <constraint firstAttribute="trailing" secondItem="au5-Ep-at8" secondAttribute="trailing" constant="10" id="cOC-gn-ZfH"/>
+                <constraint firstItem="au5-Ep-at8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="fzF-SV-Lie"/>
+                <constraint firstItem="Dgx-BQ-8CS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="lQf-f8-Fjg"/>
+                <constraint firstItem="Ns6-Da-qt2" firstAttribute="leading" secondItem="Dgx-BQ-8CS" secondAttribute="trailing" constant="9" id="vkw-2L-SJb"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="LookAllButton" destination="au5-Ep-at8" id="lQ3-d8-LCk"/>
+                <outlet property="TypeImageView" destination="Dgx-BQ-8CS" id="R5p-Z6-z3I"/>
+                <outlet property="TypeNameLabel" destination="Ns6-Da-qt2" id="TjR-n0-QxV"/>
+            </connections>
+            <point key="canvasLocation" x="330.5" y="289"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="图书音像.png" width="12" height="16"/>
+    </resources>
+</document>

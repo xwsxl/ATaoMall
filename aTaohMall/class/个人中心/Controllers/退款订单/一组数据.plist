@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>未按约定时间发货</string>
+	<string>协商一致退款</string>
+	<string>缺货</string>
+	<string>拍错/多拍/不想要</string>
+	<string>其他</string>
+</array>
+</plist>

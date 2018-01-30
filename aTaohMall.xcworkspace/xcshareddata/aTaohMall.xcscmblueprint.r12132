@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "ffd6babe-ba99-4efe-82e2-dd860f5fc28e++2335",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "ffd6babe-ba99-4efe-82e2-dd860f5fc28e++2335" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "ffd6babe-ba99-4efe-82e2-dd860f5fc28e++2335" : 0,
+    "D083F038E3E324B971DC8595F100234B68A8283E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AE21D3BF-D39D-475B-8029-7CEFFF14875D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "ffd6babe-ba99-4efe-82e2-dd860f5fc28e++2335" : "ATH%E6%9C%80%E6%96%B0%E7%89%88\/",
+    "D083F038E3E324B971DC8595F100234B68A8283E" : "ATH%E6%9C%80%E6%96%B0%E7%89%88\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "aTaohMall",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "aTaohMall.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.coding.net\/linwenbang\/aTaoMall.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D083F038E3E324B971DC8595F100234B68A8283E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/192.168.1.199",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ffd6babe-ba99-4efe-82e2-dd860f5fc28e++2335"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NoGoodsDetailViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xYu-8d-pvA">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品过期不存在" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fA-ae-VP0">
+                            <rect key="frame" x="85" y="25" width="150" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="Abd-38-Nrs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8j-1T-OHU">
+                            <rect key="frame" x="8" y="25" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="iHJ-1S-BYg"/>
+                                <constraint firstAttribute="height" constant="30" id="z9e-ow-xUh"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="iconfont-fanhui2副本.png"/>
+                            <connections>
+                                <action selector="BackBtnClick:" destination="-1" eventType="touchUpInside" id="J0d-k7-spc"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="4fA-ae-VP0" firstAttribute="top" secondItem="xYu-8d-pvA" secondAttribute="top" constant="25" id="EhH-IX-tAs"/>
+                        <constraint firstItem="r8j-1T-OHU" firstAttribute="top" secondItem="xYu-8d-pvA" secondAttribute="top" constant="25" id="H1Q-Vd-3LO"/>
+                        <constraint firstAttribute="height" constant="64" id="JLc-3W-wrj"/>
+                        <constraint firstAttribute="trailing" secondItem="4fA-ae-VP0" secondAttribute="trailing" constant="85" id="No7-jG-qRC"/>
+                        <constraint firstItem="r8j-1T-OHU" firstAttribute="leading" secondItem="xYu-8d-pvA" secondAttribute="leading" constant="8" id="b52-oe-DRl"/>
+                        <constraint firstItem="4fA-ae-VP0" firstAttribute="leading" secondItem="xYu-8d-pvA" secondAttribute="leading" constant="85" id="d9I-ap-62t"/>
+                        <constraint firstAttribute="bottom" secondItem="4fA-ae-VP0" secondAttribute="bottom" constant="9" id="dxe-Uu-EZH"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="商品过期.png" translatesAutoresizingMaskIntoConstraints="NO" id="i7Y-kC-BvE">
+                    <rect key="frame" x="100" y="100" width="120" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="4VL-RA-TGD"/>
+                        <constraint firstAttribute="height" constant="120" id="VGY-SN-eG6"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品过期不存在" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkd-m9-yjH">
+                    <rect key="frame" x="20" y="234" width="280" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="GSX-Uq-E3S"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="mkd-m9-yjH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="3Fg-dv-bRS"/>
+                <constraint firstItem="mkd-m9-yjH" firstAttribute="top" secondItem="i7Y-kC-BvE" secondAttribute="bottom" constant="14" id="APJ-Vh-5aO"/>
+                <constraint firstItem="i7Y-kC-BvE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="FZN-sr-atm"/>
+                <constraint firstItem="xYu-8d-pvA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="J2Z-4e-aCH"/>
+                <constraint firstItem="i7Y-kC-BvE" firstAttribute="top" secondItem="xYu-8d-pvA" secondAttribute="bottom" constant="36" id="Nhq-a6-vMJ"/>
+                <constraint firstItem="i7Y-kC-BvE" firstAttribute="centerX" secondItem="mkd-m9-yjH" secondAttribute="centerX" id="NtX-Qk-0FN"/>
+                <constraint firstItem="xYu-8d-pvA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="RRu-yJ-Mad"/>
+                <constraint firstAttribute="trailing" secondItem="mkd-m9-yjH" secondAttribute="trailing" constant="20" id="ZM0-Aj-3d9"/>
+                <constraint firstAttribute="trailing" secondItem="xYu-8d-pvA" secondAttribute="trailing" id="wDh-cl-CO3"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="306" y="212"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="iconfont-fanhui2副本.png" width="22" height="22"/>
+        <image name="商品过期.png" width="98" height="98"/>
+    </resources>
+</document>

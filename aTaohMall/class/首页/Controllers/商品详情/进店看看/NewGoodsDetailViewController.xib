@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewGoodsDetailViewController">
+            <connections>
+                <outlet property="PayMoneyLabel" destination="PYe-5Q-f1k" id="q3z-5u-Jhv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3WM-ae-kOH">
+                    <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小计:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpT-vK-ZP2">
+                            <rect key="frame" x="20" y="15" width="35" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="8oS-jE-rMs"/>
+                                <constraint firstAttribute="height" constant="20" id="o6I-Fb-tJ7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYe-5Q-f1k">
+                            <rect key="frame" x="55" y="15" width="210" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="HN9-GR-BuB"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PL2-q3-Pgy">
+                            <rect key="frame" x="275" y="0.0" width="100" height="49"/>
+                            <color key="backgroundColor" red="1" green="0.36470588235294116" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="OlP-zR-8sX"/>
+                                <constraint firstAttribute="height" constant="49" id="fGd-d7-Art"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="立即购买">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="GoBuyingBtnClick:" destination="-1" eventType="touchUpInside" id="fPr-1C-9bh"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="Rbl-Yt-7GF"/>
+                        <constraint firstItem="PYe-5Q-f1k" firstAttribute="top" secondItem="3WM-ae-kOH" secondAttribute="top" constant="15" id="Uqx-XN-g30"/>
+                        <constraint firstAttribute="bottom" secondItem="PYe-5Q-f1k" secondAttribute="bottom" constant="14" id="jXL-vw-MAa"/>
+                        <constraint firstItem="PL2-q3-Pgy" firstAttribute="leading" secondItem="PYe-5Q-f1k" secondAttribute="trailing" constant="10" id="kzp-7F-aFk"/>
+                        <constraint firstItem="PL2-q3-Pgy" firstAttribute="top" secondItem="3WM-ae-kOH" secondAttribute="top" id="mG8-nM-zmK"/>
+                        <constraint firstItem="lpT-vK-ZP2" firstAttribute="top" secondItem="3WM-ae-kOH" secondAttribute="top" constant="15" id="phT-ta-Zz0"/>
+                        <constraint firstItem="lpT-vK-ZP2" firstAttribute="leading" secondItem="3WM-ae-kOH" secondAttribute="leading" constant="20" id="rAX-4U-ihT"/>
+                        <constraint firstAttribute="trailing" secondItem="PL2-q3-Pgy" secondAttribute="trailing" id="vTg-Mg-sZV"/>
+                        <constraint firstItem="PYe-5Q-f1k" firstAttribute="leading" secondItem="lpT-vK-ZP2" secondAttribute="trailing" id="vfY-AI-j1m"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="分割线-拷贝.png" translatesAutoresizingMaskIntoConstraints="NO" id="6Lt-gt-c43">
+                    <rect key="frame" x="0.0" y="618" width="375" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="a7k-Tm-zOO"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="3WM-ae-kOH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MVl-ki-DWv"/>
+                <constraint firstAttribute="bottom" secondItem="3WM-ae-kOH" secondAttribute="bottom" id="PNm-Ez-ARn"/>
+                <constraint firstAttribute="trailing" secondItem="3WM-ae-kOH" secondAttribute="trailing" id="UJf-Wn-sal"/>
+                <constraint firstAttribute="trailing" secondItem="6Lt-gt-c43" secondAttribute="trailing" id="YQd-Xh-tk0"/>
+                <constraint firstAttribute="bottom" secondItem="6Lt-gt-c43" secondAttribute="bottom" constant="48" id="gRb-Mr-0Ad"/>
+                <constraint firstItem="6Lt-gt-c43" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sD7-cp-F8e"/>
+            </constraints>
+            <point key="canvasLocation" x="227.5" y="351.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="分割线-拷贝.png" width="1" height="1"/>
+    </resources>
+</document>

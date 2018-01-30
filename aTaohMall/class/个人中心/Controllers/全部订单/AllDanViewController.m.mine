@@ -1,0 +1,1332 @@
+//
+//  AllDanViewController.m
+//  aTaohMall
+//
+//  Created by JMSHT on 16/6/13.
+//  Copyright © 2016年 ysy. All rights reserved.
+//
+
+#import "AllDanViewController.h"
+
+#import "AllDingDanCell.h"
+#import "WaiteGitCell.h"
+#import "WaitePayCell.h"
+#import "WaiteSendCell.h"
+
+#import "NoDingDanCell.h"//暂无订单
+#import "AFNetworking.h"
+#import "UIImageView+WebCache.h"
+
+#import "ConverUtil.h"
+#import "DESUtil.h"
+#import "SecretCodeTool.h"
+
+#import "AllDanModel.h"
+
+#import "JiaoYiSuccessViewController.h"//交易完成
+#import "JiaoYiCloseViewController.h"
+#import "JiaoYiCloseOtherViewController.h"
+#import "JiaoYiDaiFuKuanViewController.h"//待付款
+#import "JiaoYiGetGoodsViewController.h"//待收货
+#import "JiaoYiNoSendViewController.h"//待发货
+
+#import "WKProgressHUD.h"
+#import "ReturnMoneyViewController.h"
+
+#import "ContinuePayViewController.h"//继续付款
+
+//刷新
+#import "DJRefresh.h"
+#import "DJRefreshProgressView.h"
+
+#import "GotoShopLookViewController.h"
+
+#import "XSInfoView.h"
+
+#import "HomeLookFooter.h"//点击加载更多
+
+#import "SVProgressHUD.h"
+@interface AllDanViewController ()<UITableViewDataSource,UITableViewDelegate,DJRefreshDelegate,UIAlertViewDelegate,FooterViewDelegate,ReloadeDataDelegate,ContinuePayDelegate>
+{
+    NSMutableArray *_datas; //cell的数据
+    NSMutableArray *_headerDatas; //header的数据
+    
+    NSString *page; //页码
+    
+    NSString *stringID;
+    
+    AllDanModel *model1;
+    
+    HomeLookFooter *footer;
+    
+    NoDingDanCell *cell1;
+    
+    NSString *string10;
+    
+}
+
+//tableView
+@property(nonatomic,strong)UITableView *myTableView;
+
+@property (nonatomic,strong)DJRefresh *refresh;
+@property(nonatomic,strong)UILabel *lable;//暂无数据
+
+@end
+
+@implementation AllDanViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    _datas=[NSMutableArray new];
+    
+    
+    page=@"0";
+    
+    self.view.frame=[UIScreen mainScreen].bounds;
+    
+    [self initTableView];
+
+     //获取数据
+    [self getDatas];
+    
+    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+    
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
+    dispatch_after(time, dispatch_get_main_queue(), ^{
+        [hud dismiss:YES];
+    });
+    
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"tongzhi" object:nil];
+}
+
+
+- (void)tongzhi:(NSNotification *)text{
+    
+    
+    [_datas removeAllObjects];
+    
+    [self getDatas];
+    
+    
+}
+
+-(void)ContinueReloadDate
+{
+    
+    [_datas removeAllObjects];
+    
+    [self getDatas];
+    
+    
+}
+-(void)reloadDate
+{
+    
+    NSLog(@"======重新加载数据===");
+    
+    page=@"";
+    
+    [_datas removeAllObjects];
+    
+    //获取数据
+    [self getDatas];
+    
+    //    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+    //
+    //    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
+    //    dispatch_after(time, dispatch_get_main_queue(), ^{
+    //
+    //
+    //        [hud dismiss:YES];
+    //    });
+}
+
+-(void)getDatas
+{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSString *url = [NSString stringWithFormat:@"%@getAllOrders_mob.shtml",URL_Str];
+    
+    NSDictionary *dic = @{@"sigen":self.sigen,@"exchange_id":page};
+    
+    //    NSDictionary *dic=nil;
+    
+    NSLog(@"kkkkk%@",page);
+    
+    [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
+        NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
+        
+        
+        
+        
+        if (codeKey && content) {
+            NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+            
+            NSLog(@"xmlStr===%@",xmlStr);
+            
+            
+            NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            NSLog(@"全部订单***=%@",dic);
+            
+            //清空数据源
+//            if ([page isEqualToString:@"0"]) {
+//                
+//                [_datas removeAllObjects];
+//                
+//            }
+            for (NSDictionary *dict1 in dic) {
+                string10 = dict1[@"totalCount"];
+                
+                for (NSDictionary *dict2 in dict1[@"exchangelist"]) {
+                    AllDanModel *model=[[AllDanModel alloc] init];
+                    
+                    model.attribute_str=dict2[@"attribute_str"];
+                    model.id=dict2[@"id"];
+                    model.logo=dict2[@"logo"];
+                    model.name=dict2[@"name"];
+                    model.number=dict2[@"number"];
+                    model.orderno=dict2[@"orderno"];
+                    model.pay_integer=dict2[@"pay_integer"];
+                    model.pay_maney=dict2[@"pay_maney"];
+                    model.scopeimg=dict2[@"scopeimg"];
+                    model.status=dict2[@"status"];
+                    model.storename=dict2[@"storename"];
+                    model.totalfreight=dict2[@"totalfreight"];
+                    model.payintegral=dict2[@"payintegral"];
+                    model.paymoney=dict2[@"paymoney"];
+                    model.type=dict2[@"type"];
+                    model.mid=dict2[@"mid"];
+                    
+                    [_datas addObject:model];
+                    
+                    if (_datas.count%12==0) {
+                        NSLog(@"====%@",model.id);
+                         stringID=model.id;
+//                        footer.hidden=NO;
+                        
+                    }else{
+                        
+                        //隐藏点击加载更多
+//                        footer.hidden=YES;
+                        
+                    }
+                }
+            }
+            if (_datas.count == 0) {
+                
+                [self initview];
+                
+            }else{
+                
+                _lable.hidden = YES;
+                
+            }
+            
+            if (_datas.count%12==0&&_datas.count !=[string10 integerValue]) {
+                footer.hidden=NO;
+                [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:91/255.0 green:150/255.0 blue:255/255.0 alpha:1.0] forState:0];
+                footer.loadMoreBtn.enabled=YES;
+                
+            }else if (_datas.count == [string10 integerValue]){
+                footer.hidden = NO;
+                footer.moreView.hidden=YES;
+                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0] forState:0];
+                footer.loadMoreBtn.enabled=NO;
+                
+                
+            }else{
+                
+                //隐藏点击加载更多
+                footer.hidden=YES;
+                
+            }
+            
+            
+            
+            [_myTableView reloadData];
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [WKProgressHUD popMessage:@"网络异常" inView:self.view duration:1.5 animated:YES];
+        NSLog(@"%@",error);
+    }];
+}
+-(void)initview{
+    
+    _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,[UIScreen mainScreen].bounds.size.height/10 , [UIScreen mainScreen].bounds.size.width, 80)];
+    _lable.text = @"暂无更多数据";
+    _lable.textColor = [UIColor lightGrayColor];
+    _lable.textAlignment = NSTextAlignmentCenter;
+    self.view.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1];
+    [self.view addSubview:_lable];
+    
+}
+-(void)initTableView
+{
+    //tableView
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-105) style:UITableViewStyleGrouped];
+    _myTableView.dataSource = self;
+    _myTableView.delegate = self;
+    
+    _myTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    _myTableView.separatorColor = [UIColor colorWithRed:212.0f/255.0f green:212.0f/255.0f blue:212.0f/255.0f alpha:1.0];
+    
+    [self.view addSubview:_myTableView];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"AllDingDanCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"WaiteGitCell" bundle:nil] forCellReuseIdentifier:@"cell1"];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"WaitePayCell" bundle:nil] forCellReuseIdentifier:@"cell2"];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"WaiteSendCell" bundle:nil] forCellReuseIdentifier:@"cell3"];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"NoDingDanCell" bundle:nil] forCellReuseIdentifier:@"nocell"];
+    //注册Footer
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"AllFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"footer"];
+    
+    [_myTableView registerNib:[UINib nibWithNibName:@"HomeLookFooter" bundle:nil] forHeaderFooterViewReuseIdentifier:@"header"];
+    
+    _refresh=[[DJRefresh alloc] initWithScrollView:_myTableView delegate:self];
+    _refresh.topEnabled=YES;
+    _refresh.bottomEnabled=NO;
+}
+
+#pragma mark - tableView代理方法
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+//    if (_datas.count==0) {
+//        return 1;
+//    }else
+    {
+        return _datas.count;
+    }
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_datas.count==0) {
+        return 0;
+    }else
+    {
+        
+        AllDanModel *model=_datas[indexPath.row];
+        if ([model.status isEqualToString:@"2"]){
+            return 245;
+        }else{
+            return 286;
+        }
+    }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.0000000001;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_datas.count==0) {
+        
+        NoDingDanCell *cell=[tableView dequeueReusableCellWithIdentifier:@"nocell"];
+        
+        return cell;
+        
+    }else{
+        
+        model1=_datas[indexPath.row];
+        
+        NSNull *null=[[NSNull alloc] init];
+        
+        if ([model1.status isEqualToString:@"7"]) {
+            WaitePayCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell2"];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            
+            if (![model1.attribute_str isEqual:null] || ![model1.attribute_str isEqualToString:@""]) {
+                
+                cell.GoodsShuXingLabel.text=model1.attribute_str;
+                
+            }
+            if (![model1.logo isEqual:null]) {
+                [cell.LogoImageView sd_setImageWithURL:[NSURL URLWithString:model1.logo]];
+            }
+            [cell.ShopNameButton setTitle:[NSString stringWithFormat:@"%@ >",model1.storename] forState:0];
+            cell.TypeLabel.text=@"待付款";
+            [cell.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model1.scopeimg]];
+            cell.GoodsNAmeLabel.text=model1.name;
+            cell.GoodsNumberLabel.text=[NSString stringWithFormat:@"x%@",model1.number];
+            
+            if ([model1.pay_integer isEqualToString:@"0.00"] || [model1.pay_integer isEqualToString:@"0"] || [model1.pay_integer isEqualToString:@""]) {
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.pay_maney floatValue]];
+                
+            }else if ([model1.pay_maney isEqualToString:@"0.00"] || [model1.pay_maney isEqualToString:@"0"] || [model1.pay_maney isEqualToString:@""]){
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+                
+            }else{
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_maney floatValue],[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+            }
+//            cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_maney floatValue],[model1.pay_integer floatValue]];
+            cell.AccountNumbersLabel.text=[NSString stringWithFormat:@"共%@件商品",model1.number];
+//            cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+            
+            if ([model1.paymoney isEqualToString:@"0.00"] || [model1.paymoney isEqualToString:@"0"] || [model1.paymoney isEqualToString:@""]) {
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.payintegral floatValue]];
+                
+            }else if ([model1.payintegral isEqualToString:@"0.00"] || [model1.payintegral isEqualToString:@"0"] || [model1.payintegral isEqualToString:@""]){
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.paymoney floatValue]];
+                
+            }else{
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+                
+            }
+            cell.YunFeiLabel.text=[NSString stringWithFormat:@"(含运费￥%.02f)",[model1.totalfreight floatValue]];
+            
+            //检点看看
+            self.mid1=model1.mid;
+            cell.ContinuePayButton.tag = 100 + indexPath.row;
+            cell.ShopNameButton.tag = 200 + indexPath.row;
+            //继续付款
+            [cell.ContinuePayButton addTarget:self action:@selector(ContinuePayBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //进店就看看
+            [cell.ShopNameButton addTarget:self action:@selector(JinDianBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+//            self.orderno=model1.orderno;
+            
+            return cell;
+        }else if ([model1.status isEqualToString:@"0"]){
+            WaiteSendCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell3"];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            if (![model1.attribute_str isEqual:null] || ![model1.attribute_str isEqualToString:@""]) {
+                
+                cell.GoodsShuXingLabel.text=model1.attribute_str;
+                
+            }
+            
+            if (![model1.logo isEqual:null]) {
+                [cell.LogoImageView sd_setImageWithURL:[NSURL URLWithString:model1.logo]];
+            }
+            
+            [cell.ShopNameButton setTitle:[NSString stringWithFormat:@"%@ >",model1.storename] forState:0];
+            cell.TypeLabel.text=@"待发货";
+            [cell.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model1.scopeimg]];
+            cell.GoodsNameLabel.text=model1.name;
+            cell.GoodsNumberLabel.text=[NSString stringWithFormat:@"x%@",model1.number];
+            
+            if ([model1.pay_integer isEqualToString:@"0.00"] || [model1.pay_integer isEqualToString:@"0"] || [model1.pay_integer isEqualToString:@""]) {
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.pay_maney floatValue]];
+                
+            }else if ([model1.pay_maney isEqualToString:@"0.00"] || [model1.pay_maney isEqualToString:@"0"] || [model1.pay_maney isEqualToString:@""]){
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.pay_integer floatValue]];
+                
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+            }else{
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_maney floatValue],[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+            }
+//            cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_integer floatValue],[model1.pay_maney floatValue]];
+            cell.AccountNumbersLabel.text=[NSString stringWithFormat:@"共%@件商品",model1.number];
+//            cell.ZongJiaLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+            
+            if ([model1.paymoney isEqualToString:@"0.00"] || [model1.paymoney isEqualToString:@"0"] || [model1.paymoney isEqualToString:@""]) {
+                
+                cell.ZongJiaLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.payintegral floatValue]];
+                
+            }else if ([model1.payintegral isEqualToString:@"0.00"] || [model1.payintegral isEqualToString:@"0"] || [model1.payintegral isEqualToString:@""]){
+                
+                cell.ZongJiaLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.paymoney floatValue]];
+                
+            }else{
+                
+                cell.ZongJiaLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+                
+            }
+            cell.YunFeiLabel.text=[NSString stringWithFormat:@"(含运费￥%.02f)",[model1.totalfreight floatValue]];
+            
+            
+            cell.TuiKuanButton.tag = 300 + indexPath.row;
+            cell.ShopNameButton.tag = 200 + indexPath.row;
+            self.mid2=model1.mid;
+            //退款
+            [cell.TuiKuanButton addTarget:self action:@selector(TuiKuanBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            //进店就看看
+            [cell.ShopNameButton addTarget:self action:@selector(JinDianBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            return cell;
+        }else if ([model1.status isEqualToString:@"1"]){
+            WaiteGitCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell1"];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            if (![model1.attribute_str isEqual:null] || ![model1.attribute_str isEqualToString:@""]) {
+                
+                cell.GoodsShuXingLabel.text=model1.attribute_str;
+                
+            }
+            
+            if (![model1.logo isEqual:null]) {
+                [cell.LogoImageView sd_setImageWithURL:[NSURL URLWithString:model1.logo]];
+            }
+            [cell.ShopNameButton setTitle:[NSString stringWithFormat:@"%@ >",model1.storename] forState:0];
+            cell.TypeLabel.text=@"待收货";
+            [cell.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model1.scopeimg]];
+            cell.GoodsNameLabel.text=model1.name;
+            cell.GoodsNumberLabel.text=[NSString stringWithFormat:@"x%@",model1.number];
+            
+            if ([model1.pay_integer isEqualToString:@"0.00"] || [model1.pay_integer isEqualToString:@"0"] || [model1.pay_integer isEqualToString:@""]) {
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.pay_maney floatValue]];
+                
+            }else if ([model1.pay_maney isEqualToString:@"0.00"] || [model1.pay_maney isEqualToString:@"0"] || [model1.pay_maney isEqualToString:@""]){
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+                
+            }else{
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_maney floatValue],[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+            }
+            
+//            cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_integer floatValue],[model1.pay_maney floatValue]];
+            cell.AccountNumbersLabel.text=[NSString stringWithFormat:@"共%@件商品",model1.number];
+//            cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+            
+            if ([model1.paymoney isEqualToString:@"0.00"] || [model1.paymoney isEqualToString:@"0"] || [model1.paymoney isEqualToString:@""]) {
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.payintegral floatValue]];
+                
+            }else if ([model1.payintegral isEqualToString:@"0.00"] || [model1.payintegral isEqualToString:@"0"] || [model1.payintegral isEqualToString:@""]){
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.paymoney floatValue]];
+                
+            }else{
+                
+                cell.ZongPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+                
+            }
+            
+            cell.YunFeiLabel.text=[NSString stringWithFormat:@"(含运费￥%.02f)",[model1.totalfreight floatValue]];
+            
+            self.mid3=model1.mid;
+            cell.TuiKuanButton.tag = 400 + indexPath.row;
+            cell.QueRenShouHuoButton.tag = 500 + indexPath.row;
+            cell.ShopNameButton.tag = 200 + indexPath.row;
+            //待收货退款
+            [cell.TuiKuanButton addTarget:self action:@selector(DaiShouHuoBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //确认收货
+            [cell.QueRenShouHuoButton addTarget:self action:@selector(QueRenShouHuoBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //进店就看看
+            [cell.ShopNameButton addTarget:self action:@selector(JinDianBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            
+            return cell;
+        }else{
+            AllDingDanCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell"];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            
+            if (![model1.attribute_str isEqual:null] || ![model1.attribute_str isEqualToString:@""]) {
+                
+                cell.GoodsShuXingLabel.text=model1.attribute_str;
+                
+            }
+            
+            
+            if (![model1.logo isEqual:null]) {
+                [cell.LogoImageView sd_setImageWithURL:[NSURL URLWithString:model1.logo]];
+            }
+            [cell.ShopNameButton setTitle:[NSString stringWithFormat:@"%@ >",model1.storename] forState:0];
+            cell.TypeLabel.text=@"交易成功";
+            [cell.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model1.scopeimg]];
+            cell.GoodsNameLabel.text=model1.name;
+            cell.GoodsNumberLabel.text=[NSString stringWithFormat:@"x%@",model1.number];
+            
+            if ([model1.pay_integer isEqualToString:@"0.00"] || [model1.pay_integer isEqualToString:@"0"] || [model1.pay_integer isEqualToString:@""]) {
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.pay_maney floatValue]];
+                
+            }else if ([model1.pay_maney isEqualToString:@"0.00"] || [model1.pay_maney isEqualToString:@"0"] || [model1.pay_maney isEqualToString:@""]){
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+                
+            }else{
+                
+                cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_maney floatValue],[model1.pay_integer floatValue]];
+                
+                NSString *stringForColor = @"积分";
+                
+                // 创建对象.
+                NSMutableAttributedString *mAttStri = [[NSMutableAttributedString alloc] initWithString:cell.GoodsPriceLabel.text];
+                //
+                NSRange range = [cell.GoodsPriceLabel.text rangeOfString:stringForColor];
+                
+                [mAttStri addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:range];
+                
+                cell.GoodsPriceLabel.attributedText=mAttStri;
+                
+                
+            }
+//            cell.GoodsPriceLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.pay_integer floatValue],[model1.pay_maney floatValue]];
+            cell.GoodsCountLabel.text=[NSString stringWithFormat:@"共%@件商品",model1.number];
+//            cell.AllMoneyLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+            
+            if ([model1.paymoney isEqualToString:@"0.00"] || [model1.paymoney isEqualToString:@"0"] || [model1.paymoney isEqualToString:@""]) {
+                
+                cell.AllMoneyLabel.text=[NSString stringWithFormat:@"%.02f积分",[model1.payintegral floatValue]];
+                
+            }else if ([model1.payintegral isEqualToString:@"0.00"] || [model1.payintegral isEqualToString:@"0"] || [model1.payintegral isEqualToString:@""]){
+                
+                cell.AllMoneyLabel.text=[NSString stringWithFormat:@"￥%.02f",[model1.paymoney floatValue]];
+                
+            }else{
+                
+                cell.AllMoneyLabel.text=[NSString stringWithFormat:@"￥%.02f+%.02f积分",[model1.paymoney floatValue],[model1.payintegral floatValue]];
+                
+            }
+            
+            cell.YunFeiLabel.text=[NSString stringWithFormat:@"(含运费￥%.02f)",[model1.totalfreight floatValue]];
+            
+            self.mid4=model1.mid;
+            cell.ShopNameButton.tag = 200 + indexPath.row;
+            //进店就看看
+            [cell.ShopNameButton addTarget:self action:@selector(JinDianBtnClick:event:) forControlEvents:UIControlEventTouchUpInside];
+            return cell;
+        }
+        
+    }
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(_datas.count>0){
+    AllDanModel *model=_datas[indexPath.row];
+    if ([model.status isEqualToString:@"7"]) {
+        
+        JiaoYiDaiFuKuanViewController *vc=[[JiaoYiDaiFuKuanViewController alloc] init];
+        
+        vc.sigen=self.sigen;
+        vc.orderno=model.orderno;
+        vc.logo=model.logo;
+        vc.storename=model.storename;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        self.navigationController.navigationBar.hidden=YES;
+        
+    }else if ([model.status isEqualToString:@"0"]){
+        
+        JiaoYiNoSendViewController *vc=[[JiaoYiNoSendViewController alloc] init];
+        vc.sigen=self.sigen;
+        vc.orderno=model.orderno;
+        vc.logo=model.logo;
+        vc.storename=model.storename;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        self.navigationController.navigationBar.hidden=YES;
+        
+    }else if ([model.status isEqualToString:@"1"]){
+        
+        JiaoYiGetGoodsViewController *vc=[[JiaoYiGetGoodsViewController alloc] init];
+        vc.sigen=self.sigen;
+        vc.orderno=model.orderno;
+        vc.logo=model.logo;
+        vc.storename=model.storename;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        self.navigationController.navigationBar.hidden=YES;
+        
+    }else{
+        
+        JiaoYiSuccessViewController *vc=[[JiaoYiSuccessViewController alloc] init];
+        vc.sigen=self.sigen;
+        vc.orderno=model.orderno;
+        vc.logo=model.logo;
+        vc.storename=model.storename;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+        self.navigationController.navigationBar.hidden=YES;
+    }
+
+    
+  }
+}
+
+//确认收货
+-(void)QueRenShouHuoBtnClick:(UIButton*)button event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_myTableView];
+    NSIndexPath *indexPath= [_myTableView indexPathForRowAtPoint:currentTouchPosition];
+    if (button.tag-500 == indexPath.row ){
+        model1 = _datas[indexPath.row];
+        
+        self.orderno=model1.orderno;
+        
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"请确认您已收到货" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:@"取消", nil];
+    
+    [alert show];
+    
+    }
+    
+    
+//    JiaoYiGetGoodsViewController *vc=[[JiaoYiGetGoodsViewController alloc] init];
+//    vc.sigen=self.sigen;
+//    vc.orderno=model1.orderno;
+//    vc.logo=model1.logo;
+//    vc.storename=model1.storename;
+//    
+//    [self.navigationController pushViewController:vc animated:YES];
+//    self.navigationController.navigationBar.hidden=YES;
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (alertView.tag==10) {
+        
+        
+        if (buttonIndex==0) {
+            
+            [_datas removeAllObjects];
+            
+            [self getDatas];
+            
+        }
+    }else{
+        
+        if (buttonIndex==0) {
+            
+            
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeCustom];
+            [SVProgressHUD showWithStatus:@"请耐心等待..."];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [SVProgressHUD dismiss];
+                
+            });
+            
+            
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+            
+            NSString *url = [NSString stringWithFormat:@"%@confirmExchange_mob.shtml",URL_Str];
+            //saveUserExchange_mob.shtml
+            
+            NSLog(@"=====self.orderno==%@==",self.orderno);
+            NSLog(@"=====self.sigen==%@==",self.sigen);
+            
+            NSDictionary *dic = @{@"sigen":self.sigen,@"orderno":self.orderno};
+            
+            //    NSDictionary *dic=nil;
+            //    NSDictionary *dic = @{@"sigen":@"1210114j701evr567o9pkqf7jr3sfccf3fc24efe42dbb02d577117275e2e7b4093251fb86112c4lvskmh0i3"};
+            [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
+                NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
+                
+                
+                
+                
+                if (codeKey && content) {
+                    NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
+                    xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                    xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+                    
+                    //NSLog(@"xmlStr%@",xmlStr);
+                    
+                    
+                    NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
+                    
+                    
+                    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    
+                    NSLog(@"%@",dic);
+                    
+                    for (NSDictionary *dict1 in dic) {
+                        NSString *string=dict1[@"status"];
+                        
+                        if ([string isEqualToString:@"10000"]) {
+                            JiaoYiSuccessViewController *vc=[[JiaoYiSuccessViewController alloc] init];
+                            
+                            vc.sigen=self.sigen;
+                            vc.orderno=model1.orderno;
+                            vc.status=model1.status;
+                            vc.logo=model1.logo;
+                            vc.storename=model1.storename;
+                            vc.backString=@"10";
+                            vc.delegate=self;
+                            
+                            [self.navigationController pushViewController:vc animated:YES];
+                            self.navigationController.navigationBar.hidden=YES;
+                            
+                        }else if ([string isEqualToString:@"10007"]){
+                            
+                            
+                            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:dict1[@"message"] message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                            
+                            alert.tag=10;
+                            
+                            [alert show];
+                            
+                        }else{
+                            
+                            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:dict1[@"message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+                            
+                            [alert show];
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"%@",error);
+            }];
+            
+        }else{
+            
+        }
+
+        
+    }
+}
+
+
+-(void)GetDatas3
+{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSString *url = [NSString stringWithFormat:@"%@getOrderDetails_mob.shtml",URL_Str];
+    
+    NSLog(@"======self.sigen====%@",self.sigen);
+    NSLog(@"======self.orderno====%@",self.orderno);
+    NSLog(@"======self.logo====%@",self.logo);
+    NSLog(@"======self.storename====%@",self.storename);
+    
+    NSDictionary *dic = @{@"sigen":self.sigen,@"orderno":self.orderno,@"logo":self.logo,@"storename":self.storename,@"status":@"1"};
+    
+    //    NSDictionary *dic=nil;
+    
+    [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
+        NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
+        
+        
+        
+        
+        if (codeKey && content) {
+            NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+            
+            //NSLog(@"xmlStr%@",xmlStr);
+            
+            
+            NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            //            NSLog(@"待发货订单详情=%@",dic);
+            
+            
+            for (NSDictionary *dict1 in dic) {
+                
+                self.status=dict1[@"status"];
+                
+                if ([dict1[@"status"] isEqualToString:@"10000"]) {
+                    
+                    ReturnMoneyViewController *vc=[[ReturnMoneyViewController alloc] init];
+                    
+                    vc.type=@"1";
+                    vc.sigen=self.sigen;
+                    vc.orderid=self.shopId;
+                    vc.orderno=self.orderno;
+                    vc.money=self.paymoney;
+                    vc.integral=self.payintegral;
+                    vc.storename=self.storename;
+                    vc.logo=self.logo;
+                    
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    self.navigationController.navigationBar.hidden=YES;
+                    
+                }else if ([dict1[@"status"] isEqualToString:@"10007"]){
+                    
+                    
+                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:dict1[@"message"] message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    
+                    alert.tag=10;
+                    
+                    [alert show];
+                    
+                }
+            }
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [WKProgressHUD popMessage:@"网络异常" inView:self.view duration:1.5 animated:YES];
+        
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+//待收货退款
+-(void)DaiShouHuoBtnClick:(UIButton*)button event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_myTableView];
+    NSIndexPath *indexPath= [_myTableView indexPathForRowAtPoint:currentTouchPosition];
+    if (button.tag-400 == indexPath.row ){
+
+    ReturnMoneyViewController *vc1=[[ReturnMoneyViewController alloc] init];
+    AllDanModel *model=_datas[indexPath.row];
+        
+        
+        
+        self.orderno=model1.orderno;
+        self.logo=model1.logo;
+        self.storename=model1.storename;
+        self.shopId=model1.id;
+        self.paymoney=model1.paymoney;
+        self.payintegral=model1.payintegral;
+        
+        
+        
+        [self GetDatas3];
+        
+        
+//    vc1.type=@"1";
+//    vc1.orderid=model.id;
+//    vc1.orderno=model.orderno;
+//    vc1.money=model.paymoney;
+//    vc1.integral=model.payintegral;
+//    vc1.storename=model.storename;
+//    vc1.logo=model.logo;
+//    
+//    [self.navigationController pushViewController:vc1 animated:YES];
+//    
+//    self.navigationController.navigationBar.hidden=YES;
+    }
+}
+
+
+//继续付款
+-(void)ContinuePayBtnClick:(UIButton*)button event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_myTableView];
+    NSIndexPath *indexPath= [_myTableView indexPathForRowAtPoint:currentTouchPosition];
+    if (button.tag-100 == indexPath.row ){
+
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeCustom];
+        [SVProgressHUD showWithStatus:@"请耐心等待..."];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            
+            [SVProgressHUD dismiss];
+            
+        });
+        
+    ContinuePayViewController *vc=[[ContinuePayViewController alloc] init];
+    AllDanModel *model=_datas[indexPath.row];
+    vc.orderno=model.orderno;
+    vc.delegate=self;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    self.navigationController.navigationBar.hidden=YES;
+    }
+}
+
+-(void)GetDatas2
+{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSString *url = [NSString stringWithFormat:@"%@getOrderDetails_mob.shtml",URL_Str];
+    
+    NSLog(@"======self.sigen====%@",self.sigen);
+    NSLog(@"======self.orderno====%@",self.orderno);
+    NSLog(@"======self.logo====%@",self.logo);
+    NSLog(@"======self.storename====%@",self.storename);
+    
+    NSDictionary *dic = @{@"sigen":self.sigen,@"orderno":self.orderno,@"logo":self.logo,@"storename":self.storename,@"status":@"0"};
+    
+    //    NSDictionary *dic=nil;
+    
+    [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
+        NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
+        
+        
+        
+        
+        if (codeKey && content) {
+            NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+            
+            //NSLog(@"xmlStr%@",xmlStr);
+            
+            
+            NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            //            NSLog(@"待发货订单详情=%@",dic);
+            
+            
+            for (NSDictionary *dict1 in dic) {
+                
+                self.status=dict1[@"status"];
+                
+                if ([dict1[@"status"] isEqualToString:@"10000"]) {
+                    
+                    ReturnMoneyViewController *vc=[[ReturnMoneyViewController alloc] init];
+                    
+                    vc.type=@"0";
+                    vc.sigen=self.sigen;
+                    vc.orderid=self.shopId;
+                    vc.orderno=self.orderno;
+                    vc.money=self.paymoney;
+                    vc.integral=self.payintegral;
+                    vc.storename=self.storename;
+                    vc.logo=self.logo;
+                    
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    self.navigationController.navigationBar.hidden=YES;
+                    
+                }else if ([dict1[@"status"] isEqualToString:@"10007"]){
+                    
+                    
+                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:dict1[@"message"] message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    
+                    alert.tag=10;
+                    
+                    [alert show];
+                    
+                }
+            }
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [WKProgressHUD popMessage:@"网络异常" inView:self.view duration:1.5 animated:YES];
+        
+        NSLog(@"%@",error);
+    }];
+    
+}
+//退款
+-(void)TuiKuanBtnClick:(UIButton*)button event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_myTableView];
+    NSIndexPath *indexPath= [_myTableView indexPathForRowAtPoint:currentTouchPosition];
+    if (button.tag-300 == indexPath.row ){
+
+    model1=_datas[indexPath.row];
+        
+        self.orderno=model1.orderno;
+        self.logo=model1.logo;
+        self.storename=model1.storename;
+        self.shopId=model1.id;
+        self.paymoney=model1.paymoney;
+        self.payintegral=model1.payintegral;
+        
+        
+        
+        [self GetDatas2];
+        
+        
+//    ReturnMoneyViewController *vc1=[[ReturnMoneyViewController alloc] init];
+//    
+//    vc1.type=@"0";
+//    vc1.sigen=self.sigen;
+//    vc1.orderid=model1.id;
+//    vc1.orderno=model1.orderno;
+//    vc1.money=model1.paymoney;
+//    vc1.integral=model1.payintegral;
+//    vc1.storename=model1.storename;
+//    vc1.logo=model1.logo;
+//    
+//    [self.navigationController pushViewController:vc1 animated:YES];
+//    
+//    self.navigationController.navigationBar.hidden=YES;
+    }
+}
+
+- (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self addDataWithDirection:direction];
+    });
+    
+}
+
+- (void)addDataWithDirection:(DJRefreshDirection)direction{
+    
+    if (direction==DJRefreshDirectionTop) {
+        
+        NSLog(@"下拉刷新");
+        
+        
+        page=@"0";
+        [_datas removeAllObjects];
+        //获取数据
+            [self getDatas];
+//        WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+//        
+//        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
+//        dispatch_after(time, dispatch_get_main_queue(), ^{
+//            
+//            
+//            
+//            [hud dismiss:YES];
+//        });
+//        
+    }
+    
+    [_refresh finishRefreshingDirection:direction animation:YES];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 44;
+}
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    footer=[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"header"];
+    
+    footer.delegate=self;
+    if (_datas.count == 0) {
+        footer.hidden = YES;
+    }
+    return footer;
+}
+//加载更多数据代理方法
+- (void)FooterViewClickedloadMoreData
+{
+    
+    NSLog(@"点击加载更多");
+    
+    if (_datas.count%12==0) {
+        
+        page=stringID;
+        
+         //获取数据
+        [self getDatas];
+//        WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+//        
+//        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
+//        dispatch_after(time, dispatch_get_main_queue(), ^{
+//            
+//           
+//            
+//            [hud dismiss:YES];
+//            
+//        });
+        
+        
+        
+    }else{
+        
+        
+        XSInfoViewStyle *style = [[XSInfoViewStyle alloc] init];
+        style.info = @"暂无更多数据!";
+        style.layoutStyle = XSInfoViewLayoutStyleHorizontal;
+        [XSInfoView showInfoWithStyle:style onView:self.view];
+    }
+    
+}
+
+//代付款进店看看
+-(void)JinDianBtnClick:(UIButton*)button event:(id)event
+{
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:_myTableView];
+    NSIndexPath *indexPath= [_myTableView indexPathForRowAtPoint:currentTouchPosition];
+    if (button.tag-200 == indexPath.row ){
+    model1=_datas[indexPath.row];
+    GotoShopLookViewController *vc=[[GotoShopLookViewController alloc] init];
+    vc.mid=model1.mid;
+    vc.type=@"10";
+    [self.navigationController pushViewController:vc animated:YES];
+    self.navigationController.navigationBar.hidden=YES;
+    }
+}
+
+////待发货进店看看
+//-(void)DaiFaHuoJinDianBtnClick:(UIButton*)button event:(id)event
+//{
+//    GotoShopLookViewController *vc=[[GotoShopLookViewController alloc] init];
+//    vc.mid=self.mid2;
+//    vc.type=@"10";
+//    [self.navigationController pushViewController:vc animated:YES];
+//    self.navigationController.navigationBar.hidden=YES;
+//}
+//
+////待收货进店看看
+//-(void)DaiShouHuoJinDianBtnClick:(UIButton*)button event:(id)event
+//{
+//    GotoShopLookViewController *vc=[[GotoShopLookViewController alloc] init];
+//    vc.mid=self.mid3;
+//    vc.type=@"10";
+//    [self.navigationController pushViewController:vc animated:YES];
+//    self.navigationController.navigationBar.hidden=YES;
+//}
+//
+////交易完成进店看看
+//-(void)JiaoYiWanChengJinDianBtnClick:(UIButton*)button event:(id)event
+//{
+//    GotoShopLookViewController *vc=[[GotoShopLookViewController alloc] init];
+//    vc.mid=self.mid4;
+//    vc.type=@"10";
+//    [self.navigationController pushViewController:vc animated:YES];
+//    self.navigationController.navigationBar.hidden=YES;
+//}
+@end

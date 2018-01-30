@@ -1,0 +1,19 @@
+//
+//  HomeCell3.h
+//  aTaohMall
+//
+//  Created by JMSHT on 16/6/20.
+//  Copyright © 2016年 ysy. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface HomeCell3 : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *TypeImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *TypeNameLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *TypeLookAllButton;
+
+@end

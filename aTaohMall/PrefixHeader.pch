@@ -1,0 +1,43 @@
+//
+//  PrefixHeader.pch
+//  aTaohMall
+//
+//  Created by JMSHT on 16/3/17.
+//  Copyright © 2016年 ysy. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import "ProjectObjectHeader.h"
+#import "ConstHeader.h"
+#import "JMSHT_NSENUM.h"
+#import "NormalHeaderFile.h"
+#import "WKProgressHUD.h"
+#import "YYKit.h"
+#import "XLRedNaviView.h"
+#import "XLNoDataView.h"
+#endif
+
+#endif
+
+
+//
+//
+//      ┏┛ ┻━━━━━┛ ┻┓
+//      ┃　　　　　　 ┃
+//      ┃　　　━　　　┃
+//      ┃　┳┛　  ┗┳　┃
+//      ┃　　　　　　 ┃
+//      ┃　　　┻　　　┃
+//      ┃　　　　　　 ┃
+//      ┗━┓　　　┏━━━┛
+//        ┃　　　┃   神兽保佑
+//        ┃　　　┃   代码无BUG！
+//        ┃　　　┗━━━━━━━━━┓
+//        ┃　　　　　　　    ┣┓
+//        ┃　　　　         ┏┛
+//        ┗━┓ ┓ ┏━━━┳ ┓ ┏━┛
+//          ┃ ┫ ┫   ┃ ┫ ┫
+//          ┗━┻━┛   ┗━┻━┛

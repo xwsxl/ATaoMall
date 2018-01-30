@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="w8d-1h-O9b" customClass="HomeCell2">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w8d-1h-O9b" id="GAA-0r-1NB">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="限时抢购.png" translatesAutoresizingMaskIntoConstraints="NO" id="YbM-4b-EPK">
+                        <rect key="frame" x="20" y="8" width="21" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23.5" id="UXl-7e-pJJ"/>
+                            <constraint firstAttribute="width" constant="21" id="qJ3-wt-2zC"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="限时抢购" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irv-DL-9Or">
+                        <rect key="frame" x="45" y="10" width="73" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="8vA-bU-o0B"/>
+                            <constraint firstAttribute="height" constant="20" id="ZXk-2K-Cz7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEG-3Y-LhQ">
+                        <rect key="frame" x="200" y="9" width="110" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="MUb-go-Y4Y"/>
+                            <constraint firstAttribute="width" constant="110" id="cya-vO-OZE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <inset key="titleEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="83" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="查看全部 " image="分类右键.png">
+                            <color key="titleColor" red="0.27058823529999998" green="0.27058823529999998" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="irv-DL-9Or" firstAttribute="top" secondItem="GAA-0r-1NB" secondAttribute="topMargin" constant="2" id="2ZC-S8-fcw"/>
+                    <constraint firstItem="YbM-4b-EPK" firstAttribute="top" secondItem="GAA-0r-1NB" secondAttribute="topMargin" id="CcC-3V-EbK"/>
+                    <constraint firstItem="irv-DL-9Or" firstAttribute="leading" secondItem="YbM-4b-EPK" secondAttribute="trailing" constant="4" id="Llg-r7-KD6"/>
+                    <constraint firstItem="YbM-4b-EPK" firstAttribute="leading" secondItem="GAA-0r-1NB" secondAttribute="leadingMargin" constant="12" id="WeB-4q-meI"/>
+                    <constraint firstAttribute="trailing" secondItem="rEG-3Y-LhQ" secondAttribute="trailing" constant="10" id="dwS-vP-d43"/>
+                    <constraint firstItem="rEG-3Y-LhQ" firstAttribute="top" secondItem="GAA-0r-1NB" secondAttribute="top" constant="9" id="yUY-cQ-nSQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="TypeImageView" destination="YbM-4b-EPK" id="nzw-14-g9J"/>
+                <outlet property="TypeLookAllButton" destination="rEG-3Y-LhQ" id="uzg-w3-srp"/>
+                <outlet property="TypeNameLabel" destination="irv-DL-9Or" id="dmH-Zy-lxU"/>
+            </connections>
+            <point key="canvasLocation" x="75.5" y="323"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="分类右键.png" width="22" height="22"/>
+        <image name="限时抢购.png" width="14" height="15"/>
+    </resources>
+</document>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="GoodsAddressCell2">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="董小姐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eo1-ZE-KvU">
+                        <rect key="frame" x="20" y="10" width="100" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="V0a-pY-60A"/>
+                            <constraint firstAttribute="width" constant="100" id="fI1-tE-sQ1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="福建省福州市枞阳县放假时间内小激动那你现" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBa-a7-i9P">
+                        <rect key="frame" x="20" y="49" width="289" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="rxh-8V-kiy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18019441107" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beO-Uc-9Ov">
+                        <rect key="frame" x="170" y="10" width="138" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="BKG-fe-Aux"/>
+                            <constraint firstAttribute="width" constant="138" id="PX7-Fp-Is3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="beO-Uc-9Ov" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="B1m-xW-HP8"/>
+                    <constraint firstItem="eo1-ZE-KvU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="BGS-qf-O1u"/>
+                    <constraint firstItem="BBa-a7-i9P" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="QD4-2e-wiw"/>
+                    <constraint firstAttribute="bottom" secondItem="BBa-a7-i9P" secondAttribute="bottom" constant="0.5" id="X39-o6-MTS"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="beO-Uc-9Ov" secondAttribute="trailing" constant="4" id="fib-Pl-mZx"/>
+                    <constraint firstAttribute="trailing" secondItem="BBa-a7-i9P" secondAttribute="trailing" constant="11" id="pdW-NS-EIH"/>
+                    <constraint firstItem="eo1-ZE-KvU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="rjR-no-Vx4"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="AddressLabel" destination="BBa-a7-i9P" id="V0Y-hi-w5n"/>
+                <outlet property="NameLabel" destination="eo1-ZE-KvU" id="RLI-mx-PeN"/>
+                <outlet property="PhoneLabel" destination="beO-Uc-9Ov" id="8DL-aD-z7r"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

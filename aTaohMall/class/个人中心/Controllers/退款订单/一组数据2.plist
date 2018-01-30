@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>收到商品破损</string>
+	<string>商品质量问题</string>
+	<string>七天无理由退货</string>
+	<string>商品错发/漏发</string>
+	<string>商品需要维修</string>
+	<string>发票问题</string>
+	<string>未按约定时间发货</string>
+</array>
+</plist>
