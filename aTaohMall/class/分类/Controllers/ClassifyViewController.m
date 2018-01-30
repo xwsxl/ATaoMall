@@ -376,7 +376,6 @@
                     ClassifyModel *model=[[ClassifyModel alloc] init];
                     model.GoodsId=[NSString stringWithFormat:@"%@",dic1[@"id"]];
                     model.name=[NSString stringWithFormat:@"%@",dic1[@"name"]];
-                    YLog(@"-%@-",model.name);
                     [self.RemenFenLeiArray addObject:model];
                 }
                 model.SmallClass_list=[self GetReMenFenleiArrayWith:nil];
