@@ -44,54 +44,73 @@
 #import "YTGoodsDetailViewController.h"
 
 #import "YTSearchOtherCell.h"
-@interface SearchResultViewController ()<UITableViewDataSource,UITableViewDelegate,FooterViewDelegate,UITextFieldDelegate>
+
+#import "XLShoppingCollectionCell.h"
+#import "AllSingleShoppingModel.h"
+#import "XLLookAllCollectionCell.h"
+
+@interface SearchResultViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate>
 {
-    NSString *_searchKeyWord;
-    UITableView *_tableView;
+    NSString *_searchKeyWord;//顶部搜索词
+
+    UICollectionView *_collectionView;
     NSMutableArray *_datasArrM;//搜索数据
-    HomeLookFooter *footer;
     UIView *view;
     int flag;
     NSString *string10;
     NSInteger totalCount;
+    BOOL IsShowGongGe;
 }
 
-@property (nonatomic, strong) NSTimer        *m_timer; //定时器
-@property (nonatomic,strong)NSArray *myArray;//搜索记录的数组
-@property(nonatomic,strong)NSMutableArray *myArrM;
-
-@property(nonatomic,strong)NSMutableArray *deleteArrM;
 @property(nonatomic,strong)UILabel *lable;//暂无数据
 
 @end
 
 @implementation SearchResultViewController
+static NSString * const reuseIdentifier = @"XLShoppingCollectionCell";
+static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.frame=[UIScreen mainScreen].bounds;
-    _datasArrM=[NSMutableArray new];
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    NSArray * myArray = [userDefaultes arrayForKey:@"myArray"];
-    NSLog(@"我要的myArry==%@",myArray);
-    
-    flag=1;
-    
-    self.searchResultTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
-    self.searchResultTextField.delegate = self;
-    
-    //标题数据
-    for (NSString *str in _resultArrM) {
-        self.searchResultTextField.text=str;
-        _searchKeyWord=str;
-    }
-    
-    //创建tableView
-    [self initTableView];
+
+
+    [self initData];
+    [self initUI];
+
     //获取数据
     [self getDatas];
 }
 
+-(void)initData
+{
+    flag=1;
+
+    _datasArrM=[NSMutableArray new];
+
+}
+
+-(void)initUI
+{
+    [self initNavi];
+
+    //创建tableView
+    [self initTableView];
+
+}
+
+-(void)initNavi
+{
+    self.searchResultTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
+    self.searchResultTextField.delegate = self;
+
+    NSString *str=_resultArrM.lastObject;
+    //标题数据
+
+    self.searchResultTextField.text=str;
+    _searchKeyWord=str;
+
+}
 
 -(void)initview{
     
@@ -104,40 +123,28 @@
     [self.view addSubview:_lable];
     
 }
+
 -(void)initTableView
 {
-    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight+1, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight) style:UITableViewStyleGrouped];
-    
-    _tableView.delegate=self;
-    _tableView.dataSource=self;
-    _tableView.showsVerticalScrollIndicator=NO;
-    _tableView.showsHorizontalScrollIndicator=NO;
-    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    
-    [self.view addSubview:_tableView];
-    
-    //注册cell
-    [_tableView registerNib:[UINib nibWithNibName:@"SearchResultCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-    [_tableView registerNib:[UINib nibWithNibName:@"SearchResultCell1" bundle:nil] forCellReuseIdentifier:@"cell1"];
-    [_tableView registerNib:[UINib nibWithNibName:@"SearchResultCell2" bundle:nil] forCellReuseIdentifier:@"cell2"];
-    
-    [_tableView registerNib:[UINib nibWithNibName:@"NoDataCell" bundle:nil] forCellReuseIdentifier:@"cell3"];
-    
-//    [_tableView registerNib:[UINib nibWithNibName:@"YTSearchCell" bundle:nil] forCellReuseIdentifier:@"ytcell"];
-    
-    [_tableView registerClass:[YTSearchCell class] forCellReuseIdentifier:@"ytcell"];
-    
-    [_tableView registerClass:[YTSearchOtherCell class] forCellReuseIdentifier:@"other"];
-    
-    [_tableView registerNib:[UINib nibWithNibName:@"HomeLookFooter" bundle:nil] forHeaderFooterViewReuseIdentifier:@"header"];
-    //点击加载更多
 
+
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreen_Height-KSafeAreaTopNaviHeight) collectionViewLayout:flowLayout];
+    _collectionView.backgroundColor=[UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1.0];
+    //去掉右侧滚动条
+    _collectionView.showsVerticalScrollIndicator=NO;
+    _collectionView.delegate=self;
+    _collectionView.dataSource=self;
+    [_collectionView registerClass:[XLShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [_collectionView registerClass:[XLLookAllCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier1];
+
+    [self.view addSubview:_collectionView];
 
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"正在加载..." forState:MJRefreshStateRefreshing];
     [footer setTitle:@"暂无更多数据" forState:MJRefreshStateNoMoreData];
-    _tableView.mj_footer = footer;
+    _collectionView.mj_footer = footer;
 
     MJRefreshGifHeader *header=[MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     NSMutableArray *idleImages = [NSMutableArray array];
@@ -158,7 +165,7 @@
     // 设置正在刷新状态的动画图片
     [header setImages:refreshingImages forState:MJRefreshStateRefreshing];
 
-    _tableView.mj_header=header;
+    _collectionView.mj_header=header;
     
 
     
@@ -166,7 +173,10 @@
 
 -(void)NoWebSeveice
 {
-    
+    if (view) {
+        view.hidden=NO;
+        return;
+    }
     view=[[UIView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
     view.backgroundColor=[UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0];
@@ -226,7 +236,7 @@
 -(void)loadMoreData
 {
     if (totalCount==_datasArrM.count) {
-        [_tableView.mj_footer endRefreshingWithNoMoreData];
+        [_collectionView.mj_footer endRefreshingWithNoMoreData];
     }else
     {
         [self getDatas];
@@ -243,19 +253,9 @@
 
 -(void)getDatas
 {
-    
 
-    
-    
     WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-    });
-    
-    
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -291,43 +291,22 @@
                     
                     totalCount = [[NSString stringWithFormat:@"%@",dict1[@"totalCount"]] integerValue];
                     
-                    SearchResultModel *model=[[SearchResultModel alloc] init];
+                    AllSingleShoppingModel *model=[[AllSingleShoppingModel alloc] init];
+
+                    model.amount = [NSString stringWithFormat:@"%@",dict2[@"amount"]];
+                    model.ID=[NSString stringWithFormat:@"%@",dict2[@"id"]];
+
                     
                     
-                    NSString *amount = [NSString stringWithFormat:@"%@",dict2[@"amount"]];
-                    NSString *id=[NSString stringWithFormat:@"%@",dict2[@"id"]];
-                    NSString *good_type=[NSString stringWithFormat:@"%@",dict2[@"good_type"]];
-                    
-                    
-                    NSString *name=[NSString stringWithFormat:@"%@",dict2[@"name"]];
-                    NSString *pay_integer=[NSString stringWithFormat:@"%@",dict2[@"pay_integer"]];
-                    NSString *pay_maney=[NSString stringWithFormat:@"%@",dict2[@"pay_maney"]];
-                    NSString *scopeimg=[NSString stringWithFormat:@"%@",dict2[@"scopeimg"]];
-                    NSString *status=[NSString stringWithFormat:@"%@",dict2[@"status"]];
-                    NSString *stock =[NSString stringWithFormat:@"%@",dict2[@"stock"]];
-                    NSString *start_time = [NSString stringWithFormat:@"%@",dict2[@"start_time_str"]];
-                    NSString *end_time = [NSString stringWithFormat:@"%@",dict2[@"end_time_str"]];
+                    model.name=[NSString stringWithFormat:@"%@",dict2[@"name"]];
+                    model.pay_integer=[NSString stringWithFormat:@"%@",dict2[@"pay_integer"]];
+                    model.pay_maney=[NSString stringWithFormat:@"%@",dict2[@"pay_maney"]];
+                    model.scopeimg=[NSString stringWithFormat:@"%@",dict2[@"scopeimg"]];
+
                     //赋值
-                    model.attribute = [NSString stringWithFormat:@"%@",dict2[@"is_attribute"]];
+                    model.is_attribute = [NSString stringWithFormat:@"%@",dict2[@"is_attribute"]];
 
                     model.storename = [NSString stringWithFormat:@"%@",dict2[@"storename"]];
-                    
-                    model.amount=amount;
-                    model.id=id;
-                    model.good_type=good_type;
-                    model.name=name;
-                    model.pay_integer=pay_integer;
-                    model.pay_maney=pay_maney;
-                    model.scopeimg=scopeimg;
-                    model.status=status;
-                    model.stock=stock;
-                    
-                    if ([good_type isEqualToString:@"1"]) {
-                        
-                        model.start_time=start_time;
-                        model.end_time = end_time;
-                        
-                    }
 
                     [_datasArrM addObject:model];
 
@@ -338,10 +317,10 @@
             }else
             {
                 _lable.hidden=YES;
-                [_tableView.mj_header endRefreshing];
-                [_tableView.mj_footer endRefreshing];
+                [_collectionView.mj_header endRefreshing];
+                [_collectionView.mj_footer endRefreshing];
                 //刷新数据
-                [_tableView reloadData];
+                [_collectionView reloadData];
             }
             [hud dismiss:YES];
 
@@ -350,8 +329,8 @@
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
-        [_tableView.mj_header endRefreshing];
-        [_tableView.mj_footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
         [self NoWebSeveice];
         [hud dismiss:YES];
     }];
@@ -366,247 +345,122 @@
     [self getDatas];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - collectionView的代理方法
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (_datasArrM.count==0) {
-        return 0;
-    }else{
-        
-       return _datasArrM.count;
+    return _datasArrM.count;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!IsShowGongGe) {
+        return CGSizeMake(kScreenWidth, Width(145));
+    }else
+    {
+        CGFloat WWW=([UIScreen mainScreen].bounds.size.width-Width(18))/2;
+        CGFloat HHH=WWW+5*Height(7)+39+26+1+10;
+        return CGSizeMake(WWW, HHH);
     }
-    
+
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//最小行间距
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    if (_datasArrM.count==0) {
+    if (!IsShowGongGe) {
         return 0;
-    }else{
-        return ((kScreenHeight==812)?667:kScreenHeight)/3.5;
+    }else
+    {
+        return Width(6);
     }
-    
+}
+//最小行内部cell的间距
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    if (!IsShowGongGe) {
+        return 0;
+    }else
+    {
+        return Width(3);
+    }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//section的边距
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return 0.0000000001;
+
+    if (!IsShowGongGe) {
+        return UIEdgeInsetsMake(Width(10), 0, 0, 0  );
+    }
+    //上,左,下,右
+    else{
+        return UIEdgeInsetsMake(Width(10), Width(6), Width(6), Width(6));
+    }
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[UIView alloc]init];
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_datasArrM.count==0) {
-        
-        NoDataCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell3"];
-        
+    if (!IsShowGongGe) {
+        XLLookAllCollectionCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier1 forIndexPath:indexPath];
+        cell.model=_datasArrM[indexPath.row];
         return cell;
-        
-    }else{
-        
-        SearchResultModel *model=_datasArrM[indexPath.row];
-        
-        
-        
+    }else
+    {
+        XLShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+        AllSingleShoppingModel *model=_datasArrM[indexPath.row];
 
-            
-            YTSearchOtherCell *cell=[tableView dequeueReusableCellWithIdentifier:@"other"];
-            
-            cell.model=_datasArrM[indexPath.row];
-            
-            return cell;
-
-        
+        [cell1 SetDataWithImgUrl:model.scopeimg GoodsName:model.name StoreName:model.storename priceStr:model.pay_maney Interger:model.pay_integer stock:@"1"];
+        return cell1;
     }
 }
 
-//选择
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(_datasArrM.count==0){
-    
-    
-    }else{
-    SearchResultModel *model=_datasArrM[indexPath.row];
-    
-//    NewGoodsDetailViewController *vc=[[NewGoodsDetailViewController alloc] init];
-    
-        
+    AllSingleShoppingModel *model=_datasArrM[indexPath.row];
+
     YTGoodsDetailViewController *vc=[[YTGoodsDetailViewController alloc] init];
-    vc.ID=model.id;
-    vc.gid=model.id;
-    vc.good_type=model.good_type;
-    vc.status=model.status;
-        
-        NSLog(@"====YYYYYYYY=====%@",self.attribute);
-        
-    vc.attribute = model.attribute;
-        
-    vc.Attribute_back=@"3";
+    vc.good_type=model.type_name;
+    vc.gid=model.gid;
+    vc.type=@"1";
+    vc.attribute = model.is_attribute;
+    vc.ID=model.ID;
     [self.navigationController pushViewController:vc animated:NO];
-    
-    self.navigationController.navigationBar.hidden=YES;
-    }
-    
-    [self.view endEditing:YES];
-    
-}
-//返回
-- (IBAction)backBtnClick:(UIButton *)sender {
-    
-    self.searchResultTextField.text = @"";
-  //  self.tabBarController.tabBar.hidden=NO;
-    [self.navigationController popViewControllerAnimated:YES];
 
 }
-
-
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-        return 0.01;
-    
-}
-
-
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [[UIView alloc] init];
-}
-
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField.text.length == 0) {
-        
         [JRToast showWithText:@"输入的搜索内容不能为空!" duration:0.5f];
-        
-        
     }else{
         flag=1;
-        textField.returnKeyType=UIReturnKeySearch;
-        
-        textField.delegate=self;
-        
         _searchKeyWord=self.searchResultTextField.text;
-        
-        [_datasArrM removeAllObjects];
-
+        [self getDatas];
         if (_delegate &&[_delegate respondsToSelector:@selector(searchNewInformation:)]) {
             [_delegate searchNewInformation:_searchKeyWord];
         }
-
-        _lable.hidden = YES;
-        
-        [self getDatas];
-        
-        
-        WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-        
-        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
-        dispatch_after(time, dispatch_get_main_queue(), ^{
-            
-            
-            [hud dismiss:YES];
-            
-        });
-        
-        [_tableView reloadData];
-        
-        [textField resignFirstResponder];
-        
     }
-    
+    [textField resignFirstResponder];
     return YES;
-    
 }
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
-}
-
-
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    
-    if (textField.text.length==0) {
-        
-        [JRToast showWithText:@"输入的搜索内容不能为空!" duration:0.5f];
-        
-    }else{
-        
-        
-//        [SearchManager SearchText:textField.text];//缓存搜索记录
-//        [self readNSUserDefaults];
-//        
-//        
-//        [_myArrM addObject:textField.text];
-        
-        //---------------------------
-        NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-        NSArray * myArray = [userDefaultes arrayForKey:@"myArray"];
-        
-        if (myArray.count==0) {
-            
-            [SearchManager SearchText:textField.text];//缓存搜索记录
-            [self readNSUserDefaults];
-            
-            
-            [_myArrM addObject:textField.text];
-            
-        }else{
-            
-            
-            
-            if ([myArray containsObject:textField.text]) {
-                
-                NSLog(@"****相等*****");
-            }else{
-                NSLog(@"*****不相等****");
-                
-                [SearchManager SearchText:textField.text];//缓存搜索记录
-                [self readNSUserDefaults];
-                
-                
-                [_myArrM addObject:textField.text];
-                
-            }
-            
-        }
-        //----------------------------
-        
-        [_tableView reloadData];
-        
-        NSLog(@"搜索被点击了");
-        
+- (IBAction)clickGongGeBtn:(UIButton *)sender {
+    IsShowGongGe=!IsShowGongGe;
+    if (IsShowGongGe) {
+        [sender setImage:KImage(@"xl-btn-change") forState:UIControlStateNormal];
+    }else
+    {
+        [sender setImage:KImage(@"xl-btn-change2") forState:UIControlStateNormal];
     }
-//    if (textField.text.length > 0) {
-//        
-//        
-//        
-//    }else{
-//        NSLog(@"请输入查找内容");
-//    }
-////    textField.text = @"";
-}
-
--(void)readNSUserDefaults{//取出缓存的数据
-    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    //读取数组NSArray类型的数据
-    NSArray * myArray = [userDefaultes arrayForKey:@"myArray"];
-    self.myArray = myArray;
-    
-    for (NSString *str in self.myArray) {
-        [_deleteArrM addObject:str];
-    }
-    
-    [_tableView reloadData];
-    NSLog(@"myArray======%@",myArray);
+    [_collectionView reloadData];
 }
 
 
+//返回
+- (IBAction)backBtnClick:(UIButton *)sender {
+
+    //    self.searchResultTextField.text = @"";
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
 
 @end

@@ -12,14 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassifySearchViewController">
             <connections>
-                <outlet property="FenGeView" destination="uGP-4A-inj" id="fml-Hc-2Ht"/>
-                <outlet property="deleteAllBut" destination="IRE-n6-Ed8" id="WhJ-sH-ttZ"/>
-                <outlet property="lineView" destination="Ivc-5j-QP0" id="2Yb-cZ-X6e"/>
-                <outlet property="myTableView" destination="wDo-mN-Wli" id="tpP-8j-Aj0"/>
                 <outlet property="navView" destination="T02-gN-aks" id="Tjt-Eg-4aW"/>
-                <outlet property="searchJiLuLab" destination="xtw-Lr-guA" id="xxu-E7-aTv"/>
                 <outlet property="searchTextField" destination="PPE-WX-lgx" id="LXf-Ov-dVm"/>
-                <outlet property="topView" destination="Wty-sw-ts2" id="dTe-pc-Mo9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -44,8 +38,8 @@
                                 <constraint firstAttribute="height" constant="14" id="Ox7-zp-rsY"/>
                             </constraints>
                         </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您要搜索的商品名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PPE-WX-lgx">
-                            <rect key="frame" x="54" y="54" width="266" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您要搜索的商品名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PPE-WX-lgx">
+                            <rect key="frame" x="54" y="52" width="266" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="f2Z-s6-GT8"/>
                             </constraints>
@@ -77,7 +71,7 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="PPE-WX-lgx" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="54" id="11P-rf-Igd"/>
+                        <constraint firstItem="PPE-WX-lgx" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="52" id="11P-rf-Igd"/>
                         <constraint firstItem="2CD-Jz-53I" firstAttribute="leading" secondItem="PPE-WX-lgx" secondAttribute="trailing" constant="15" id="2fe-uj-LZi"/>
                         <constraint firstItem="Z8D-uM-zXy" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="61" id="7mu-WP-8Yj"/>
                         <constraint firstItem="2CD-Jz-53I" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="54" id="KY9-70-eyZ"/>
@@ -93,97 +87,13 @@
                         <constraint firstAttribute="height" constant="88" id="zGX-5q-Z5q"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wDo-mN-Wli">
-                    <rect key="frame" x="0.0" y="243" width="375" height="424"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="z4n-rF-9lu"/>
-                        <outlet property="delegate" destination="-1" id="XIM-ZI-Pfo"/>
-                    </connections>
-                </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wty-sw-ts2">
-                    <rect key="frame" x="0.0" y="64" width="375" height="179"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="热门搜索" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynB-wI-NOG">
-                            <rect key="frame" x="12" y="15" width="70" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="70" id="8G8-8z-xTp"/>
-                                <constraint firstAttribute="height" constant="20" id="AeK-XS-F4L"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搜索记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtw-Lr-guA">
-                            <rect key="frame" x="12" y="149" width="70" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="70" id="2Dl-90-Eap"/>
-                                <constraint firstAttribute="height" constant="20" id="lDL-Wa-UAI"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRE-n6-Ed8">
-                            <rect key="frame" x="298" y="149" width="65" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="7Fr-k4-eNu"/>
-                                <constraint firstAttribute="width" constant="65" id="BAr-Eq-PBr"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title=" 清空" image="xl-垃圾桶">
-                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="deleteAllSearch:" destination="-1" eventType="touchUpInside" id="CTc-C6-cTO"/>
-                            </connections>
-                        </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ivc-5j-QP0">
-                            <rect key="frame" x="0.0" y="178" width="375" height="1"/>
-                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="w2R-dE-JgJ"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uGP-4A-inj">
-                            <rect key="frame" x="0.0" y="129" width="375" height="10"/>
-                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="10" id="dG1-6q-7wI"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="IRE-n6-Ed8" secondAttribute="bottom" constant="10" id="4s1-RB-CyJ"/>
-                        <constraint firstAttribute="bottom" secondItem="Ivc-5j-QP0" secondAttribute="bottom" id="Jtg-Ih-j8K"/>
-                        <constraint firstAttribute="trailing" secondItem="uGP-4A-inj" secondAttribute="trailing" id="Mj7-yF-BfB"/>
-                        <constraint firstItem="ynB-wI-NOG" firstAttribute="leading" secondItem="Wty-sw-ts2" secondAttribute="leading" constant="12" id="Qqt-9K-jja"/>
-                        <constraint firstAttribute="bottom" secondItem="xtw-Lr-guA" secondAttribute="bottom" constant="10" id="Uxc-Mw-twd"/>
-                        <constraint firstAttribute="bottom" secondItem="uGP-4A-inj" secondAttribute="bottom" constant="40" id="iK3-Aa-1L3"/>
-                        <constraint firstItem="Ivc-5j-QP0" firstAttribute="leading" secondItem="Wty-sw-ts2" secondAttribute="leading" id="iKT-bx-S1f"/>
-                        <constraint firstItem="uGP-4A-inj" firstAttribute="leading" secondItem="Wty-sw-ts2" secondAttribute="leading" id="jOb-w7-d0W"/>
-                        <constraint firstAttribute="trailing" secondItem="Ivc-5j-QP0" secondAttribute="trailing" id="k4R-na-ULB"/>
-                        <constraint firstAttribute="trailing" secondItem="IRE-n6-Ed8" secondAttribute="trailing" constant="12" id="mPh-jN-4Rv"/>
-                        <constraint firstItem="ynB-wI-NOG" firstAttribute="top" secondItem="Wty-sw-ts2" secondAttribute="top" constant="15" id="tlf-hg-lfY"/>
-                        <constraint firstAttribute="height" constant="179" id="v1X-76-EcX"/>
-                        <constraint firstItem="xtw-Lr-guA" firstAttribute="leading" secondItem="Wty-sw-ts2" secondAttribute="leading" constant="12" id="vY5-8X-e3p"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="T02-gN-aks" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-24" id="3ob-11-qcy"/>
                 <constraint firstItem="T02-gN-aks" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3ve-cQ-xMo"/>
-                <constraint firstItem="wDo-mN-Wli" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9oW-ah-Uma"/>
                 <constraint firstAttribute="trailing" secondItem="T02-gN-aks" secondAttribute="trailing" id="HdT-mW-t1P"/>
-                <constraint firstItem="Wty-sw-ts2" firstAttribute="leading" secondItem="plW-XU-IU0" secondAttribute="leading" id="N49-tD-Ppl"/>
-                <constraint firstItem="Wty-sw-ts2" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="bottom" id="PXq-T5-G1R"/>
                 <constraint firstItem="T02-gN-aks" firstAttribute="top" secondItem="plW-XU-IU0" secondAttribute="top" priority="750" constant="-44" id="fLj-cj-QDs"/>
-                <constraint firstItem="wDo-mN-Wli" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="bottom" constant="179" id="i9S-dJ-0Kf"/>
-                <constraint firstItem="plW-XU-IU0" firstAttribute="trailing" secondItem="Wty-sw-ts2" secondAttribute="trailing" id="m8J-gd-39E"/>
-                <constraint firstAttribute="trailing" secondItem="wDo-mN-Wli" secondAttribute="trailing" id="qbL-hh-vOq"/>
-                <constraint firstAttribute="bottom" secondItem="wDo-mN-Wli" secondAttribute="bottom" id="u8H-88-fwt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="plW-XU-IU0"/>
             <point key="canvasLocation" x="297.5" y="266.5"/>
@@ -191,7 +101,6 @@
     </objects>
     <resources>
         <image name="xl-Search Icon" width="14" height="14"/>
-        <image name="xl-垃圾桶" width="16" height="16"/>
         <image name="搜索长框.png" width="250" height="28"/>
     </resources>
 </document>

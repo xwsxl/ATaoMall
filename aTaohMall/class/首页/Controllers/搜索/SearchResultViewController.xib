@@ -37,39 +37,52 @@
                             </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="搜索长框.png" translatesAutoresizingMaskIntoConstraints="NO" id="92K-Z8-MeL">
-                            <rect key="frame" x="60" y="49" width="285" height="30"/>
+                            <rect key="frame" x="47" y="49" width="281" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="CzZ-oJ-QbR"/>
                             </constraints>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="搜索" translatesAutoresizingMaskIntoConstraints="NO" id="b5v-7r-bwd">
-                            <rect key="frame" x="70" y="54" width="20" height="20"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xl-Search Icon" translatesAutoresizingMaskIntoConstraints="NO" id="b5v-7r-bwd">
+                            <rect key="frame" x="57" y="58" width="14" height="14"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="7u7-nz-2jX"/>
-                                <constraint firstAttribute="width" constant="20" id="ewm-Om-v7L"/>
+                                <constraint firstAttribute="height" constant="14" id="7u7-nz-2jX"/>
+                                <constraint firstAttribute="width" constant="14" id="ewm-Om-v7L"/>
                             </constraints>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WUO-ok-rX3">
-                            <rect key="frame" x="100" y="50" width="245" height="30"/>
+                            <rect key="frame" x="81" y="55" width="237" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="jpE-Z4-kNw"/>
+                                <constraint firstAttribute="height" constant="20" id="pW6-ht-FHu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXd-W2-Rkk">
+                            <rect key="frame" x="343" y="57" width="17" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="17" id="lFj-nW-r2A"/>
+                                <constraint firstAttribute="height" constant="17" id="svl-Py-rAm"/>
+                            </constraints>
+                            <state key="normal" image="xl-btn-change2"/>
+                            <connections>
+                                <action selector="clickGongGeBtn:" destination="-1" eventType="touchUpInside" id="i3O-7V-9jd"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="WUO-ok-rX3" firstAttribute="top" secondItem="i23-ah-UFN" secondAttribute="top" constant="50" id="0AB-Et-sTg"/>
-                        <constraint firstItem="92K-Z8-MeL" firstAttribute="leading" secondItem="wPD-kO-eUt" secondAttribute="trailing" constant="20" id="AxG-th-6ov"/>
-                        <constraint firstAttribute="trailing" secondItem="WUO-ok-rX3" secondAttribute="trailing" constant="30" id="Dhr-Lr-mHK"/>
-                        <constraint firstItem="b5v-7r-bwd" firstAttribute="leading" secondItem="wPD-kO-eUt" secondAttribute="trailing" constant="30" id="EZ5-kK-a8H"/>
-                        <constraint firstItem="b5v-7r-bwd" firstAttribute="top" secondItem="i23-ah-UFN" secondAttribute="top" constant="54" id="HS9-ww-bl8"/>
+                        <constraint firstAttribute="trailing" secondItem="oXd-W2-Rkk" secondAttribute="trailing" constant="15" id="2l6-nf-buz"/>
+                        <constraint firstAttribute="bottom" secondItem="oXd-W2-Rkk" secondAttribute="bottom" constant="14" id="6tD-Cf-gOy"/>
+                        <constraint firstItem="92K-Z8-MeL" firstAttribute="leading" secondItem="i23-ah-UFN" secondAttribute="leading" constant="47" id="AxG-th-6ov"/>
+                        <constraint firstItem="b5v-7r-bwd" firstAttribute="leading" secondItem="92K-Z8-MeL" secondAttribute="leading" constant="10" id="EZ5-kK-a8H"/>
+                        <constraint firstItem="b5v-7r-bwd" firstAttribute="top" secondItem="92K-Z8-MeL" secondAttribute="top" constant="9" id="HS9-ww-bl8"/>
                         <constraint firstItem="wPD-kO-eUt" firstAttribute="leading" secondItem="i23-ah-UFN" secondAttribute="leading" constant="10" id="QUV-V8-Kei"/>
+                        <constraint firstItem="WUO-ok-rX3" firstAttribute="top" secondItem="92K-Z8-MeL" secondAttribute="top" constant="6" id="RAe-4c-oJN"/>
                         <constraint firstItem="wPD-kO-eUt" firstAttribute="top" secondItem="i23-ah-UFN" secondAttribute="top" constant="50" id="SFt-qQ-w7r"/>
+                        <constraint firstItem="WUO-ok-rX3" firstAttribute="leading" secondItem="92K-Z8-MeL" secondAttribute="leading" constant="34" id="ZIs-f0-CjP"/>
+                        <constraint firstItem="92K-Z8-MeL" firstAttribute="trailing" secondItem="WUO-ok-rX3" secondAttribute="trailing" constant="10" id="dxT-s6-GOZ"/>
                         <constraint firstItem="92K-Z8-MeL" firstAttribute="top" secondItem="i23-ah-UFN" secondAttribute="top" constant="49" id="obY-dp-GwL"/>
-                        <constraint firstAttribute="trailing" secondItem="92K-Z8-MeL" secondAttribute="trailing" constant="30" id="r9d-8o-dW1"/>
-                        <constraint firstItem="WUO-ok-rX3" firstAttribute="leading" secondItem="b5v-7r-bwd" secondAttribute="trailing" constant="10" id="tIH-yw-Vi5"/>
+                        <constraint firstAttribute="trailing" secondItem="92K-Z8-MeL" secondAttribute="trailing" constant="47" id="r9d-8o-dW1"/>
                         <constraint firstAttribute="height" constant="88" id="uNz-1z-Jf4"/>
                     </constraints>
                 </view>
@@ -82,7 +95,7 @@
                 <constraint firstItem="i23-ah-UFN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ozV-ma-Kmh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="0Wb-Zx-m5L"/>
-            <point key="canvasLocation" x="130" y="366"/>
+            <point key="canvasLocation" x="129.5" y="365.5"/>
         </view>
         <searchDisplayController id="Eut-C4-6pu">
             <connections>
@@ -95,7 +108,8 @@
     </objects>
     <resources>
         <image name="iconfont-fanhui2副本.png" width="22" height="22"/>
-        <image name="搜索" width="12" height="12"/>
+        <image name="xl-Search Icon" width="14" height="14"/>
+        <image name="xl-btn-change2" width="17" height="17"/>
         <image name="搜索长框.png" width="250" height="28"/>
     </resources>
 </document>
