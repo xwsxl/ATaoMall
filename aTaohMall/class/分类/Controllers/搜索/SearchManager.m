@@ -27,7 +27,7 @@
         [searTXT removeObject:seaTxt];
     }
     [searTXT addObject:seaTxt];
-    while (searTXT.count>12) {
+    while (searTXT.count>10) {
         [searTXT removeObjectAtIndex:0];
     }
     //将上述数据全部存储到NSUserDefaults中
