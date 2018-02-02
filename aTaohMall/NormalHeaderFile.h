@@ -17,7 +17,6 @@
 #define KNotificationCenter [NSNotificationCenter defaultCenter]
 #define KDeviceID [[UIDevice currentDevice].identifierForVendor UUIDString] //设备唯一标识
 #define CurrentSystemVersion [[[UIDevice currentDevice] systemVersion] floatValue] //获取系统版本
-#define MYID [[NSString alloc] initWithString:[[[UIDevice currentDevice] identifierForVendor]UUIDString]]
 /*********************** 版本号 *********************/
 #define kVersion_ATH [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 #define kVersionBuild_ATH [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]

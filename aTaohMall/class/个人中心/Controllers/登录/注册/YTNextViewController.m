@@ -564,12 +564,14 @@
     
 //    NSString *strUser = self.userNameTF.text;
 //    NSString *strPassword = self.againUserPassWordTF.text;
-    
-    NSString *strMYID = [NSString stringWithFormat:@"%@",MYID];
+
+
+    NSString *strMYID = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor].UUIDString];
     
     NSDictionary *dic = @{@"username":self.userName,@"password":self.userPassWord,@"imei":strMYID,@"phone":self.self.YTUserNameTF.text,@"uid":self.uid,@"mid":self.mid};
     
     NSString *url = [NSString stringWithFormat:@"%@registered_mob.shtml",URL_Str];
+    YLog(@"%@",dic);
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
