@@ -87,6 +87,7 @@
     
 }
 @property (nonatomic,strong)NSMutableArray *DataSource;
+@property (nonatomic,strong)NSMutableArray *statusArray;
 @property (nonatomic,strong)ClassifyModel *DataModel;
 @property (nonatomic,strong)NSMutableArray *RemenFenLeiArray;
 
@@ -211,6 +212,9 @@
                 model.name=@"为你推荐";
                 model.GoodsId=@"";
                 [_datasArray addObject:model];
+                self.statusArray=[[NSMutableArray alloc] init];
+                [self.statusArray addObject:@"0"];
+                [self.DataSource addObject:@[]];
                 for (NSDictionary *dic1 in dic[@"list1"]) {
 
                     ClassifyModel *model=[[ClassifyModel alloc] init];
@@ -218,7 +222,8 @@
                     model.GoodsId=dic1[@"id"];
 
                     [_datasArray addObject:model];
-
+                    [self.statusArray addObject:@"0"];
+                    [self.DataSource addObject:@[]];
                 }
                 [self initScollview];
             }
@@ -268,9 +273,10 @@
                 NSMutableArray *temp=[[NSMutableArray alloc] init];
                 for (NSDictionary *dic1 in dic[@"list"]) {
                     ClassifyModel *model=[[ClassifyModel alloc] init];
+                    NSMutableArray *temp1=[[NSMutableArray alloc] init];
                     model.GoodsId=dic1[@"id"];
                     model.name=dic1[@"name"];
-                    NSMutableArray *temp1=[[NSMutableArray alloc] init];
+
                     for (NSDictionary *dict4 in dic1[@"goodsList"]) {
                         goodListModel *model=[[goodListModel alloc] init];
 
@@ -320,7 +326,8 @@
                     [HeaderIV addGestureRecognizer:tap];
                     [HeaderIV sd_setImageWithURL:KNSURL(model.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
                 }
-                [self.DataSource addObject:model];
+                [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
+                [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
             }
         }
         _tableView.hidden=NO;
@@ -385,7 +392,10 @@
                 }
                 model.SmallClass_list=[self GetReMenFenleiArrayWith:nil];
                 _DataModel=model;
+                [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
+                [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
                 [self initReMenFenlei];
+
             }
 
         }
@@ -860,6 +870,15 @@
  */
 -(void)selectIndex:(NSInteger )index
 {
+
+    if(selectIndex==index)
+    {
+        return;
+    }
+
+
+
+
     selectIndex=index;
     for (NSInteger i = 0; i <_datasArray.count; i ++) {
         UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
@@ -871,6 +890,21 @@
         [_slidView setFrame:CGRectMake(0, bheight*selectIndex+(bheight-20)/2, 3, 20)];
     }
 
+    if([_statusArray[selectIndex] isEqualToString:@"1"])
+    {
+        _DataModel=self.DataSource[selectIndex];
+        if(selectIndex==0)
+        {
+            [self initReMenFenlei];
+        }else
+        {
+            _tableView.hidden=NO;
+            _RemenScroll.hidden=YES;
+            [_tableView reloadData];
+        }
+
+    }else
+    {
     if (selectIndex==0) {
         [self getForYouSelectData];
     }else
@@ -878,6 +912,7 @@
     ClassifyModel *model=_datasArray[selectIndex];
     self.classId=model.GoodsId;
     [self getRightSencondCateData];
+    }
     }
 }
 /*
