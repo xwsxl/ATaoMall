@@ -12,8 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassifySearchViewController">
             <connections>
+                <outlet property="cancleBut" destination="2CD-Jz-53I" id="PgH-As-sox"/>
                 <outlet property="navView" destination="T02-gN-aks" id="Tjt-Eg-4aW"/>
-                <outlet property="searchTextField" destination="PPE-WX-lgx" id="LXf-Ov-dVm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,28 +25,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T02-gN-aks">
                     <rect key="frame" x="0.0" y="-24" width="375" height="88"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="搜索长框.png" translatesAutoresizingMaskIntoConstraints="NO" id="bvz-IY-UYY">
-                            <rect key="frame" x="15" y="51" width="305" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="lVY-lK-X6y"/>
-                            </constraints>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xl-Search Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Z8D-uM-zXy">
-                            <rect key="frame" x="30" y="61" width="14" height="14"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="14" id="J7O-Ps-g8r"/>
-                                <constraint firstAttribute="height" constant="14" id="Ox7-zp-rsY"/>
-                            </constraints>
-                        </imageView>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您要搜索的商品名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PPE-WX-lgx">
-                            <rect key="frame" x="54" y="52" width="266" height="30"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="f2Z-s6-GT8"/>
-                            </constraints>
-                            <color key="textColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2CD-Jz-53I">
                             <rect key="frame" x="335" y="54" width="30" height="30"/>
                             <constraints>
@@ -71,19 +49,11 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="PPE-WX-lgx" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="52" id="11P-rf-Igd"/>
-                        <constraint firstItem="2CD-Jz-53I" firstAttribute="leading" secondItem="PPE-WX-lgx" secondAttribute="trailing" constant="15" id="2fe-uj-LZi"/>
-                        <constraint firstItem="Z8D-uM-zXy" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="61" id="7mu-WP-8Yj"/>
                         <constraint firstItem="2CD-Jz-53I" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="54" id="KY9-70-eyZ"/>
                         <constraint firstAttribute="trailing" secondItem="LEr-MM-0Aa" secondAttribute="trailing" id="LMT-7y-K8x"/>
-                        <constraint firstItem="bvz-IY-UYY" firstAttribute="leading" secondItem="T02-gN-aks" secondAttribute="leading" constant="15" id="XNg-3y-ta5"/>
                         <constraint firstAttribute="bottom" secondItem="LEr-MM-0Aa" secondAttribute="bottom" id="cgm-hL-HdG"/>
-                        <constraint firstItem="PPE-WX-lgx" firstAttribute="leading" secondItem="Z8D-uM-zXy" secondAttribute="trailing" constant="10" id="ev5-gi-b5d"/>
                         <constraint firstItem="LEr-MM-0Aa" firstAttribute="leading" secondItem="T02-gN-aks" secondAttribute="leading" id="fuF-o2-KCl"/>
-                        <constraint firstItem="2CD-Jz-53I" firstAttribute="leading" secondItem="bvz-IY-UYY" secondAttribute="trailing" constant="15" id="m03-ZJ-CW8"/>
                         <constraint firstAttribute="trailing" secondItem="2CD-Jz-53I" secondAttribute="trailing" constant="10" id="v54-0k-pck"/>
-                        <constraint firstItem="Z8D-uM-zXy" firstAttribute="leading" secondItem="T02-gN-aks" secondAttribute="leading" constant="30" id="vdF-02-dkd"/>
-                        <constraint firstItem="bvz-IY-UYY" firstAttribute="top" secondItem="T02-gN-aks" secondAttribute="top" constant="51" id="yPj-K1-hcI"/>
                         <constraint firstAttribute="height" constant="88" id="zGX-5q-Z5q"/>
                     </constraints>
                 </view>
@@ -99,8 +69,4 @@
             <point key="canvasLocation" x="297.5" y="266.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="xl-Search Icon" width="14" height="14"/>
-        <image name="搜索长框.png" width="250" height="28"/>
-    </resources>
 </document>

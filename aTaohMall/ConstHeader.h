@@ -113,7 +113,7 @@ static NSString *const VERSION_INFO_CURRENT=@"Version_info_current";
 //获取订单状态
 static NSString *const JMSHTGetOrderStatusStr=@"getOrderStatus_mob.shtml";
 
-static BOOL ISTEXTPRICE=NO;
+static BOOL ISTEXTPRICE=YES;
 
 #endif
 
