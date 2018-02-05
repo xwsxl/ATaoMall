@@ -381,6 +381,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
                 [but setTitle:str forState:UIControlStateNormal];
                 [but addTarget:self action:@selector(clickReMen:) forControlEvents:UIControlEventTouchUpInside];
                 but.tag=2400+i;
+                but.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);//上，左，下，右
+
                 [but.layer setCornerRadius:3];
                 [but setBackgroundColor:RGB(245, 245, 245)];
                 [but setTitleColor:RGB(74, 74, 74) forState:UIControlStateNormal];
@@ -396,7 +398,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
                 UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(0, height+20, kScreen_Width, 14)];
                 lab.font=KNSFONT(14);
                 lab.textColor=RGB(155, 155, 155);
-                lab.text=@"当前发现已隐藏";
+                lab.text=@"当前搜索发现已隐藏";
             lab.textAlignment=NSTextAlignmentCenter;
                 [_scroll addSubview:lab];
             height+=20+14+20;
@@ -420,13 +422,29 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 }
 //删除全部
 - (void)deleteAllSearch:(id)sender {
-    [UIAlertTools showAlertWithTitle:nil message:@"确定删除全部历史搜索记录？" cancelTitle:@"取消" titleArray:@[] viewController:self confirm:^(NSInteger buttonTag) {
-        if (buttonTag==0) {
-            [SearchManager removeAllArray];
-            _searchHistoryArr=@[];
-            [self initScrollView];
-        }
+
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:nil message:@"确定删除全部历史搜索记录？" preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [SearchManager removeAllArray];
+        _searchHistoryArr=@[];
+        [self initScrollView];
+    }]];
+    [self presentViewController:alert animated:YES completion:^{
+
     }];
+//
+//
+//    [UIAlertTools showAlertWithTitle:nil message:@"确定删除全部历史搜索记录？" cancelTitle:@"取消" titleArray:@[] viewController:self confirm:^(NSInteger buttonTag) {
+//        if (buttonTag==0) {
+//            [SearchManager removeAllArray];
+//            _searchHistoryArr=@[];
+//            [self initScrollView];
+//        }
+//    }];
 
 }
 
@@ -719,7 +737,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
         UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,(kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2+100, [UIScreen mainScreen].bounds.size.width, 20)];
         _lable.font=KNSFONT(15);
-        _lable.text = @"没有您要搜索的相关商品";
+        _lable.text = @"抱歉，没有搜索到相关商品~";
         _lable.tag = 100;
         _lable.textColor = [UIColor lightGrayColor];
         _lable.textAlignment = NSTextAlignmentCenter;
@@ -817,7 +835,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
     YTGoodsDetailViewController *vc=[[YTGoodsDetailViewController alloc] init];
     vc.good_type=model.type_name;
-    vc.gid=model.gid;
+    vc.gid=model.ID;
     vc.type=@"1";
     vc.attribute = model.is_attribute;
     vc.ID=model.ID;
