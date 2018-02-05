@@ -45,7 +45,7 @@
 
 #import "YTSearchOtherCell.h"
 
-#import "XLShoppingCollectionCell.h"
+#import "XLSingleLineShoppingCollectionCell.h"
 #import "AllSingleShoppingModel.h"
 #import "XLLookAllCollectionCell.h"
 
@@ -135,7 +135,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     _collectionView.showsVerticalScrollIndicator=NO;
     _collectionView.delegate=self;
     _collectionView.dataSource=self;
-    [_collectionView registerClass:[XLShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [_collectionView registerClass:[XLSingleLineShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [_collectionView registerClass:[XLLookAllCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier1];
 
     [self.view addSubview:_collectionView];
@@ -358,7 +358,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     }else
     {
         CGFloat WWW=([UIScreen mainScreen].bounds.size.width-Width(18))/2;
-        CGFloat HHH=WWW+5*Height(7)+39+26+1+10;
+        CGFloat HHH=WWW+5*Height(7)+15+26+1+10;
         return CGSizeMake(WWW, HHH);
     }
 
@@ -406,10 +406,10 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
         return cell;
     }else
     {
-        XLShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+        XLSingleLineShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
         AllSingleShoppingModel *model=_datasArrM[indexPath.row];
+        cell1.model=model;
 
-        [cell1 SetDataWithImgUrl:model.scopeimg GoodsName:model.name StoreName:model.storename priceStr:model.pay_maney Interger:model.pay_integer stock:@"1"];
         return cell1;
     }
 }
