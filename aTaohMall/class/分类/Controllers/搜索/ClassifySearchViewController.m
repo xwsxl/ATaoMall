@@ -224,8 +224,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     
     self.searchBackView.frame=CGRectMake(15, 51, kScreen_Width-30-30-10, 32);
     self.searchIcon1.frame=CGRectMake(30, 61, 14, 14);
-    self.searchTextField.frame=CGRectMake(30+14+5, 60, kScreen_Width-30-14-5-30-15-10-15, 16);
+    self.searchTextField.frame=CGRectMake(30+14+5, 58, kScreen_Width-30-14-5-30-15-10-15, 20);
     self.searchTextField.placeholder=@"请输入你要搜索的商品名称";
+    self.searchTextField.clearButtonMode=UITextFieldViewModeAlways;
     [self.searchTextField addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventEditingChanged];
     self.searchTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
     self.searchTextField.delegate = self;
@@ -731,15 +732,15 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
         [self.view addSubview:nodataView];
         nodataView.backgroundColor=[UIColor whiteColor];
 
-        UIImageView *IV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreen_Width-90)/2, (kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2, 90, 90)];
+        UIImageView *IV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreen_Width-90)/2, (kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2-KSafeAreaTopNaviHeight, 90, 90)];
         IV.image=[UIImage imageNamed:@"xl-img-empty"];
         [nodataView addSubview:IV];
 
-        UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,(kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2+100, [UIScreen mainScreen].bounds.size.width, 20)];
+        UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,(kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2+100-KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, 20)];
         _lable.font=KNSFONT(15);
         _lable.text = @"抱歉，没有搜索到相关商品~";
         _lable.tag = 100;
-        _lable.textColor = [UIColor lightGrayColor];
+        _lable.textColor =RGB(74,74,74);
         _lable.textAlignment = NSTextAlignmentCenter;
         [nodataView addSubview:_lable];
     }else
