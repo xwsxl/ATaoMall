@@ -45,7 +45,7 @@
 #import "NoMoreDataCell.h"
 #import "JDSelectAnctionViewController.h"//筛选动画
 
-#import "XLShoppingCollectionCell.h"
+#import "XLSingleLineShoppingCollectionCell.h"
 #import "AllSingleShoppingModel.h"
 #import "XLLookAllCollectionCell.h"
 
@@ -311,7 +311,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 {
     titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, KSafeAreaTopNaviHeight)];
 
-    titleView.backgroundColor = [UIColor whiteColor];
+    titleView.backgroundColor = RGB(250, 250, 250);
 
     [self.view addSubview:titleView];
 
@@ -395,8 +395,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     //    selectLabelImgView.image = [UIImage imageNamed:@""];
     //    selectImgView.image = [UIImage imageNamed:@"筛选"];
     soldLabel.textColor=[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0];
-    newLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
-    priceLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    newLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    priceLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     //    selectLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
 
 
@@ -434,9 +434,9 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     priceselectImgView.image = [UIImage imageNamed:@"升降序"];
     //    selectLabelImgView.image = [UIImage imageNamed:@""];
     //    selectImgView.image = [UIImage imageNamed:@"筛选"];
-    soldLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    soldLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     newLabel.textColor=[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0];
-    priceLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    priceLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     //    selectLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
 
     self.type=@"5";
@@ -511,8 +511,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
     //    selectLabelImgView.image = [UIImage imageNamed:@""];
     //    selectImgView.image = [UIImage imageNamed:@"筛选"];
-    soldLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
-    newLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
+    soldLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    newLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
     priceLabel.textColor=[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0];
     //    selectLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
 
@@ -570,7 +570,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     soldLabel.text =@"销量";
     soldLabel.textAlignment=NSTextAlignmentCenter;
     soldLabel.textColor=[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0];
-    soldLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+    soldLabel.font = KNSFONT(15);
     [sold addSubview:soldLabel];
 
 //    soldImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
@@ -589,8 +589,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     newLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 12, Weight, 20)];
     newLabel.text =@"最新";
     newLabel.textAlignment=NSTextAlignmentCenter;
-    newLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
-    newLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+    newLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    newLabel.font = KNSFONT(15);
     [new addSubview:newLabel];
 
 //    newImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2, 42, 50, 2)];
@@ -611,8 +611,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 12, Weight, 20)];
     priceLabel.text =@"价格";
     priceLabel.textAlignment=NSTextAlignmentCenter;
-    priceLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
-    priceLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+    priceLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    priceLabel.font = KNSFONT(15);
     [price addSubview:priceLabel];
 
 //    priceLabelImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2+5, 42, 50, 2)];
@@ -638,8 +638,8 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     selectLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 12, Weight, 20)];
     selectLabel.text =@"筛选";
     selectLabel.textAlignment=NSTextAlignmentCenter;
-    selectLabel.textColor=[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0];
-    selectLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:14];
+    selectLabel.textColor=[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+    selectLabel.font = KNSFONT(15);
     [select addSubview:selectLabel];
 
     selectLabelImgView = [[UIImageView alloc] initWithFrame:CGRectMake((Weight-50)/2+5, 42, 50, 2)];
@@ -671,7 +671,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     _collectionView.showsVerticalScrollIndicator=NO;
     _collectionView.delegate=self;
     _collectionView.dataSource=self;
-    [_collectionView registerClass:[XLShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [_collectionView registerClass:[XLSingleLineShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [_collectionView registerClass:[XLLookAllCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier1];
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
@@ -743,7 +743,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     }else
     {
     CGFloat WWW=([UIScreen mainScreen].bounds.size.width-Width(18))/2;
-    CGFloat HHH=WWW+5*Height(7)+39+26+1+10;
+    CGFloat HHH=WWW+5*Height(7)+14+26+1+10;
     return CGSizeMake(WWW, HHH);
     }
 
@@ -791,10 +791,10 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
         return cell;
     }else
     {
-    XLShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    XLSingleLineShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     AllSingleShoppingModel *model=_datas[indexPath.row];
 
-    [cell1 SetDataWithImgUrl:model.scopeimg GoodsName:model.name StoreName:model.storename priceStr:model.pay_maney Interger:model.pay_integer stock:@"1"];
+        cell1.model=model;
     return cell1;
     }
 }
