@@ -32,5 +32,5 @@
 @property (assign, nonatomic) CGFloat width;
 
 @property (assign, nonatomic) id<AF_ScreeningViewControllerDelegate> delegate;
-
+-(void)SureBtnClick;
 @end

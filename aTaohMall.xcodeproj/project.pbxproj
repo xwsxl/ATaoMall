@@ -1712,6 +1712,7 @@
 		DB952F831FC400FE0012CF08 /* XLRedNaviView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB952F821FC400FE0012CF08 /* XLRedNaviView.m */; };
 		DB9E09C01FCE457F00AAB808 /* BMSingleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9E09BF1FCE457F00AAB808 /* BMSingleModel.m */; };
 		DB9E09C31FCE520400AAB808 /* PersonalBMDanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9E09C21FCE520400AAB808 /* PersonalBMDanCell.m */; };
+		DB9F02D9202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F02D8202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.m */; };
 		DBAC7B6F2015C14A00B78964 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC7B6E2015C14900B78964 /* Security.framework */; };
 		DBAC7B722015C18D00B78964 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC7B712015C18D00B78964 /* Bugly.framework */; };
 		DBAE5F1F1FD81108009E43CC /* ConsultNounVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DBAE5F1E1FD81108009E43CC /* ConsultNounVC.m */; };
@@ -4376,6 +4377,8 @@
 		DB9E09BF1FCE457F00AAB808 /* BMSingleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMSingleModel.m; sourceTree = "<group>"; };
 		DB9E09C11FCE520400AAB808 /* PersonalBMDanCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalBMDanCell.h; sourceTree = "<group>"; };
 		DB9E09C21FCE520400AAB808 /* PersonalBMDanCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalBMDanCell.m; sourceTree = "<group>"; };
+		DB9F02D7202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLSingleLineShoppingCollectionCell.h; sourceTree = "<group>"; };
+		DB9F02D8202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLSingleLineShoppingCollectionCell.m; sourceTree = "<group>"; };
 		DBAC7B6E2015C14900B78964 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DBAC7B712015C18D00B78964 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		DBAE5F1D1FD81108009E43CC /* ConsultNounVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConsultNounVC.h; sourceTree = "<group>"; };
@@ -9078,12 +9081,14 @@
 		DB6BAE6120202221005D54BE /* 海外购物佳 */ = {
 			isa = PBXGroup;
 			children = (
-				DB6BAE6220202221005D54BE /* AllSingleShoppingModel.m */,
+				DB6BAE6620202221005D54BE /* HomeAbroadShoppingVC.h */,
 				DB6BAE6320202221005D54BE /* HomeAbroadShoppingVC.m */,
 				DB6BAE6420202221005D54BE /* XLShoppingCollectionCell.h */,
-				DB6BAE6520202221005D54BE /* AllSingleShoppingModel.h */,
-				DB6BAE6620202221005D54BE /* HomeAbroadShoppingVC.h */,
 				DB6BAE6720202221005D54BE /* XLShoppingCollectionCell.m */,
+				DB6BAE6520202221005D54BE /* AllSingleShoppingModel.h */,
+				DB6BAE6220202221005D54BE /* AllSingleShoppingModel.m */,
+				DB9F02D7202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.h */,
+				DB9F02D8202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.m */,
 			);
 			name = "海外购物佳";
 			path = "../../../../../备份/ATaoMall-优化/aTaohMall/class/首页/Controllers/海外购物佳";
@@ -11739,6 +11744,7 @@
 				723584351DDC2EBC0041E1C0 /* ZQCountDownView.m in Sources */,
 				727D60611D30A41D0062BE73 /* GoodsDetailCell.m in Sources */,
 				727D5F2D1D30A41D0062BE73 /* CollectionReusableHeadrView.m in Sources */,
+				DB9F02D9202860B100A9D9C9 /* XLSingleLineShoppingCollectionCell.m in Sources */,
 				727D608E1D30A41D0062BE73 /* ChunJiFenCell.m in Sources */,
 				72C36E681EC57BC300DE252F /* CheXingCell.m in Sources */,
 				DB35FD901FC65A7700677584 /* UIPasteboard+YYText.m in Sources */,

@@ -14,6 +14,7 @@
 @interface JDSelectAnctionViewController ()<AF_ScreeningViewControllerDelegate>
 {
     UIWindow *window;
+    JD_ScreeningViewController * rvc;
 }
 @end
 
@@ -38,14 +39,14 @@
     // Do any additional setup after loading the view.
     
     /** 点击视图关闭window */
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissWindow)];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickWindow)];
     [self.view addGestureRecognizer:tap];
     
     /** 加载window */
     window = [[UIWindow alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width, 0, offset, [UIScreen mainScreen].bounds.size.height)];
     //window.windowLevel =  UIWindowLevelStatusBar + 1;//此设置遮蔽状态栏
     window.hidden = NO;
-    JD_ScreeningViewController * rvc = [[JD_ScreeningViewController alloc] init];
+    rvc = [[JD_ScreeningViewController alloc] init];
     rvc.width = offset;
     rvc.delegate = self;
     window.rootViewController = rvc;
@@ -58,6 +59,11 @@
     }];
     
     
+}
+
+-(void)clickWindow
+{
+    [rvc SureBtnClick];
 }
 
 #pragma mark - AF_ScreeningViewController 代理

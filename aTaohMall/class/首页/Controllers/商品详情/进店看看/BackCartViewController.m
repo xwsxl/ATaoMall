@@ -2623,7 +2623,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotification:notification];
         
-        [self.navigationController popViewControllerAnimated:YES];
+
         
         
     }else if ([self.BackString isEqualToString:@"200"]){
@@ -2643,31 +2643,20 @@
         [[NSNotificationCenter defaultCenter] postNotification:notionfication];
         
         
-        for(UIViewController *vc in vcArray)
-        {
-            if ([vc isKindOfClass:[YTGoodsDetailViewController class]]){
-                
-                
-                self.navigationController.navigationBar.hidden=YES;
-                self.tabBarController.tabBar.hidden=YES;
-                
-                [self.navigationController popToViewController:vc animated:NO];
-                
-            }else{
-                
-                [self.navigationController popToRootViewControllerAnimated:NO];
-            }
-        }
+
         
-    }else{
-        
-        
-        NSLog(@"88888888");
-        
-        [self.navigationController popViewControllerAnimated:YES];
     }
-    
-    
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if ([vc isKindOfClass:[YTGoodsDetailViewController class]]){
+
+            self.navigationController.navigationBar.hidden=YES;
+            self.tabBarController.tabBar.hidden=YES;
+            [self.navigationController popToViewController:vc animated:NO];
+            return;
+        }
+    }
+     [self.navigationController popViewControllerAnimated:NO];
 }
 
 -(void)NewbackBtnClick
