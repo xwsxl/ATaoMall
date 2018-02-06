@@ -326,10 +326,11 @@
                     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
                     HeaderIV.userInteractionEnabled=YES;
 
-                    HeaderIV.layer.cornerRadius=2;
-                    tap.numberOfTapsRequired=1;
+                   tap.numberOfTapsRequired=1;
                     [HeaderIV addGestureRecognizer:tap];
                     [HeaderIV sd_setImageWithURL:KNSURL(model.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
+                    HeaderIV.layer.cornerRadius=5;
+
                 }
                 [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
                 [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
@@ -539,11 +540,12 @@
     if (!([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"])) {
         UIImageView *headerIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
-        headerIV.layer.cornerRadius=2;
+
         headerIV.userInteractionEnabled=YES;
         tap.numberOfTapsRequired=1;
         [headerIV addGestureRecognizer:tap];
         [headerIV sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
+        headerIV.layer.cornerRadius=5;
         [_RemenScroll addSubview:headerIV];
         height +=15+(kScreenWidth-Width(80)-30)*96/264.0;
     }
