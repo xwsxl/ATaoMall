@@ -316,8 +316,8 @@
                 YLog(@"%@",model.logo1);
                 if ([model.logo1 isEqualToString:@""]||[model.logo1 containsString:@"null"]) {
                     HeaderIV.frame=CGRectZero;
-                    headerView1.frame=CGRectZero;
-                    //_tableView.tableHeaderView=nil;
+                    headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
+                    [_tableView setTableHeaderView:headerView1];// 关键是这句话
                 }else
                 {
 
@@ -514,7 +514,9 @@
     [_tableView registerClass:[NewClassifyHeaderView class] forHeaderFooterViewReuseIdentifier:@"hedaer"];
 
     [_tableView registerNib:[UINib nibWithNibName:@"FenLeiHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"FenLeiHeaderView"];
-
+    _tableView.estimatedRowHeight=0;
+    _tableView.estimatedSectionFooterHeight=0;
+    _tableView.estimatedSectionHeaderHeight=0;
     headerView1=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width-Width(80), (kScreenWidth-Width(80)-30)*96/264.0+15)];
 
     HeaderIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
@@ -910,6 +912,24 @@
             [self initReMenFenlei];
         }else
         {
+            if ([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"]) {
+                HeaderIV.frame=CGRectZero;
+                headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
+                [_tableView setTableHeaderView:headerView1];// 关键是这句话
+            }else
+            {
+
+                headerView1.frame=CGRectMake(0, 0, kScreen_Width-Width(80), (kScreenWidth-Width(80)-30)*96/264.0+15);
+                HeaderIV.frame=CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0);
+                UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
+                HeaderIV.userInteractionEnabled=YES;
+
+                HeaderIV.layer.cornerRadius=2;
+                tap.numberOfTapsRequired=1;
+                [HeaderIV addGestureRecognizer:tap];
+                [HeaderIV sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
+                [_tableView setTableHeaderView:headerView1];
+            }
             _tableView.hidden=NO;
             _RemenScroll.hidden=YES;
             [_tableView reloadData];
