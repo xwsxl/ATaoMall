@@ -318,12 +318,13 @@
                 <constraint firstAttribute="trailing" secondItem="Dlk-u9-mUA" secondAttribute="trailing" id="ezv-T4-7qD"/>
                 <constraint firstItem="xt1-jS-KEq" firstAttribute="top" secondItem="Hpf-oA-BPq" secondAttribute="bottom" id="f21-VF-hQL"/>
                 <constraint firstAttribute="trailing" secondItem="Hpf-oA-BPq" secondAttribute="trailing" id="g7A-73-Vak"/>
-                <constraint firstItem="UI8-Wu-M8g" firstAttribute="top" secondItem="Htt-da-HPd" secondAttribute="top" constant="-44" id="h8K-cC-VRR"/>
+                <constraint firstItem="UI8-Wu-M8g" firstAttribute="top" secondItem="Htt-da-HPd" secondAttribute="top" priority="750" constant="-44" id="h8K-cC-VRR"/>
                 <constraint firstItem="5gd-5P-aUc" firstAttribute="top" secondItem="KSu-Sq-VOB" secondAttribute="bottom" id="hud-1k-9RL"/>
                 <constraint firstAttribute="trailing" secondItem="KSu-Sq-VOB" secondAttribute="trailing" id="j08-FR-Ef0"/>
                 <constraint firstItem="TTQ-P8-pKy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jIm-lw-q5X"/>
                 <constraint firstItem="Hpf-oA-BPq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lhG-Vg-dD5"/>
                 <constraint firstItem="nwC-Mt-bwS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="mSm-af-aeX"/>
+                <constraint firstItem="UI8-Wu-M8g" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-24" id="nLu-2w-g8m"/>
                 <constraint firstItem="KSu-Sq-VOB" firstAttribute="top" secondItem="UI8-Wu-M8g" secondAttribute="bottom" id="o2n-DB-ypB"/>
                 <constraint firstItem="KSu-Sq-VOB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="olD-KR-KGK"/>
                 <constraint firstItem="Dlk-u9-mUA" firstAttribute="top" secondItem="TTQ-P8-pKy" secondAttribute="bottom" constant="10" id="pdq-uJ-p6g"/>

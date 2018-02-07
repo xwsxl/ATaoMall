@@ -226,7 +226,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     self.searchIcon1.frame=CGRectMake(30, 61, 14, 14);
     self.searchTextField.frame=CGRectMake(30+14+5, 58, kScreen_Width-30-14-5-30-15-10-15, 20);
     self.searchTextField.placeholder=@"请输入你要搜索的商品名称";
-    self.searchTextField.clearButtonMode=UITextFieldViewModeAlways;
+    self.searchTextField.clearButtonMode=UITextFieldViewModeWhileEditing;
     [self.searchTextField addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventEditingChanged];
     self.searchTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
     self.searchTextField.delegate = self;
@@ -411,8 +411,6 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 
     _scroll.contentSize=CGSizeMake(kScreen_Width, height);
 }
-
-
 
 //点击历史记录
 -(void)clickHistoryBtn:(UIButton *)sender
