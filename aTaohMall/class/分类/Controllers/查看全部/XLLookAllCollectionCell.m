@@ -36,10 +36,11 @@
     self.Goods_Name.textColor = [UIColor colorWithRed:74/255.0 green:74/255.0 blue:74/255.0 alpha:1.0];
     [self addSubview:self.Goods_Name];
 
-    self.Goods_Price = [[UILabel alloc] initWithFrame:CGRectMake(Width(150), Width(70), kScreenWidth-Width(160), 20)];
+    self.Goods_Price = [[UILabel alloc] initWithFrame:CGRectMake(Width(150), Width(70)+10, kScreenWidth-Width(160), 20)];
     self.Goods_Price.text = @"￥10.00+10.00积分";
     self.Goods_Price.textColor = [UIColor colorWithRed:243/255.0 green:73/255.0 blue:73/255.0 alpha:1.0];
     self.Goods_Price.font = [UIFont fontWithName:@"PingFang-SC-Regular" size:17];
+    self.Goods_Price.font=KNSFONTM(17);
     [self addSubview:self.Goods_Price];
 
 

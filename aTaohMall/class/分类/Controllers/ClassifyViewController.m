@@ -84,7 +84,7 @@
     NSInteger selectIndex;
     UIView *_slidView;
 
-    
+    UIView *headerView1;
 }
 @property (nonatomic,strong)NSMutableArray *DataSource;
 @property (nonatomic,strong)NSMutableArray *statusArray;
@@ -316,15 +316,21 @@
                 YLog(@"%@",model.logo1);
                 if ([model.logo1 isEqualToString:@""]||[model.logo1 containsString:@"null"]) {
                     HeaderIV.frame=CGRectZero;
-                    //_tableView.tableHeaderView=nil;
+                    headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
+                    [_tableView setTableHeaderView:headerView1];// 关键是这句话
                 }else
                 {
+
+                    headerView1.frame=CGRectMake(0, 0, kScreen_Width-Width(80), (kScreenWidth-Width(80)-30)*96/264.0+15);
                     HeaderIV.frame=CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0);
                     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
                     HeaderIV.userInteractionEnabled=YES;
+
+                    HeaderIV.layer.cornerRadius=2;
                     tap.numberOfTapsRequired=1;
                     [HeaderIV addGestureRecognizer:tap];
                     [HeaderIV sd_setImageWithURL:KNSURL(model.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
+                    [_tableView setTableHeaderView:headerView1];
                 }
                 [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
                 [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
@@ -438,7 +444,7 @@
         fenge.tag = 200+i;
 
         //退款框
-        [btn setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] forState:0];
+        [btn setTitleColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0] forState:0];
         [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         btn.titleLabel.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:13];
 
@@ -508,9 +514,14 @@
     [_tableView registerClass:[NewClassifyHeaderView class] forHeaderFooterViewReuseIdentifier:@"hedaer"];
 
     [_tableView registerNib:[UINib nibWithNibName:@"FenLeiHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"FenLeiHeaderView"];
-    HeaderIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
+    _tableView.estimatedRowHeight=0;
+    _tableView.estimatedSectionFooterHeight=0;
+    _tableView.estimatedSectionHeaderHeight=0;
+    headerView1=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width-Width(80), (kScreenWidth-Width(80)-30)*96/264.0+15)];
 
-    _tableView.tableHeaderView=HeaderIV;
+    HeaderIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
+    [headerView1 addSubview:HeaderIV];
+    _tableView.tableHeaderView=headerView1;
 
 }
 //初始化热门分类
@@ -531,6 +542,7 @@
     if (!([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"])) {
         UIImageView *headerIV=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0)];
         UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
+        headerIV.layer.cornerRadius=2;
         headerIV.userInteractionEnabled=YES;
         tap.numberOfTapsRequired=1;
         [headerIV addGestureRecognizer:tap];
@@ -539,23 +551,23 @@
         height +=15+(kScreenWidth-Width(80)-30)*96/264.0;
     }
     if (_DataModel.SmallClass_list.count>0) {
-    UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(15, height+15, 70, 18)];
+    UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(15, height+15, 70, 14)];
     lab.font=KNSFONT(14);
     lab.textColor=RGB(51, 51, 51);
     lab.text=@"热门分类";
-
     [_RemenScroll addSubview:lab];
 
     UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
-    but.frame=CGRectMake(kScreenWidth-Width(80)-15-70, height+15, 70, 18);
+    but.frame=CGRectMake(kScreenWidth-Width(80)-15-70, height+15, 70, 14);
     [but setImage:KImage(@"xl-icon-F5") forState:UIControlStateNormal];
+        [but setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     [but setTitle:@"换一换" forState:UIControlStateNormal];
     [but setTitleColor:RGB(155, 155, 155) forState:UIControlStateNormal];
     but.titleLabel.font=KNSFONT(14);
     [but addTarget:self action:@selector(HuanYiHuan:) forControlEvents:UIControlEventTouchUpInside];
     [_RemenScroll addSubview:but];
 
-    height+=15+18;
+    height+=15+14;
 
     CGFloat leading=(kScreenWidth-Width(80)-Width(65)*3)/4.0;
 
@@ -574,7 +586,7 @@
         [IV setImage:KImage(model.name)];
         [_RemenScroll addSubview:IV];
         UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(IVwidth, IVHeight+Width(65)+5, Width(65), 14)];
-        lab.font=KNSFONT(14);
+        lab.font=KNSFONT(13);
         lab.textColor=RGB(155, 155, 155);
         lab.text=model.name;
         lab.textAlignment=NSTextAlignmentCenter;
@@ -589,7 +601,8 @@
         [_RemenScroll addSubview:but];
 
     }
-    height+=((_DataModel.SmallClass_list.count+2)/3)*(5+14+Width(65)+Width(20));
+    height+=((_DataModel.SmallClass_list.count+2)/3)*(5+14+Width(65)+Width(20))+15;
+
     }
 
     if (_DataModel.SelectedBrand_list.count>0) {
@@ -805,7 +818,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
 
-    return 40;
+    return 30;
 
 }
 
@@ -882,7 +895,7 @@
     selectIndex=index;
     for (NSInteger i = 0; i <_datasArray.count; i ++) {
         UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
-        [button setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] forState:0];
+        [button setTitleColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0] forState:0];
         if (selectIndex ==i) {
             [button setTitleColor:[UIColor colorWithRed:255/255.0 green:93/255.0 blue:94/255.0 alpha:1.0] forState:0];
         }
@@ -898,6 +911,24 @@
             [self initReMenFenlei];
         }else
         {
+            if ([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"]) {
+                HeaderIV.frame=CGRectZero;
+                headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
+                [_tableView setTableHeaderView:headerView1];// 关键是这句话
+            }else
+            {
+
+                headerView1.frame=CGRectMake(0, 0, kScreen_Width-Width(80), (kScreenWidth-Width(80)-30)*96/264.0+15);
+                HeaderIV.frame=CGRectMake(15, 15,kScreenWidth-Width(80)-30,(kScreenWidth-Width(80)-30)*96/264.0);
+                UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBanner:)];
+                HeaderIV.userInteractionEnabled=YES;
+
+                HeaderIV.layer.cornerRadius=2;
+                tap.numberOfTapsRequired=1;
+                [HeaderIV addGestureRecognizer:tap];
+                [HeaderIV sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
+                [_tableView setTableHeaderView:headerView1];
+            }
             _tableView.hidden=NO;
             _RemenScroll.hidden=YES;
             [_tableView reloadData];
