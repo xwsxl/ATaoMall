@@ -229,6 +229,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     self.searchTextField.clearButtonMode=UITextFieldViewModeWhileEditing;
     [self.searchTextField addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventEditingChanged];
     self.searchTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
+    self.searchTextField.contentVerticalAlignment=NSTextAlignmentCenter;
     self.searchTextField.delegate = self;
     self.searchTextField.font=KNSFONT(14);
 
@@ -279,7 +280,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
         [_scroll addSubview:lab];
 
         UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
-        but.frame=CGRectMake(kScreen_Width-top-16, top+height, 16, 16);
+        but.frame=CGRectMake(kScreen_Width-top-30, top+height-14, 44, 44);
         [but setImage:KImage(@"xl-垃圾桶") forState:UIControlStateNormal];
         [but addTarget:self action:@selector(deleteAllSearch:) forControlEvents:UIControlEventTouchUpInside];
         [_scroll addSubview:but];
@@ -344,7 +345,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
         [_scroll addSubview:lab];
 
         UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
-        but.frame=CGRectMake(kScreen_Width-top-16, top+height, 16, 16);
+        but.frame=CGRectMake(kScreen_Width-top-30, top+height-14, 44, 44);
 
         [but addTarget:self action:@selector(qiehuanSearch) forControlEvents:UIControlEventTouchUpInside];
         [_scroll addSubview:but];
@@ -540,7 +541,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     _cancleBut.frame=CGRectMake(kScreen_Width-15-30, 54, 30, 30);
     self.searchBackView.frame=CGRectMake(15, 51, kScreen_Width-30-30-10, 32);
    self.searchIcon1.frame=CGRectMake(30, 61, 14, 14);
-    self.searchTextField.frame=CGRectMake(30+14+5, 61, kScreen_Width-30-14-5-30-15-10-15, 14);
+    self.searchTextField.frame=CGRectMake(30+14+5, 58, kScreen_Width-30-14-5-30-15-10-15, 20);
     }else
     {
     rightBtn.hidden=NO;
@@ -548,7 +549,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
     _cancleBut.hidden=YES;
     self.searchBackView.frame=CGRectMake(15+30+8, 51, kScreen_Width-15-30-8-30-15-10, 32);
     self.searchIcon1.frame=CGRectMake(30+30+8, 61, 14, 14);
-    self.searchTextField.frame=CGRectMake(30+30+8+14+5, 61, kScreen_Width-60-14-8-15-14-30-10, 14);
+    self.searchTextField.frame=CGRectMake(30+30+8+14+5, 58, kScreen_Width-60-14-8-15-14-30-10, 20);
 
     }
 
