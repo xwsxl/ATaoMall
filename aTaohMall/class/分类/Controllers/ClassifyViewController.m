@@ -55,6 +55,7 @@
 
 @interface ClassifyViewController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 {
+
     NSMutableArray *_datasArray;//存储一级标题
     NSMutableArray *_secondArray;//存储二级标题
     NSMutableArray *_goodsArray;//存储商品信息
@@ -73,23 +74,33 @@
     UIScrollView *_titleScroll;
     ClassifyLeftCell *cell1;
 
+    UIScrollView *_mainScroll;
+
     UIScrollView *_RemenScroll;
 
     UIView *view;//没网络的视图
 
     UIImageView *HeaderIV;
+
     UITableView *_tableView;
 
     NSString *selectStr;
     NSInteger selectIndex;
     UIView *_slidView;
-
     UIView *headerView1;
+
+
+
 }
+
 @property (nonatomic,strong)NSMutableArray *DataSource;
 @property (nonatomic,strong)NSMutableArray *statusArray;
 @property (nonatomic,strong)ClassifyModel *DataModel;
 @property (nonatomic,strong)NSMutableArray *RemenFenLeiArray;
+
+
+@property (nonatomic,strong)NSMutableArray *tableViewArr;
+
 
 @end
 
@@ -225,7 +236,7 @@
                     [self.statusArray addObject:@"0"];
                     [self.DataSource addObject:@[]];
                 }
-                [self initScollview];
+                [self setUI];
             }
 
         }
@@ -413,6 +424,42 @@
 
 }
 /*******************************************************      初始化视图       ******************************************************/
+//
+-(void)setUI
+{
+    [self initScollview];
+ //   [self initTableView];
+    CGFloat width=kScreen_Width-Width(80);
+    CGFloat height=kScreen_Height-49-KSafeAreaBottomHeight-KSafeAreaTopNaviHeight;
+
+    _mainScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(Width(80), KSafeAreaTopNaviHeight, width, height)];
+    _mainScroll.scrollEnabled=NO;
+    _mainScroll.contentSize=CGSizeMake(width, height*_datasArray.count);
+    [self.view addSubview:_mainScroll];
+
+
+    for (int i=1; i<_datasArray.count; i++) {
+        UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(Width(80), KSafeAreaTopNaviHeight+height*i, width, height) style:UITableViewStyleGrouped];
+        table.delegate=self;
+        table.dataSource=self;
+        table.bounces=NO;
+        table.backgroundColor = [UIColor whiteColor];
+        table.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+        [table registerClass:[FenLeiCell class] forCellReuseIdentifier:@"cell1"];
+
+        [table registerClass:[NoDataFenLeiCell class] forCellReuseIdentifier:@"nodata"];
+
+        [table registerClass:[NewClassifyHeaderView class] forHeaderFooterViewReuseIdentifier:@"hedaer"];
+
+        [table registerNib:[UINib nibWithNibName:@"FenLeiHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"FenLeiHeaderView"];
+        [_mainScroll addSubview:table];
+        [_tableViewArr addObject:table];
+
+    }
+
+}
+
 //创建左边的滚动视图
 -(void)initScollview{
 
@@ -651,7 +698,6 @@
 
 }
 
-
 /*******************************************************      各种button执行方法、页面间的跳转       ******************************************************/
 //首页点击通知
 -(void)JumpToLeimu:(NSNotification *)noti
@@ -846,7 +892,6 @@
     return header;
 }
 
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
@@ -946,6 +991,7 @@
     }
     }
 }
+
 /*
 获取热门分类
  */
@@ -976,8 +1022,6 @@
     }
     return [resultArr copy];
 }
-
-
 
 -(void)NoWebSeveice
 {
