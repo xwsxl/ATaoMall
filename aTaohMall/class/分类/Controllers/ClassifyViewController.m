@@ -264,7 +264,7 @@
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
         NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
 
-
+        UITableView *table=_tableViewArr[selectIndex-1];
         if (codeKey && content) {
             NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
             xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
@@ -328,7 +328,7 @@
                 if ([model.logo1 isEqualToString:@""]||[model.logo1 containsString:@"null"]) {
                     HeaderIV.frame=CGRectZero;
                     headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
-                    [_tableView setTableHeaderView:headerView1];// 关键是这句话
+                    [table setTableHeaderView:headerView1];// 关键是这句话
                 }else
                 {
 
@@ -341,15 +341,15 @@
                     tap.numberOfTapsRequired=1;
                     [HeaderIV addGestureRecognizer:tap];
                     [HeaderIV sd_setImageWithURL:KNSURL(model.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
-                    [_tableView setTableHeaderView:headerView1];
+                    [table setTableHeaderView:headerView1];
                 }
                 [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
                 [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
             }
         }
-        _tableView.hidden=NO;
+       // _tableView.hidden=NO;
         _RemenScroll.hidden=YES;
-        [_tableView reloadData];
+        [table reloadData];
         [hud dismiss:YES];
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         [hud dismiss:YES];
@@ -579,7 +579,7 @@
     if (!_RemenScroll) {
         _RemenScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(Width(80), KSafeAreaTopNaviHeight, kScreenWidth-Width(80), kScreenHeight-KSafeAreaTopNaviHeight-49-KSafeAreaBottomHeight)];
         _RemenScroll.delegate=self;
-        [self.view addSubview:_RemenScroll];
+        [_mainScroll addSubview:_RemenScroll];
     }else
     {
         [_RemenScroll.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -933,10 +933,6 @@
     {
         return;
     }
-
-
-
-
     selectIndex=index;
     for (NSInteger i = 0; i <_datasArray.count; i ++) {
         UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
@@ -956,10 +952,11 @@
             [self initReMenFenlei];
         }else
         {
+            UITableView *table=_tableViewArr[selectIndex-1];
             if ([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"]) {
                 HeaderIV.frame=CGRectZero;
                 headerView1.frame=CGRectMake(0, 0, kScreen_Width, 0.0001);
-                [_tableView setTableHeaderView:headerView1];// 关键是这句话
+                [table setTableHeaderView:headerView1];// 关键是这句话
             }else
             {
 
@@ -972,11 +969,11 @@
                 tap.numberOfTapsRequired=1;
                 [HeaderIV addGestureRecognizer:tap];
                 [HeaderIV sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
-                [_tableView setTableHeaderView:headerView1];
+                [table setTableHeaderView:headerView1];
             }
-            _tableView.hidden=NO;
+         //   _tableView.hidden=NO;
             _RemenScroll.hidden=YES;
-            [_tableView reloadData];
+            [table reloadData];
         }
 
     }else
@@ -990,6 +987,7 @@
     [self getRightSencondCateData];
     }
     }
+    [_mainScroll setContentOffset:CGPointMake(0, selectIndex*(kScreen_Height-49-KSafeAreaBottomHeight-KSafeAreaTopNaviHeight)) animated:YES];
 }
 
 /*
