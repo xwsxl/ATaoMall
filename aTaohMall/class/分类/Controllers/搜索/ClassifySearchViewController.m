@@ -522,6 +522,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 - (IBAction)cancleBtnClick:(UIButton *)sender {
     if (cancle) {
         [self SetNaviWithCancle:NO];
+        [self.searchTextField resignFirstResponder];
         _scroll.hidden=YES;
         _collectionView.hidden=NO;
     }else
