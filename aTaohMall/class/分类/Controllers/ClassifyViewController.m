@@ -90,6 +90,7 @@
     UIView *headerView1;
 
     BOOL BottomGes;
+    BOOL TOPGes;
 
 }
 
@@ -347,9 +348,19 @@
                 }
                 [self.DataSource replaceObjectAtIndex:selectIndex withObject:model];
                 [self.statusArray replaceObjectAtIndex:selectIndex withObject:@"1"];
-                BottomGes=NO;
+          //      BottomGes=NO;
+                [table setContentOffset:CGPointZero];
                 [table reloadData];
+                YLog(@"%.2f",table.contentOffset.y);
+                [table setContentOffset:CGPointZero];
                 [_mainScroll setContentOffset:CGPointMake(0, selectIndex*(kScreen_Height-49-KSafeAreaBottomHeight-KSafeAreaTopNaviHeight)) animated:YES];
+//                if (selectIndex>1) {
+//                    UITableView *tab=_tableViewArr[selectIndex-2];
+//                    [tab setContentOffset:CGPointZero];
+//                }else
+//                {
+//                    [_RemenScroll setContentOffset:CGPointZero];
+//                }
             }
         }
 
@@ -358,8 +369,104 @@
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         [hud dismiss:YES];
     }];
+}
+//
+-(void)getRightNextSencondCateData
+{
+   // WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+    NSString *url=[NSString stringWithFormat:@"%@getClassificationSecondLevelData_mob.shtml",URL_Str];
+    if (selectIndex+1>=_datasArray.count-1) {
+        return;
+    }
+    if ([_statusArray[selectIndex+1] isEqualToString:@"1"]) {
+        return;
+    }
+    ClassifyModel *model=_datasArray[selectIndex+1];
+    [manager POST:url parameters:@{@"id":model.GoodsId} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+
+
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
+        NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
+
+       // UITableView *table=self.tableViewArr[selectIndex-1];
+        if (codeKey && content) {
+            NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+            xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+
+            NSLog(@"====112345667===xmlStr%@",xmlStr);
+
+
+            NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
+
+
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            if ([dic[@"status"] isEqualToString:@"10000"]) {
+                ClassifyModel *model=[[ClassifyModel alloc] init];
+                model.logo1=[NSString stringWithFormat:@"%@",dic[@"picture"]];
+                model.gid=[NSString stringWithFormat:@"%@",dic[@"gid"]];
+                NSMutableArray *temp=[[NSMutableArray alloc] init];
+                for (NSDictionary *dic1 in dic[@"list"]) {
+                    ClassifyModel *model=[[ClassifyModel alloc] init];
+                    NSMutableArray *temp1=[[NSMutableArray alloc] init];
+                    model.GoodsId=dic1[@"id"];
+                    model.name=dic1[@"name"];
+
+                    for (NSDictionary *dict4 in dic1[@"goodsList"]) {
+                        goodListModel *model=[[goodListModel alloc] init];
+
+                        /*  "type": "149",
+                         "level": "1",
+                         "carousel_figure": "",
+                         "gid": 7442,
+                         "mid": "2242",
+                         "name": "小风扇",
+                         "amount": "0",
+                         "stock": "200",
+                         "pay_integer": "100.00",
+                         "pay_maney": "100.00",
+                         "scopeimg": "http://image.anzimall.com/union/upload/9d6fda9200009b0a.jpg",
+                         "status": "0",
+                         "is_attribute": "1",
+                         "storename": "领家小吃"*/
+                        model.amount=[NSString stringWithFormat:@"%@",dict4[@"amount"]];
+                        model.goods_name=[NSString stringWithFormat:@"%@",dict4[@"name"]];
+                        model.gid=[NSString stringWithFormat:@"%@",dict4[@"gid"]];
+                        model.pay_integer=[NSString stringWithFormat:@"%@",dict4[@"pay_integer"]];
+                        model.pay_maney=[NSString stringWithFormat:@"%@",dict4[@"pay_maney"]];
+                        model.scopeimg=[NSString stringWithFormat:@"%@",dict4[@"scopeimg"]];
+                        model.sort_type=[NSString stringWithFormat:@"%@",dict4[@"sort_type"]];
+                        model.type=[NSString stringWithFormat:@"%@",dict4[@"type"]];
+                        model.attribute = [NSString stringWithFormat:@"%@",dict4[@"is_attribute"]];//属性判断
+                        model.storename = [NSString stringWithFormat:@"%@",dict4[@"storename"]];
+                        model.status = [NSString stringWithFormat:@"%@",dict4[@"status"]];
+                        model.stock = [NSString stringWithFormat:@"%@",dict4[@"stock"]];
+                        [temp1 addObject:model];
+                    }
+                    model.goodsList=[temp1 copy];
+                    [temp addObject:model];
+                }
+                model.goodsList=[temp copy];
+
+                [self.DataSource replaceObjectAtIndex:selectIndex+1 withObject:model];
+                [self.statusArray replaceObjectAtIndex:selectIndex+1 withObject:@"1"];
+
+            }
+        }
+
+
+    //    [hud dismiss:YES];
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+      //  [hud dismiss:YES];
+    }];
 
 }
+
 //为你推荐
 -(void)getForYouSelectData
 {
@@ -449,7 +556,7 @@
         UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, height*i, width, height) style:UITableViewStyleGrouped];
         table.delegate=self;
         table.dataSource=self;
-       // table.bounces=NO;
+      //  table.bounces=NO;
         table.tag=3456+i;
         table.backgroundColor = [UIColor whiteColor];
         table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -461,12 +568,14 @@
         [table registerClass:[NewClassifyHeaderView class] forHeaderFooterViewReuseIdentifier:@"hedaer"];
 
         [table registerNib:[UINib nibWithNibName:@"FenLeiHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"FenLeiHeaderView"];
-        MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-        // [footer setBackgroundColor:[UIColor whiteColor]];
-        [footer setTitle:@"" forState:MJRefreshStateIdle];
-        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
-        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
-     //   table.mj_footer = footer;
+//        MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//        // [footer setBackgroundColor:[UIColor whiteColor]];
+//        [footer setTitle:@"" forState:MJRefreshStateIdle];
+//        [footer setTitle:@"" forState:MJRefreshStateRefreshing];
+//        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
+//        table.mj_footer = footer;
+//        MJRefreshHeader *header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(UPdata)];
+//        table.mj_header=header;
         [_mainScroll addSubview:table];
         [self.tableViewArr addObject:table];
 
@@ -593,12 +702,14 @@
    // _RemenScroll.hidden=NO;
     if (!_RemenScroll) {
         _RemenScroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth-Width(80), kScreenHeight-KSafeAreaTopNaviHeight-49-KSafeAreaBottomHeight)];
-      //  _RemenScroll.delegate=self;
+        _RemenScroll.delegate=self;
+        _RemenScroll.tag=3456;
         [_mainScroll addSubview:_RemenScroll];
     }else
     {
         [_RemenScroll.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
+    [_RemenScroll setContentOffset:CGPointZero];
     YLog(@"%@,%ld,%ld",_DataModel.logo1,_DataModel.SmallClass_list.count,_DataModel.SelectedBrand_list.count);
     CGFloat height=0;
     if (!([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"])) {
@@ -710,7 +821,13 @@
     }
 
     _RemenScroll.contentSize=CGSizeMake(0, height+20);
-    BottomGes=NO;
+//    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//    // [footer setBackgroundColor:[UIColor whiteColor]];
+//    [footer setTitle:@"" forState:MJRefreshStateIdle];
+//    [footer setTitle:@"" forState:MJRefreshStateRefreshing];
+//    [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
+//    _RemenScroll.mj_footer=footer;
+  //  BottomGes=NO;
     [_mainScroll setContentOffset:CGPointMake(0, selectIndex*(kScreen_Height-49-KSafeAreaBottomHeight-KSafeAreaTopNaviHeight)) animated:YES];
 }
 
@@ -820,6 +937,7 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    
     if (scrollView.tag-3456!=selectIndex) {
         return;
     }
@@ -828,32 +946,56 @@
 YLog(@"%ld",selectIndex);
     NSLogSize(size);
     NSLogPoint(point);
-    if (point.y>(size.height-(kScreenHeight-49-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight))+100&&!BottomGes) {
-        scrollView.contentOffset=CGPointMake(0, size.height-(kScreenHeight-49-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight));
-        BottomGes=YES;
-        [self selectIndex:selectIndex+1];
-    }else if(point.y<-100&&!BottomGes){
-        scrollView.contentOffset=CGPointMake(0, 0);
-        BottomGes=YES;
+    if (point.y>(size.height-(kScreenHeight-49-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight))+50&&!BottomGes) {
+
+        // scrollView.contentOffset=CGPointMake(0, size.height-(kScreenHeight-49-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight));
+     //   scrollView.scrollEnabled=NO;
+          BottomGes=YES;
+          [self selectIndex:selectIndex+1];
+      //  scrollView.scrollEnabled=YES;
+
+    }else if(point.y<-50&&!BottomGes){
+
+        //  scrollView.scrollEnabled=NO;
+       // scrollView.contentOffset=CGPointMake(0, 0);
+        TOPGes=YES;
         [self selectIndex:selectIndex-1];
+       // scrollView.scrollEnabled=YES;
 
     }
 
 }
 
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+
+    if (BottomGes) {
+        BottomGes=NO;
+        if (scrollView.tag-3456!=_statusArray.count-1) {
+            [scrollView setContentOffset:CGPointZero];
+        }
+
+    // [self selectIndex:selectIndex+1];
+    }else if (TOPGes)
+    {
+        TOPGes=NO;
+         [scrollView setContentOffset:CGPointZero];
+    //[self selectIndex:selectIndex-1];
+    }
+
+
+}
 #pragma
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     YLog(@"%ld",_DataModel.goodsList.count);
     ClassifyModel *model=self.DataSource[tableView.tag-3456];
     return model.goodsList.count;
-
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     ClassifyModel *model1=self.DataSource[tableView.tag-3456];
-
     ClassifyModel *model=model1.goodsList[section];
     return (model.goodsList.count==0)?1:model.goodsList.count;
 }
@@ -973,20 +1115,23 @@ YLog(@"%ld",selectIndex);
  */
 -(void)selectIndex:(NSInteger )index
 {
-    if (index>_statusArray.count-1) {
-        index=_statusArray.count-1;
-    }else if (index<0)
+    NSLog(@"%ld,%ld",index,_statusArray.count-1);
+    if (index==_datasArray.count)
+    {
+        index=_datasArray.count-1;
+    }
+    else if (index==-1)
     {
         index=0;
     }
-
     if(selectIndex==index)
     {
         return;
-    }
+    }else
+    {
 
     selectIndex=index;
-    for (NSInteger i = 0; i <_datasArray.count; i ++) {
+    for (NSInteger i = 0; i <_datasArray.count; i++) {
         UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
         [button setTitleColor:[UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0] forState:0];
         if (selectIndex ==i) {
@@ -1005,6 +1150,7 @@ YLog(@"%ld",selectIndex);
         }else
         {
             UITableView *table=_tableViewArr[selectIndex-1];
+
             if ([_DataModel.logo1 isEqualToString:@""]||[_DataModel.logo1 containsString:@"null"]) {
 
                 UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, 0.001)];
@@ -1026,9 +1172,11 @@ YLog(@"%ld",selectIndex);
                 [HeaderIV1 sd_setImageWithURL:KNSURL(_DataModel.logo1) placeholderImage:KImage(@"default_image") options:SDWebImageProgressiveDownload];
             }
 
-            BottomGes=NO;
-
+          //  BottomGes=NO;
+            YLog(@"%.2f",table.contentOffset.y);
+            [table setContentOffset:CGPointZero];
             [table reloadData];
+            [table setContentOffset:CGPointZero];
             [_mainScroll setContentOffset:CGPointMake(0, selectIndex*(kScreen_Height-49-KSafeAreaBottomHeight-KSafeAreaTopNaviHeight)) animated:YES];
         }
 
@@ -1043,15 +1191,31 @@ YLog(@"%ld",selectIndex);
     [self getRightSencondCateData];
     }
     }
+    }
 
+    [self getRightNextSencondCateData];
 }
 
 -(void)loadMoreData
 {
-   // [self selectIndex:selectIndex+1];
-
+    if (selectIndex>0) {
+        UITableView *tab=[self.view viewWithTag:3456+selectIndex];
+        [tab.mj_footer endRefreshing];
+       // [tab scrollToBottom];
+    }else
+    {
+        [_RemenScroll.mj_footer endRefreshing];
+        [_RemenScroll scrollToBottom];
+    }
+    [self selectIndex:selectIndex+1];
 }
 
+-(void)UPdata
+{
+    UITableView *tab=_tableViewArr[selectIndex-1];
+    [tab.mj_header endRefreshing];
+    [self selectIndex:selectIndex-1];
+}
 /*
 获取热门分类
  */
