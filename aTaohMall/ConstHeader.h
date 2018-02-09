@@ -12,8 +12,7 @@
 /*******************************************************      常量定义       ******************************************************/
 /*
 //本地
-//static NSString *const URL_Str=@"http://192.168.1.47:8085/";
- static NSString *const URL_Str=@"http://192.168.1.99:8088/";
+static NSString *const URL_Str=@"http://192.168.1.47:8085/";
 //测试支付
 static NSString *const URL_Str1=@"http://120.76.245.90:8089/pay/";
 //*/
