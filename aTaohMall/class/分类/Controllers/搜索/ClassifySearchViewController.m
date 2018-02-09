@@ -138,7 +138,7 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 //为你推荐
 -(void)getKeyWordsData
 {
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+    WKProgressHUD *hud = [WKProgressHUD showInView:_scroll withText:nil animated:YES];
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSString *url=[NSString stringWithFormat:@"%@getSearchKeywords_mob.shtml",URL_Str];
