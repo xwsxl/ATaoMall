@@ -13,6 +13,7 @@
 #import "HomeLittleAppliancesCell.h"
 #import "YTGoodsDetailViewController.h"
 #import "WKProgressHUD.h"
+#import "XLSingleLineShoppingCollectionCell.h"
 @interface HomeBigHealthyVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
     NSInteger page;
@@ -27,6 +28,7 @@
 @end
 
 @implementation HomeBigHealthyVC
+static NSString * const reuseIdentifier = @"XLShoppingCollectionCell";
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -58,7 +60,8 @@
     _collectionView.delegate=self;
     _collectionView.dataSource=self;
     //  _collectionView.scrollEnabled=NO;
-    [_collectionView registerClass:[HomeLittleAppliancesCell class] forCellWithReuseIdentifier:@"Home"];
+    //[_collectionView registerClass:[HomeLittleAppliancesCell class] forCellWithReuseIdentifier:@"Home"];
+    [_collectionView registerClass:[XLSingleLineShoppingCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"正在加载..." forState:MJRefreshStateRefreshing];
@@ -180,49 +183,62 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    return CGSizeMake(([UIScreen mainScreen].bounds.size.width-2)/2-4, ([UIScreen mainScreen].bounds.size.height)/2.7);
+    CGFloat WWW=([UIScreen mainScreen].bounds.size.width-Width(18))/2;
+    CGFloat HHH=WWW+5*Height(7)+14+26+1+10;
+    return CGSizeMake(WWW, HHH);
+  //  return CGSizeMake(([UIScreen mainScreen].bounds.size.width-2)/2-4, ([UIScreen mainScreen].bounds.size.height)/2.7);
 
 }
 
 //最小行间距
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 5;
+    return Width(6);
 }
 //最小行内部cell的间距
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0;
+    return Width(3);
 }
 
 //section的边距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     //上,左,下,右
-    return UIEdgeInsetsMake(8, 0, 10, 0);
+   // return UIEdgeInsetsMake(8, 0, 10, 0);
+    return UIEdgeInsetsMake(Width(10), Width(6), Width(6), Width(6));
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    HomeLittleAppliancesCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:@"Home" forIndexPath:indexPath];
-    if (!(_dataSource.count==0)) {
-        HomeModel2 *model=_dataSource[indexPath.row];
-        cell1.status = model.status;//判断是否售完
-        cell1.stock = model.stock;
-        cell1.StrorenameLabel.text = model.storename;
-
-        [cell1.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model.scopeimg] placeholderImage:[UIImage imageNamed:@"default_image"] options:SDWebImageProgressiveDownload];
-        cell1.GoodsNameLabel.text=model.name;
-        cell1.GoodsAmountLabel.text=[NSString stringWithFormat:@"%@人付款",model.amount];
-        cell1.GoodsPriceLabel.text=[NSString stringWithPrice:model.pay_maney andInterger:model.pay_integer];
-        cell1.GoodsPriceLabel.textColor=RGB(255, 82, 82);
-        
-    }
-
+//    HomeLittleAppliancesCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:@"Home" forIndexPath:indexPath];
+//    if (!(_dataSource.count==0)) {
+//        HomeModel2 *model=_dataSource[indexPath.row];
+//        cell1.status = model.status;//判断是否售完
+//        cell1.stock = model.stock;
+//        cell1.StrorenameLabel.text = model.storename;
+//
+//        [cell1.GoodsImageView sd_setImageWithURL:[NSURL URLWithString:model.scopeimg] placeholderImage:[UIImage imageNamed:@"default_image"] options:SDWebImageProgressiveDownload];
+//        cell1.GoodsNameLabel.text=model.name;
+//        cell1.GoodsAmountLabel.text=[NSString stringWithFormat:@"%@人付款",model.amount];
+//        cell1.GoodsPriceLabel.text=[NSString stringWithPrice:model.pay_maney andInterger:model.pay_integer];
+//        cell1.GoodsPriceLabel.textColor=RGB(255, 82, 82);
+//
+//    }
+//
+//    return cell1;
+    XLSingleLineShoppingCollectionCell *cell1=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    HomeModel2 *model=_dataSource[indexPath.row];
+    AllSingleShoppingModel *model2=[[AllSingleShoppingModel alloc] init];
+    model2.name=model.name;
+    model2.storename=model.storename;
+    model2.scopeimg=model.scopeimg;
+    model2.pay_maney=model.pay_maney;
+    model2.pay_integer=model.pay_integer;
+    model2.amount=model.amount;
+    cell1.model=model2;
     return cell1;
-
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

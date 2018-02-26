@@ -63,7 +63,7 @@
 
     NewScoreHeaderView *header;
 
-    HomeLookFooter *footer;
+//    HomeLookFooter *footer;
 
     int num;
     int bo;//用来判断点击的是哪一个；
@@ -78,6 +78,8 @@
 @property (nonatomic,strong)DJRefresh *refresh;
 @property (nonatomic,strong)UIButton *MyScoreBut;
 @property (nonatomic,strong)UIButton *HealthyScoreBut;
+@property (nonatomic,strong)UISwipeGestureRecognizer *leftSwipeGesture;
+@property (nonatomic,strong)UISwipeGestureRecognizer *rightSwipeGesture;
 @end
 
 @implementation PersonHealthyScoreVC
@@ -189,6 +191,11 @@
     [view addSubview:button3];
 
     [button3 addTarget:self action:@selector(BtnClick3) forControlEvents:UIControlEventTouchUpInside];
+
+    self.leftSwipeGesture=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    self.rightSwipeGesture=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    self.leftSwipeGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.rightSwipeGesture.direction = UISwipeGestureRecognizerDirectionRight;
 }
 -(void)getData
 {
@@ -200,7 +207,8 @@
     dispatch_after(time, dispatch_get_main_queue(), ^{
         [hud dismiss:YES];
     });
-
+    [self.view removeGestureRecognizer:self.leftSwipeGesture];
+    [self.view removeGestureRecognizer:self.rightSwipeGesture];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -215,6 +223,9 @@
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
         NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
 
+
+
+
         if (codeKey && content) {
             NSString *xmlStr = [DesUtil decryptUseDES:content key:codeKey];
             xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
@@ -226,13 +237,13 @@
             NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
 
 
-            NSDictionary *dic1= [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"消费:=========%@",dic1);
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"消费:=========%@",dic);
 
 
             NOView.hidden=YES;
 
-           // for (NSDictionary *dic1 in dic) {
+            for (NSDictionary *dic1 in dic) {
 
                 string10 = dic1[@"totalCount"];
                 MyScoreModel *model=[[MyScoreModel alloc] init];
@@ -247,11 +258,12 @@
 
                 if ([self.status isEqualToString:@"10001"]) {
 
-                    footer.hidden=YES;
-
+                    //  footer.hidden=YES;
+                    _refresh.bottomEnabled=NO;
                 }else{
+                    _refresh.bottomEnabled=YES;
 
-                    footer.hidden=NO;
+                    //   footer.hidden=NO;
 
                 }
                 for (NSDictionary *dict in dic1[@"integraldeductionlist"]) {
@@ -290,7 +302,7 @@
                     }
 
                 }
-         //   }
+            }
 
             //全部
             if (bo==1) {
@@ -314,23 +326,25 @@
                 }
 
                 if (_datasArr1.count%12==0&&_datasArr1.count!=0&&_datasArr1.count !=[string10 integerValue]) {
+                    _refresh.bottomEnabled=YES;
 
-                    footer.hidden=NO;
-                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-                    footer.loadMoreBtn.enabled=YES;
+                    //                    footer.hidden=NO;
+                    //                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+                    //                    footer.loadMoreBtn.enabled=YES;
 
                 }else if (_datasArr1.count == [string10 integerValue]){
-                    footer.hidden = NO;
-                    footer.moreView.hidden=YES;
-                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                    footer.loadMoreBtn.enabled=NO;
+                    _refresh.bottomEnabled=YES;
+                    //                    footer.hidden = NO;
+                    //                    footer.moreView.hidden=YES;
+                    //                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+                    //                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+                    //                    footer.loadMoreBtn.enabled=NO;
 
 
                 }else{
-
+                    _refresh.bottomEnabled=NO;
                     //隐藏点击加载更多
-                    footer.hidden=YES;
+                    //    footer.hidden=YES;
 
                 }
 
@@ -354,24 +368,28 @@
                 }
 
                 if (_datasArr2.count%12==0&&_datasArr2.count!=0&&_datasArr2.count !=[string10 integerValue]) {
+                    _refresh.bottomEnabled=YES;
 
-                    footer.hidden=NO;
-                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-
-                    footer.loadMoreBtn.enabled=YES;
-
+                    //                    footer.hidden=NO;
+                    //                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+                    //
+                    //                    footer.loadMoreBtn.enabled=YES;
+                    //
                 }else if (_datasArr2.count == [string10 integerValue]){
-                    footer.hidden = NO;
-                    footer.moreView.hidden=YES;
-                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                    footer.loadMoreBtn.enabled=NO;
+                    _refresh.bottomEnabled=YES;
+
+                    //                    footer.hidden = NO;
+                    //                    footer.moreView.hidden=YES;
+                    //                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+                    //                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+                    //                    footer.loadMoreBtn.enabled=NO;
 
 
                 }else{
+                    _refresh.bottomEnabled=NO;
 
                     //隐藏点击加载更多
-                    footer.hidden=YES;
+                    //                    footer.hidden=YES;
 
                 }
 
@@ -396,24 +414,28 @@
 
 
                 if (_datasArr3.count%12==0&&_datasArr3.count!=0&&_datasArr3.count !=[string10 integerValue]) {
+                    _refresh.bottomEnabled=YES;
 
-                    footer.hidden=NO;
-                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-                    //                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:91/255.0 green:150/255.0 blue:255/255.0 alpha:1.0] forState:0];
-                    footer.loadMoreBtn.enabled=YES;
+                    //                    footer.hidden=NO;
+                    //                    [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+                    //                    //                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:91/255.0 green:150/255.0 blue:255/255.0 alpha:1.0] forState:0];
+                    //                    footer.loadMoreBtn.enabled=YES;
 
                 }else if (_datasArr3.count == [string10 integerValue]){
-                    footer.hidden = NO;
-                    footer.moreView.hidden=YES;
-                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                    footer.loadMoreBtn.enabled=NO;
+                    _refresh.bottomEnabled=YES;
+
+                    //                    footer.hidden = NO;
+                    //                    footer.moreView.hidden=YES;
+                    //                    [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+                    //                    [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+                    //                    footer.loadMoreBtn.enabled=NO;
 
 
                 }else{
+                    _refresh.bottomEnabled=NO;
 
                     //隐藏点击加载更多
-                    footer.hidden=YES;
+                    //                    footer.hidden=YES;
 
                 }
 
@@ -439,6 +461,8 @@
 
 
         }
+        [self.view addGestureRecognizer:self.leftSwipeGesture];
+        [self.view addGestureRecognizer:self.rightSwipeGesture];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
         //            [WKProgressHUD popMessage:@"网络请求失败，请检查您的网络设置" inView:self.view duration:1.5 animated:YES];
@@ -550,7 +574,29 @@
     [header BtnClick3];
 }
 
+//手势触发事件
+-(void)handleSwipe:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction==UISwipeGestureRecognizerDirectionLeft) {
 
+        if (bo==1) {
+            [self BtnClick2];
+        }else if (bo==2)
+        {
+            [self BtnClick3];
+        }
+    }else if (sender.direction==UISwipeGestureRecognizerDirectionRight)
+    {
+        if (bo==3) {
+            [self BtnClick2];
+        }else if (bo==2)
+        {
+            [self BtnClick1];
+        }
+
+    }
+
+}
 - (void)AllScoreButClick:(UIButton *)sender{
 
     num=1;
@@ -1041,7 +1087,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
 
-    return 44;
+    return 0.01;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -1086,6 +1132,19 @@
         [self getData];
         [_tableView reloadData];
         _tableView.scrollEnabled=YES;
+    }else
+    {
+        self.PanDuan=@"1";
+
+        num=num+1;
+
+        self.flag=[NSString stringWithFormat:@"%d",num];
+        //获取数据
+
+
+        [self getData];
+        _tableView.scrollEnabled=YES;
+
     }
     [_refresh finishRefreshingDirection:direction animation:YES];
 }
@@ -1093,22 +1152,22 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    footer=[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"footer"];
+//    footer=[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"footer"];
+//
+//    footer.delegate=self;
+//
+//    if(_datasArr1.count==0 && bo == 1){
+//        footer.hidden = YES;
+//    }
+//    if(_datasArr2.count==0 && bo == 2){
+//        footer.hidden = YES;
+//    }
+//
+//    if(_datasArr3.count==0 && bo == 3){
+//        footer.hidden = YES;
+//    }
 
-    footer.delegate=self;
-
-    if(_datasArr1.count==0 && bo == 1){
-        footer.hidden = YES;
-    }
-    if(_datasArr2.count==0 && bo == 2){
-        footer.hidden = YES;
-    }
-
-    if(_datasArr3.count==0 && bo == 3){
-        footer.hidden = YES;
-    }
-
-    return footer;
+    return [[UIView alloc] init];
 }
 //加载更多数据代理方法
 - (void)FooterViewClickedloadMoreData

@@ -42,7 +42,7 @@
 @interface MerchantDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DJRefreshDelegate,FooterViewDelegate>
 {
     
-    NineFooterView *footer;
+  //  NineFooterView *footer;
     
     UICollectionView *_collectionView;
     
@@ -114,13 +114,13 @@
 
 - (void)createTimer {
     
-    self.m_timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerEvent) userInfo:nil repeats:YES];
+    self.m_timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_m_timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)timerEvent {
     
-    [_collectionView reloadData];
+   // [_collectionView reloadData];
 }
 
 - (void)TimeStop3:(NSNotification *)text{
@@ -228,7 +228,7 @@
     
     Qurt.frame = CGRectMake(15, 25+KSafeTopHeight, 30, 30);
     
-    [Qurt setBackgroundImage:[UIImage imageNamed:@"iconfont-fanhui2yt"] forState:0];
+    [Qurt setImage:[UIImage imageNamed:@"iconfont-fanhui2yt"] forState:0];
     
     
     [Qurt addTarget:self action:@selector(QurtBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -363,25 +363,27 @@
             
             
             if (_dataArrM.count%12==0&&_dataArrM.count !=[string10 integerValue]) {
-                
-                footer.hidden=NO;
+                _refresh.bottomEnabled=YES;
+//                footer.hidden=NO;
                 cell1.hidden=YES;
-                [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-                footer.loadMoreBtn.enabled=YES;
-                
+//                [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+//                footer.loadMoreBtn.enabled=YES;
+
             }else if (_dataArrM.count == [string10 integerValue]){
-                footer.hidden = NO;
-                cell1.hidden=YES;
-                footer.moreView.hidden=YES;
-                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                footer.loadMoreBtn.enabled=NO;
-                
+//                footer.hidden = NO;
+               cell1.hidden=YES;
+                 _refresh.bottomEnabled=YES;
+//                footer.moreView.hidden=YES;
+//                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+//                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+//                footer.loadMoreBtn.enabled=NO;
+
                 
             }else{
                 
                 //隐藏点击加载更多
-                footer.hidden=YES;
+            //    footer.hidden=YES;
+                 _refresh.bottomEnabled=NO;
                 cell1.hidden=NO;
             }
             
@@ -709,20 +711,7 @@
 {
     
     
-    if (kind==UICollectionElementKindSectionFooter) {
-        
-        footer=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-        
-        footer.delegate=self;
-        
-//        NSLog(@"===_dataArrM.count==%ld",_dataArrM.count);
-        
-        if (_dataArrM.count == 0) {
-            footer.hidden = YES;
-        }
-        return footer;
-        
-    }else if(kind==UICollectionElementKindSectionHeader){
+     if(kind==UICollectionElementKindSectionHeader){
         
         MerchantDetailHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
         
@@ -765,11 +754,7 @@
     
 }
 
-//返回footer的高度
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width-20, 44);
-}
+
 //加载更多数据代理方法
 - (void)FooterViewClickedloadMoreData
 {
@@ -845,7 +830,7 @@
 
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addDataWithDirection:direction];
     });
     
@@ -866,6 +851,9 @@
         //获取数据
         [self GetDatas];
         
+    }else
+    {
+        [self FooterViewClickedloadMoreData];
     }
     
     

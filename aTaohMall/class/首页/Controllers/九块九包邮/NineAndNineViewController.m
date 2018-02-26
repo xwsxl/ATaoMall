@@ -53,7 +53,7 @@
     
     UIView *view;
 
-    NineFooterView *footer;
+  //  NineFooterView *footer;
     
     int page;
     
@@ -123,7 +123,7 @@
     
     _refresh=[[DJRefresh alloc] initWithScrollView:_collectionView delegate:self];
     _refresh.topEnabled=YES;//下拉刷新
-    _refresh.bottomEnabled=NO;//上拉加载
+    _refresh.bottomEnabled=YES;//上拉加载
     
     //注册cell
     [_collectionView registerNib:[UINib nibWithNibName:@"NineNineCell" bundle:nil] forCellWithReuseIdentifier:@"cell"];
@@ -285,25 +285,29 @@
                 }
             }
             if (_dataSource.count%12==0&&_dataSource.count !=[string10 integerValue]) {
-                
-                footer.hidden=NO;
-                [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-//                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:91/255.0 green:150/255.0 blue:255/255.0 alpha:1.0] forState:0];
-                footer.loadMoreBtn.enabled=YES;
-                
+                _refresh.bottomEnabled=YES;
+//                footer.hidden=NO;
+//                [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+////                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:91/255.0 green:150/255.0 blue:255/255.0 alpha:1.0] forState:0];
+//                footer.loadMoreBtn.enabled=YES;
+
             }else if (_dataSource.count == [string10 integerValue]){
-                 footer.hidden=NO;
-                footer.moreView.hidden=YES;
-                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                footer.loadMoreBtn.enabled=NO;
-                
+                _refresh.bottomEnabled=YES;
+
+//
+//                 footer.hidden=NO;
+//                footer.moreView.hidden=YES;
+//                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+//                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+//                footer.loadMoreBtn.enabled=NO;
+
                 
             }else{
-                
+                _refresh.bottomEnabled=NO;
+
                 //隐藏点击加载更多
-                footer.hidden=YES;
-                
+//                footer.hidden=YES;
+
             }
 
             [hud dismiss:YES];
@@ -428,27 +432,11 @@
     self.navigationController.navigationBar.hidden=YES;
 }
 
-//footer
--(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    
-    footer=[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-    
-    footer.delegate=self;
-    if (_dataSource.count == 0) {
-        footer.hidden = YES;
-    }
-    return footer;
-    
-}
 
 
 
-//返回footer的高度
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width-20, 44);
-}
+
+
 
 //返回
 - (IBAction)backBtnClick:(UIButton *)sender {
@@ -505,23 +493,28 @@
                             
                     }
                     if (_dataSource.count%12==0&&_dataSource.count !=[string10 integerValue]) {
-                        
-                        footer.hidden=NO;
-                        [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
-                        footer.loadMoreBtn.enabled=YES;
-                        
+                        _refresh.bottomEnabled=YES;
+
+//                        footer.hidden=NO;
+//                        [footer.loadMoreBtn setTitle:@"点击加载更多" forState:0];
+//                        footer.loadMoreBtn.enabled=YES;
+
                     }else if (_dataSource.count == [string10 integerValue]){
-                        footer.hidden=NO;
-                        footer.moreView.hidden=YES;
-                        [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
-                        [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
-                        footer.loadMoreBtn.enabled=NO;
-                        
+                        _refresh.bottomEnabled=YES;
+
+//                        footer.hidden=NO;
+//                        footer.moreView.hidden=YES;
+//                        [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
+//                        [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
+//                        footer.loadMoreBtn.enabled=NO;
+
                         
                     }else{
                         
                         //隐藏点击加载更多
-                        footer.hidden=YES;
+                        _refresh.bottomEnabled=NO;
+
+                    //    footer.hidden=YES;
                         
                     }
                     
@@ -573,6 +566,9 @@
 //        [self ReloadDatas];
         
 
+    }else
+    {
+        [self FooterViewClickedloadMoreData];
     }
     
     

@@ -9048,11 +9048,11 @@
 		DB4A4B66200EFEC70006EE17 /* 大牌推荐 */ = {
 			isa = PBXGroup;
 			children = (
-				DB4A4B67200EFEC70006EE17 /* HomeDPListCell.m */,
-				DB4A4B68200EFEC70006EE17 /* HomeDPModel.m */,
-				DB4A4B69200EFEC70006EE17 /* HomeDaiPaiSuggestListVC.h */,
-				DB4A4B6A200EFEC70006EE17 /* HomeDPListCell.h */,
 				DB4A4B6B200EFEC70006EE17 /* HomeDPModel.h */,
+				DB4A4B68200EFEC70006EE17 /* HomeDPModel.m */,
+				DB4A4B6A200EFEC70006EE17 /* HomeDPListCell.h */,
+				DB4A4B67200EFEC70006EE17 /* HomeDPListCell.m */,
+				DB4A4B69200EFEC70006EE17 /* HomeDaiPaiSuggestListVC.h */,
 				DB4A4B6C200EFEC70006EE17 /* HomeDaiPaiSuggestListVC.m */,
 			);
 			path = "大牌推荐";

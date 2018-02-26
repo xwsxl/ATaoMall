@@ -130,7 +130,7 @@
 
 #define HHH ([UIScreen mainScreen].bounds.size.width)*310.0/750
 
-@interface NewHomeViewController ()<UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UISearchBarDelegate,UIApplicationDelegate,LoginMessageDelegate,DJRefreshDelegate,UIAlertViewDelegate,SSPopupDelegate,RecetHomeHeaderDelegate,MKMapViewDelegate, CLLocationManagerDelegate>
+@interface NewHomeViewController ()<UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UISearchBarDelegate,UIApplicationDelegate,LoginMessageDelegate,DJRefreshDelegate,UIAlertViewDelegate,SSPopupDelegate,RecetHomeHeaderDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UITabBarControllerDelegate>
 {
     UITableView *_tableView;
     //    NewHomeHeaderView *_headerView;
@@ -240,6 +240,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //设置代理
+    self.tabBarController.delegate=self;
     [self initProperty];
     [self SetUI];
 
@@ -2484,7 +2486,16 @@
 
 
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"12345566");
+    if ((tabBarController.selectedIndex==0)&&(viewController==self)) {
+        _tableView.contentOffset=CGPointZero;
+    }
 
+
+
+}
 #pragma mark - collectionView的代理方法
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {

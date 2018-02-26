@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,51 +16,51 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="129.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="红标识底色" translatesAutoresizingMaskIntoConstraints="NO" id="moJ-B7-6nX">
-                        <rect key="frame" x="10" y="10" width="300" height="120"/>
+                        <rect key="frame" x="18" y="13" width="290" height="114.5"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="招行" translatesAutoresizingMaskIntoConstraints="NO" id="9rI-cA-KYC">
-                        <rect key="frame" x="30" y="30" width="50" height="50"/>
+                        <rect key="frame" x="38" y="33" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="bdq-Kx-LFe"/>
                             <constraint firstAttribute="width" constant="50" id="ccB-IP-wwf"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="招商银行" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mO3-0b-qpn">
-                        <rect key="frame" x="100" y="30" width="177" height="20"/>
+                        <rect key="frame" x="108" y="33" width="177" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="177" id="VYb-yC-8N7"/>
                             <constraint firstAttribute="height" constant="20" id="p4d-UT-bzp"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="储蓄卡" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bS2-fj-oMZ">
-                        <rect key="frame" x="100" y="60" width="74" height="20"/>
+                        <rect key="frame" x="108" y="63" width="74" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="74" id="58u-Q3-mi1"/>
                             <constraint firstAttribute="height" constant="20" id="xLB-L4-nyL"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="601 **** **** **** 8988" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nn-Xq-UsD">
-                        <rect key="frame" x="100" y="100" width="200" height="20"/>
+                        <rect key="frame" x="108" y="103" width="200" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="CYl-Sb-pjB"/>
                             <constraint firstAttribute="height" constant="20" id="vxt-4g-Z7M"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Quc-7y-zDU">
-                        <rect key="frame" x="294" y="2" width="25" height="25"/>
+                        <rect key="frame" x="292" y="5" width="25" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="fDC-Gi-Puf"/>
                             <constraint firstAttribute="height" constant="25" id="oLp-1e-y2o"/>
@@ -81,7 +86,7 @@
                     <constraint firstItem="moJ-B7-6nX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="ucU-k9-pel"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
                 <outlet property="BackgoundImageView" destination="moJ-B7-6nX" id="dZN-GQ-TFs"/>
                 <outlet property="BankDeleteButton" destination="Quc-7y-zDU" id="tG4-Fb-0cw"/>
