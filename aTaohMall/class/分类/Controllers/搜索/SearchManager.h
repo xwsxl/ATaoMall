@@ -15,4 +15,8 @@
 //清除缓存数组
 +(void)removeAllArray;
 
+//缓存订单搜索的数组
++(void)SearchDingDanText :(NSString *)seaTxt;
+//清除订单缓存数组
++(void)removeAllDingDanArray;
 @end

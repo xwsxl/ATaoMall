@@ -10,7 +10,7 @@
 #import "PersonalShoppingDanVC.h"
 #import "PersonalBMDanVC.h"
 #import "PersonalShoppingDanDetailVC.h"
-
+#import "XLPersonalDingDanVC.h"
 
 @interface PersonalAllDanVC ()<UIScrollViewDelegate>
 {
@@ -157,7 +157,13 @@
 -(void)searchButClick
 {
 
-
+    XLPersonalDingDanVC *VC=[[XLPersonalDingDanVC alloc] init];
+    CGPoint point=self.ContentView.contentOffset;
+    VC.ISKindOfShop=@"0";
+    if (point.x>0) {
+        VC.ISKindOfShop=@"1";
+    }
+    [self.navigationController pushViewController:VC animated:NO];
 }
 
 -(void)selectorBMDan:(UIButton *)sender

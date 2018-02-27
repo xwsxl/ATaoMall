@@ -237,15 +237,15 @@
             NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
 
 
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *dic1 = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"消费:=========%@",dic);
 
 
             NOView.hidden=YES;
 
-            for (NSDictionary *dic1 in dic) {
+            if (1) {
 
-                string10 = dic1[@"totalCount"];
+                string10 = [NSString stringWithFormat:@"%@",dic1[@"totalCount"]];
                 MyScoreModel *model=[[MyScoreModel alloc] init];
                 model.integral=dic1[@"integral"];
 

@@ -255,12 +255,8 @@
 //获取数据源
 -(void)GetDatas
 {
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-    });
-    
+  //  WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -279,7 +275,7 @@
             xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
             xmlStr = [xmlStr stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
             
-//            NSLog(@"xmlStr==店铺详情===%@",xmlStr);
+
             
             
             NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
@@ -287,7 +283,7 @@
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            
+            NSLog(@"xmlStr==店铺详情===%@",dic);
             if (page == 0) {
                 
                 [_dataArrM removeAllObjects];
@@ -388,8 +384,8 @@
             }
             
             
-            [hud dismiss:YES];
-            
+       //     [hud dismiss:YES];
+            [_refresh finishRefreshing];
             [_collectionView reloadData];
             
             
@@ -399,9 +395,9 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         
-        [hud dismiss:YES];
+    //    [hud dismiss:YES];
         
-        
+        [_refresh finishRefreshing];
         NSLog(@"%@",error);
     }];
     
@@ -626,7 +622,7 @@
         [cell.GoodsImgView sd_setImageWithURL:[NSURL URLWithString:model.GoodsImg] placeholderImage:[UIImage imageNamed:@"default_image"] options:SDWebImageProgressiveDownload];
         
         cell.GoodsNameLabel.text = model.GoodsName;
-        
+
         cell.GoodsPriceLabel.text = [NSString stringWithFormat:@"￥%.02f+%.02f积分",[model.GoodsPay_maney floatValue],[model.GoodsPay_integer floatValue]];
         
         cell.GoodsNumberLabel.text = [NSString stringWithFormat:@"%@人付款",model.Goods_amount];
@@ -754,7 +750,6 @@
     
 }
 
-
 //加载更多数据代理方法
 - (void)FooterViewClickedloadMoreData
 {
@@ -773,13 +768,11 @@
         [_collectionView reloadData];
         
     }else{
-        
-        
+        [_refresh finishRefreshing];
+
     }
     
 }
-
-
 
 -(void)QurtBtnClick
 {
@@ -857,10 +850,10 @@
     }
     
     
+
+   // [_refresh finishRefreshingDirection:direction animation:YES];
     
-    [_refresh finishRefreshingDirection:direction animation:YES];
-    
-    [_collectionView reloadData];
+  //  [_collectionView reloadData];
     
 }
 
