@@ -123,9 +123,28 @@
     [titleView addSubview:self.ShoppingDanBut];
     [titleView addSubview:self.BMDanBut];
 
+    //返回按钮
+
+    UIButton *searchBut = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    searchBut.frame = CGRectMake(kScreen_Width-35, 32+KSafeTopHeight, 20, 20);
+
+    //    [Qurt setBackgroundImage:[UIImage imageNamed:@"iconfont-fanhui2yt"] forState:0];
+
+    [searchBut setImage:[UIImage imageNamed:@"searchIcon"] forState:UIControlStateNormal];
+   // [searchBut setImage:[UIImage imageNamed:@"iconfont-fanhui2"] forState:UIControlStateSelected];
+    [searchBut addTarget:self action:@selector(searchButClick) forControlEvents:UIControlEventTouchUpInside];
+
+    [titleView addSubview:searchBut];
+
+
+
+
+
     //设置不自动调整导航栏布局和左滑退出手势不可用
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    
 }
 
 /*******************************************************      各种button执行方法、页面间的跳转       ******************************************************/
@@ -133,6 +152,12 @@
 -(void)QurtBtnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)searchButClick
+{
+
+
 }
 
 -(void)selectorBMDan:(UIButton *)sender

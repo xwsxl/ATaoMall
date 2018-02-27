@@ -234,7 +234,10 @@
     _tableView.delegate=self;
     
     _tableView.dataSource=self;
-    
+
+    _tableView.estimatedRowHeight=44;
+    _tableView.estimatedSectionHeaderHeight=10;
+    _tableView.estimatedSectionFooterHeight=0.01;
     
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
@@ -264,11 +267,11 @@
 {
     NSArray *array0=@[@"1",@"用户名",@"性别",@"生日",@"邮箱",@"QQ",@"手机"];
 
-    NSArray *array1=@[@"收货地址"];
+  //  NSArray *array1=@[@"收货地址"];
 
     
     [_titleArr addObject:@{@"array":array0}];
-    [_titleArr addObject:@{@"array":array1}];
+   // [_titleArr addObject:@{@"array":array1}];
 }
 
 -(void)getUserMessage
@@ -710,6 +713,7 @@
 {
     return 0.000000000001;
 }
+
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [[UIView alloc]init];

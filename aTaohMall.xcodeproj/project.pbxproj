@@ -1453,6 +1453,12 @@
 		72FD241B1F0B26F40047662A /* BMNewGameAndPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FD24181F0B26F40047662A /* BMNewGameAndPhoneViewController.m */; };
 		72FD241C1F0B26F40047662A /* BMPlaneAndTrainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FD241A1F0B26F40047662A /* BMPlaneAndTrainViewController.m */; };
 		DB01A7061FCD3C8F00D35D30 /* BMDanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB01A7051FCD3C8F00D35D30 /* BMDanModel.m */; };
+		DB0A40A22043F53A00F49B48 /* XLPersonalSatiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40A02043F53A00F49B48 /* XLPersonalSatiCell.m */; };
+		DB0A40A32043F53A00F49B48 /* XLPersonalSatiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0A40A12043F53A00F49B48 /* XLPersonalSatiCell.xib */; };
+		DB0A40A92044011700F49B48 /* XLPersonalAboutUsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40A82044011700F49B48 /* XLPersonalAboutUsVC.m */; };
+		DB0A40AC20440C8200F49B48 /* XLPersonalHopeHandVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40AB20440C8200F49B48 /* XLPersonalHopeHandVC.m */; };
+		DB0A40AF204463AD00F49B48 /* XLPersonalAccountSuggestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40AE204463AD00F49B48 /* XLPersonalAccountSuggestVC.m */; };
+		DB0A40B32044E86D00F49B48 /* XLPersonalDingDanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */; };
 		DB188CC41FB42959001B47C0 /* HomeBigHealthyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC31FB42959001B47C0 /* HomeBigHealthyVC.m */; };
 		DB188CC71FB53E89001B47C0 /* PersonAllScoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC61FB53E89001B47C0 /* PersonAllScoreVC.m */; };
 		DB188CCA1FB53EDF001B47C0 /* PersonHealthyScoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC91FB53EDF001B47C0 /* PersonHealthyScoreVC.m */; };
@@ -1757,7 +1763,6 @@
 		EE36C5191F307AF7005F2797 /* SelectCityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE36C5181F307AF7005F2797 /* SelectCityCell.m */; };
 		EE4B79161F593B7900C515F5 /* NSDateFormatter+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4B79151F593B7900C515F5 /* NSDateFormatter+Category.m */; };
 		EE4B79191F593DC800C515F5 /* XLDateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4B79181F593DC800C515F5 /* XLDateTools.m */; };
-		EE7278F21F6FA0DB004C2F14 /* PersonSettingInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7278F11F6FA0DB004C2F14 /* PersonSettingInfoVC.m */; };
 		EE93D9841F3877F800270C6F /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = EE93D9831F3877F800270C6F /* UIImage+Color.m */; };
 		EE93D9861F3878B500270C6F /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE93D9851F3878B500270C6F /* QuickLook.framework */; };
 		EEA2501B1F70AEEC00FD4857 /* UIButton+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA2501A1F70AEEC00FD4857 /* UIButton+badge.m */; };
@@ -3983,6 +3988,17 @@
 		B3535CAAB514DD84E5EEA773 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DB01A7041FCD3C8F00D35D30 /* BMDanModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMDanModel.h; sourceTree = "<group>"; };
 		DB01A7051FCD3C8F00D35D30 /* BMDanModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMDanModel.m; sourceTree = "<group>"; };
+		DB0A409F2043F53A00F49B48 /* XLPersonalSatiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalSatiCell.h; sourceTree = "<group>"; };
+		DB0A40A02043F53A00F49B48 /* XLPersonalSatiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalSatiCell.m; sourceTree = "<group>"; };
+		DB0A40A12043F53A00F49B48 /* XLPersonalSatiCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XLPersonalSatiCell.xib; sourceTree = "<group>"; };
+		DB0A40A72044011700F49B48 /* XLPersonalAboutUsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalAboutUsVC.h; sourceTree = "<group>"; };
+		DB0A40A82044011700F49B48 /* XLPersonalAboutUsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalAboutUsVC.m; sourceTree = "<group>"; };
+		DB0A40AA20440C8200F49B48 /* XLPersonalHopeHandVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalHopeHandVC.h; sourceTree = "<group>"; };
+		DB0A40AB20440C8200F49B48 /* XLPersonalHopeHandVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalHopeHandVC.m; sourceTree = "<group>"; };
+		DB0A40AD204463AD00F49B48 /* XLPersonalAccountSuggestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalAccountSuggestVC.h; sourceTree = "<group>"; };
+		DB0A40AE204463AD00F49B48 /* XLPersonalAccountSuggestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalAccountSuggestVC.m; sourceTree = "<group>"; };
+		DB0A40B12044E86D00F49B48 /* XLPersonalDingDanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalDingDanVC.h; sourceTree = "<group>"; };
+		DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalDingDanVC.m; sourceTree = "<group>"; };
 		DB188CC21FB42959001B47C0 /* HomeBigHealthyVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeBigHealthyVC.h; sourceTree = "<group>"; };
 		DB188CC31FB42959001B47C0 /* HomeBigHealthyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeBigHealthyVC.m; sourceTree = "<group>"; };
 		DB188CC51FB53E89001B47C0 /* PersonAllScoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonAllScoreVC.h; sourceTree = "<group>"; };
@@ -4461,8 +4477,6 @@
 		EE4B79151F593B7900C515F5 /* NSDateFormatter+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDateFormatter+Category.m"; path = "Category/NSDateFormatter+Category.m"; sourceTree = "<group>"; };
 		EE4B79171F593DC800C515F5 /* XLDateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLDateTools.h; sourceTree = "<group>"; };
 		EE4B79181F593DC800C515F5 /* XLDateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLDateTools.m; sourceTree = "<group>"; };
-		EE7278F01F6FA0DB004C2F14 /* PersonSettingInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonSettingInfoVC.h; sourceTree = "<group>"; };
-		EE7278F11F6FA0DB004C2F14 /* PersonSettingInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonSettingInfoVC.m; sourceTree = "<group>"; };
 		EE93D9821F3877F800270C6F /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Color.h"; path = "Other/UIImage+Color.h"; sourceTree = "<group>"; };
 		EE93D9831F3877F800270C6F /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Color.m"; path = "Other/UIImage+Color.m"; sourceTree = "<group>"; };
 		EE93D9851F3878B500270C6F /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -6122,7 +6136,6 @@
 				727D5B3A1D30A41C0062BE73 /* 推广返利 */,
 				727D5B4A1D30A41C0062BE73 /* 登录 */,
 				727D5B5F1D30A41C0062BE73 /* 设置 */,
-				727D5B671D30A41C0062BE73 /* 账户信息 */,
 				727D5BAB1D30A41C0062BE73 /* 退款订单 */,
 			);
 			path = Controllers;
@@ -6324,6 +6337,10 @@
 				EE7278EF1F6F9FA8004C2F14 /* Controller */,
 				EE7278EE1F6F9F9E004C2F14 /* View */,
 				EE7278ED1F6F9F95004C2F14 /* Model */,
+				727D5B671D30A41C0062BE73 /* 账户信息 */,
+				DB0A40A6204400A000F49B48 /* 反馈 */,
+				DB0A40A52044009700F49B48 /* 帮助 */,
+				DB0A40A42044008A00F49B48 /* 关于我们 */,
 				727D5B601D30A41C0062BE73 /* 修改密码 */,
 			);
 			path = "设置";
@@ -6335,9 +6352,6 @@
 				727D5B611D30A41C0062BE73 /* PassWordSettingViewController.h */,
 				727D5B621D30A41C0062BE73 /* PassWordSettingViewController.m */,
 				727D5B631D30A41C0062BE73 /* PassWordSettingViewController.xib */,
-				727D5B641D30A41C0062BE73 /* SettingPassWordViewController.h */,
-				727D5B651D30A41C0062BE73 /* SettingPassWordViewController.m */,
-				727D5B661D30A41C0062BE73 /* SettingPassWordViewController.xib */,
 			);
 			path = "修改密码";
 			sourceTree = "<group>";
@@ -8688,6 +8702,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DB0A40A42044008A00F49B48 /* 关于我们 */ = {
+			isa = PBXGroup;
+			children = (
+				DB0A40A72044011700F49B48 /* XLPersonalAboutUsVC.h */,
+				DB0A40A82044011700F49B48 /* XLPersonalAboutUsVC.m */,
+			);
+			name = "关于我们";
+			sourceTree = "<group>";
+		};
+		DB0A40A52044009700F49B48 /* 帮助 */ = {
+			isa = PBXGroup;
+			children = (
+				DB0A40AA20440C8200F49B48 /* XLPersonalHopeHandVC.h */,
+				DB0A40AB20440C8200F49B48 /* XLPersonalHopeHandVC.m */,
+			);
+			name = "帮助";
+			sourceTree = "<group>";
+		};
+		DB0A40A6204400A000F49B48 /* 反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				DB0A40AD204463AD00F49B48 /* XLPersonalAccountSuggestVC.h */,
+				DB0A40AE204463AD00F49B48 /* XLPersonalAccountSuggestVC.m */,
+			);
+			name = "反馈";
+			sourceTree = "<group>";
+		};
+		DB0A40B02044E82F00F49B48 /* 订单搜索 */ = {
+			isa = PBXGroup;
+			children = (
+				DB0A40B12044E86D00F49B48 /* XLPersonalDingDanVC.h */,
+				DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */,
+			);
+			path = "订单搜索";
+			sourceTree = "<group>";
+		};
 		DB188CC11FB4290D001B47C0 /* 大健康专区 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9918,6 +9968,7 @@
 		DB952F801FC400BB0012CF08 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				DB0A40B02044E82F00F49B48 /* 订单搜索 */,
 				DB35FDC01FC65EB200677584 /* 全部订单 */,
 			);
 			path = controller;
@@ -10185,8 +10236,12 @@
 		EE7278EF1F6F9FA8004C2F14 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EE7278F01F6FA0DB004C2F14 /* PersonSettingInfoVC.h */,
-				EE7278F11F6FA0DB004C2F14 /* PersonSettingInfoVC.m */,
+				727D5B641D30A41C0062BE73 /* SettingPassWordViewController.h */,
+				727D5B651D30A41C0062BE73 /* SettingPassWordViewController.m */,
+				727D5B661D30A41C0062BE73 /* SettingPassWordViewController.xib */,
+				DB0A409F2043F53A00F49B48 /* XLPersonalSatiCell.h */,
+				DB0A40A02043F53A00F49B48 /* XLPersonalSatiCell.m */,
+				DB0A40A12043F53A00F49B48 /* XLPersonalSatiCell.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -10955,6 +11010,7 @@
 				727D632E1D30B82C0062BE73 /* 兴业@2x.png in Resources */,
 				DB78EFD41FBD851300C861BA /* dropdown_anim__00036@2x.png in Resources */,
 				722FF3EF1D3C8667003D33B3 /* SelectPayCardCell13.xib in Resources */,
+				DB0A40A32043F53A00F49B48 /* XLPersonalSatiCell.xib in Resources */,
 				726823961DFA96ED00335A3A /* RennSDK.bundle in Resources */,
 				722FEDB01E1B775800CB8356 /* settlement_normal@2x.png in Resources */,
 				72C507AE1DAB1BCA003884F1 /* delete@2x.png in Resources */,
@@ -11344,7 +11400,6 @@
 				722FF3BC1D3C85B6003D33B3 /* SelectPayCardCell3.m in Sources */,
 				72DB56751E1CE03F000CD5CE /* FailureModel.m in Sources */,
 				7298620F1DA8EFC100519F48 /* YTOtherLoginViewController.m in Sources */,
-				EE7278F21F6FA0DB004C2F14 /* PersonSettingInfoVC.m in Sources */,
 				72A16C061EB9C72F007A96C7 /* MYCusIndexView.m in Sources */,
 				DB35FDAF1FC65A7700677584 /* NSObject+YYAddForKVO.m in Sources */,
 				72E9BCB41DC1A77800D8010F /* AVFooterRefresh.m in Sources */,
@@ -11559,6 +11614,7 @@
 				DB4A4B7A200EFEC90006EE17 /* HomeGeekGoodsListVC.m in Sources */,
 				727D5F0A1D30A41D0062BE73 /* MessageCell.m in Sources */,
 				727D5EE31D30A41D0062BE73 /* UIView+ST.m in Sources */,
+				DB0A40AF204463AD00F49B48 /* XLPersonalAccountSuggestVC.m in Sources */,
 				727D5E961D30A41D0062BE73 /* AddMyPayCardViewController.m in Sources */,
 				DB4A4B7B200EFEC90006EE17 /* HomeDPListCell.m in Sources */,
 				7202E12C1C9AA9B800B2FA42 /* HZAreaPickerView.m in Sources */,
@@ -11623,6 +11679,7 @@
 				72C5CF6D1EC943BC00767983 /* TrainYuDingViewController.m in Sources */,
 				727FCAB11E13678B008DCD25 /* UpLookCell.m in Sources */,
 				667E024E1F44A07500160C1E /* CCUploadModel.m in Sources */,
+				DB0A40B32044E86D00F49B48 /* XLPersonalDingDanVC.m in Sources */,
 				72FD240C1F0B266C0047662A /* ForYouSelectViewController.m in Sources */,
 				7202E0B91C9AA7E100B2FA42 /* main.m in Sources */,
 				667E024C1F44A07500160C1E /* CCNetWorkItem.m in Sources */,
@@ -11978,6 +12035,7 @@
 				DB35FDCB1FC6730700677584 /* PersonalShoppingRefundFooterView.m in Sources */,
 				72FD240B1F0B266C0047662A /* ForYouSelectCell.m in Sources */,
 				DB35FDA11FC65A7700677584 /* UIFont+YYAdd.m in Sources */,
+				DB0A40A92044011700F49B48 /* XLPersonalAboutUsVC.m in Sources */,
 				DBE482471FCEB63800D422F8 /* PersonalTrainDetailVC.m in Sources */,
 				727D5F231D30A41D0062BE73 /* ClassifyModel.m in Sources */,
 				666A4CD11F4EB6D300D7394F /* AirChengCheRenModel.m in Sources */,
@@ -12071,11 +12129,13 @@
 				727D613F1D30A5210062BE73 /* DJRefreshView.m in Sources */,
 				72FD24131F0B266C0047662A /* ZTSelectDetailViewController.m in Sources */,
 				72F8A4AC1EC46A6F0049AD8F /* NSDate+WQCalendarLogic.m in Sources */,
+				DB0A40A22043F53A00F49B48 /* XLPersonalSatiCell.m in Sources */,
 				720E963E1ED6742E008E56D5 /* AirOrderRefundViewController.m in Sources */,
 				DB4A4B7E200EFEC90006EE17 /* HomeHaveGoodShoppingVC.m in Sources */,
 				727D615A1D30A5210062BE73 /* WKWaitingProgressHUD.m in Sources */,
 				DB952F791FC3F9CE0012CF08 /* PersonalShoppingRefundTypeVC.m in Sources */,
 				727D5E981D30A41D0062BE73 /* BankBankCell.m in Sources */,
+				DB0A40AC20440C8200F49B48 /* XLPersonalHopeHandVC.m in Sources */,
 				724AD5621E1F32810055B28D /* SMProgressHUDLoadingView.m in Sources */,
 				72DF0B591EAD9004007A2805 /* JDSelectAnctionViewController.m in Sources */,
 				727D606B1D30A41D0062BE73 /* GotoShopLookViewController.m in Sources */,

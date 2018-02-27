@@ -43,7 +43,8 @@
     if (!URLStr) {
         URLStr=@"";
     }
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URL_Str,URLStr]]]];
+
+    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://192.168.1.26:8085/",URLStr]]]];
     [self.view addSubview:webView];
 }
 

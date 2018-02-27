@@ -418,7 +418,6 @@ static NSString * const reuseIdentifier1 = @"XLLookAllCollectionCell";
 {
     NSString *str=_searchHistoryArr[sender.tag-1400];
     [self searchText:str];
-
 }
 //删除全部
 - (void)deleteAllSearch:(id)sender {

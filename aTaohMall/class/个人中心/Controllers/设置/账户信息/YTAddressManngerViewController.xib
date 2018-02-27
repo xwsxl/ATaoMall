@@ -28,13 +28,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qGU-RW-mfr">
                     <rect key="frame" x="0.0" y="-24" width="375" height="88"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfa-EC-bdO">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfa-EC-bdO">
                             <rect key="frame" x="10" y="49" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="KtP-ld-IyC"/>
                                 <constraint firstAttribute="width" constant="30" id="qUh-H6-Kza"/>
                             </constraints>
-                            <state key="normal" backgroundImage="iconfont-fanhui2副本.png"/>
+                            <state key="normal" image="iconfont-fanhui2副本.png"/>
                             <connections>
                                 <action selector="backBtnClick:" destination="-1" eventType="touchUpInside" id="thk-4x-Ajh"/>
                             </connections>
