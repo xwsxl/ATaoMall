@@ -130,7 +130,7 @@
 
 #define HHH ([UIScreen mainScreen].bounds.size.width)*310.0/750
 
-@interface NewHomeViewController ()<UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UISearchBarDelegate,UIApplicationDelegate,LoginMessageDelegate,DJRefreshDelegate,UIAlertViewDelegate,SSPopupDelegate,RecetHomeHeaderDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UITabBarControllerDelegate>
+@interface NewHomeViewController ()<UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UISearchBarDelegate,UIApplicationDelegate,LoginMessageDelegate,DJRefreshDelegate,UIAlertViewDelegate,SSPopupDelegate,RecetHomeHeaderDelegate,MKMapViewDelegate, CLLocationManagerDelegate>
 {
     UITableView *_tableView;
     //    NewHomeHeaderView *_headerView;
@@ -207,6 +207,10 @@
 
 @property (nonatomic,assign)NSInteger datacount;
 
+/** 上次选中的索引(或者控制器) */
+@property (nonatomic, assign) NSInteger lastSelectedIndex;
+
+@property (nonatomic,assign)BOOL CanNotRefresh;
 
 @end
 
@@ -240,17 +244,51 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //设置代理
-    self.tabBarController.delegate=self;
+
     [self initProperty];
     [self SetUI];
 
     [self SetData];
-    [KNotificationCenter addObserver:self selector:@selector(receivePushNoti:) name:JMSHTReceivePushNoti object:nil];
+  //  [KNotificationCenter addObserver:self selector:@selector(receivePushNoti:) name:JMSHTReceivePushNoti object:nil];
+    static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
+    //注册接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
+}
+// 接收到通知实现方法
+- (void)tabBarSeleted {
+
+    // 如果是连续选中2次, 直接刷新
+    if (self.lastSelectedIndex == self.tabBarController.selectedIndex && [self isShowingOnKeyWindow]&&!self.CanNotRefresh) {
+        //直接写刷新代码
+        self.CanNotRefresh=YES;
+        [_tableView setContentOffset:CGPointZero];
+        [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
+    }
+    if (self.tabBarController.selectedIndex==0) {
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    // 记录这一次选中的索引
+    self.lastSelectedIndex = self.tabBarController.selectedIndex;
 
 }
 
+/**
+ * 判断一个控件是否真正显示在主窗口
+ */
+- (BOOL)isShowingOnKeyWindow
+{
+    // 主窗口
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
 
+    // 以主窗口左上角为坐标原点, 计算self的矩形框
+    CGRect newFrame = [keyWindow convertRect:self.view.frame fromView:self.view.superview];
+    CGRect winBounds = keyWindow.bounds;
+
+    // 主窗口的bounds 和 self的矩形框 是否有重叠
+    BOOL intersects = CGRectIntersectsRect(newFrame, winBounds);
+
+    return !self.view.isHidden && self.view.alpha > 0.01 && self.view.window == keyWindow && intersects;
+}
 
 //设置获取数据
 -(void)SetData
@@ -2486,16 +2524,7 @@
 
 
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    NSLog(@"12345566");
-    if ((tabBarController.selectedIndex==0)&&(viewController==self)) {
-        _tableView.contentOffset=CGPointZero;
-    }
 
-
-
-}
 #pragma mark - collectionView的代理方法
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -3099,6 +3128,7 @@
     _datacount=datacount;
     if (datacount==6) {
         [hud dismiss:YES];
+        self.CanNotRefresh=NO;
         [_tableView reloadData];
         [_collectionView reloadData];
         [_collectionView1 reloadData];
@@ -3111,6 +3141,7 @@
     else if (datacount>6)
     {
         [hud dismiss:YES];
+        self.CanNotRefresh=NO;
         if (_tableView.numberOfSections>=5) {
             [_tableView reloadSection:5 withRowAnimation:UITableViewRowAnimationNone];
         }

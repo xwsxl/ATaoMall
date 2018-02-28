@@ -23,7 +23,7 @@ static  NSString * const JMSHTImageLoadComplete=@"JMSHTImageLoadComplete";
 #define HEIGHT (NSInteger)self.view.bounds.size.height
 
 
-@interface AppStartADVC ()<UIScrollViewDelegate>
+@interface AppStartADVC ()<UIScrollViewDelegate,UITabBarControllerDelegate>
 {
     UITabBarController *tabBarController;
     CartViewController *vc4;
@@ -545,6 +545,7 @@ static  NSString * const JMSHTImageLoadComplete=@"JMSHTImageLoadComplete";
     
     tabBarController=[[UITabBarController alloc] init];
     tabBarController.viewControllers=@[nav1,nav2,nav4,nav5];
+    tabBarController.delegate=self;
     //改变TabBar的默认颜色
     tabBarController.tabBar.tintColor=[UIColor colorWithRed:255/255.0 green:91/255.0 blue:94/255.0 alpha:1.0];
     if ([str isEqualToString:@"YES"]) {
@@ -574,6 +575,18 @@ static  NSString * const JMSHTImageLoadComplete=@"JMSHTImageLoadComplete";
     
     self.view.window.rootViewController=tabBarController;
 }
+
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+
+    static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
+    //当tabBar被点击时发出一个通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:tabBarDidSelectedNotification object:nil userInfo:nil];
+
+}
+
+
+
 
 
 @end

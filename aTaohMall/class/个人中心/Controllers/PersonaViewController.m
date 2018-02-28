@@ -73,7 +73,7 @@
 #import "YTGoodsDetailViewController.h"
 #import "WKProgressHUD.h"
 
-@interface PersonaViewController ()<UITableViewDataSource,UITableViewDelegate,OutMessageDelegate,DJRefreshDelegate,ChangHeaderImageDelegate,UITabBarControllerDelegate,UITabBarDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PersonaViewController ()<UITableViewDataSource,UITableViewDelegate,OutMessageDelegate,DJRefreshDelegate,ChangHeaderImageDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 {
     UITableView *_tableView;
     
@@ -105,10 +105,14 @@
     
     UIButton *_zhiding;
     UITapGestureRecognizer *tap;
+    BOOL CannotRefresh;
 }
 
 @property (nonatomic,strong)DJRefresh *refresh;
 @property (nonatomic,strong)NSString *hahahahahah;
+/** 上次选中的索引(或者控制器) */
+@property (nonatomic, assign) NSInteger lastSelectedIndex;
+
 @end
 
 @implementation PersonaViewController
@@ -154,8 +158,7 @@
     self.navigationController.navigationBar.hidden=YES;
     self.navigationController.interactivePopGestureRecognizer.enabled=NO;
     self.view.frame=[UIScreen mainScreen].bounds;
-    //设置代理
-    self.tabBarController.delegate=self;
+
     
     [self initData];//初始化数据
     //登录通知
@@ -166,7 +169,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BMNotification:) name:@"BMNotification" object:nil];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CartDataFinish:) name:@"CartDataFinish" object:nil];
-    
+    static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
+    //注册接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
     //**************
    // [KNotificationCenter addObserver:self selector:@selector(login) name:@"login" object:nil];
     
@@ -250,6 +255,40 @@
     //启动定位
     [_locationManager startUpdatingLocation];
 
+}
+
+// 接收到通知实现方法
+- (void)tabBarSeleted {
+
+    // 如果是连续选中2次, 直接刷新
+    if (self.lastSelectedIndex == self.tabBarController.selectedIndex && [self isShowingOnKeyWindow]&&!CannotRefresh) {
+        CannotRefresh=YES;
+        _tableView.contentOffset=CGPointZero;
+        //直接写刷新代码
+        [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
+    }
+
+    // 记录这一次选中的索引
+    self.lastSelectedIndex = self.tabBarController.selectedIndex;
+
+}
+
+/**
+ * 判断一个控件是否真正显示在主窗口
+ */
+- (BOOL)isShowingOnKeyWindow
+{
+    // 主窗口
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+
+    // 以主窗口左上角为坐标原点, 计算self的矩形框
+    CGRect newFrame = [keyWindow convertRect:self.view.frame fromView:self.view.superview];
+    CGRect winBounds = keyWindow.bounds;
+
+    // 主窗口的bounds 和 self的矩形框 是否有重叠
+    BOOL intersects = CGRectIntersectsRect(newFrame, winBounds);
+
+    return !self.view.isHidden && self.view.alpha > 0.01 && self.view.window == keyWindow && intersects;
 }
 
 -(void)gotoYT
@@ -459,14 +498,14 @@
 
             }
             [hud dismiss:YES];
-
+            CannotRefresh=NO;
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 
         }
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
 
         [hud dismiss:YES];
-
+        CannotRefresh=NO;
         NSLog(@"errpr = %@",error);
     }];
 }
@@ -1305,11 +1344,12 @@
     
     self.sigen=[kUserDefaults objectForKey:@"sigen"];
     [self getUserAccountData];
-    
+
+    if (!_refresh) {
     _refresh=[[DJRefresh alloc] initWithScrollView:_tableView delegate:self];
     _refresh.topEnabled=YES;//下拉刷新
     _refresh.bottomEnabled=NO;//上拉加载
-    
+    }
 }
 
 //退出登录
@@ -1336,41 +1376,6 @@
     [_tableView reloadData];
 }
 
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    
-    if (tabBarController.selectedIndex==3) {
-        
-        NewHomeViewController *vc=[[NewHomeViewController alloc] init];
-        
-        if (viewController==vc) {
-            
-            self.navigationController.navigationBar.hidden=YES;
-        }
-        if (viewController == self) {
-            
-            [self outStatus];
-            
-        }
-    }else if (tabBarController.selectedIndex==2){
-        
-        
-        
-        
-        //发送通知给购物车刷新数据
-        
-        NSNotification *notification = [[NSNotification alloc] initWithName:@"CartReloadData" object:nil userInfo:nil];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        
-        
-        
-    }
-    else if (tabBarController.selectedIndex==0)
-    {
-        [(UINavigationController *)self.tabBarController.viewControllers.firstObject popToRootViewControllerAnimated:YES];
-    }
-}
 
 //全部订单点击返回刷新用户积分
 -(void)personScoreReloasData
@@ -1589,7 +1594,7 @@
  ******/
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addDataWithDirection:direction];
     });
     

@@ -230,6 +230,10 @@
 //当前商品所选规格model数组
 @property (nonatomic, strong) NSMutableArray *selectSpecificationsArray;
 
+/** 上次选中的索引(或者控制器) */
+@property (nonatomic, assign) NSInteger lastSelectedIndex;
+
+@property (nonatomic,assign)BOOL CannotRefresh;
 
 #define HEADERCELLTAG 10000
 #define HEADEREDITTTAG 10100
@@ -285,14 +289,46 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TongZhiCartLoginSuccess:) name:@"TongZhiCartLoginSuccess" object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PaySuccessBackCart:) name:@"PaySuccessBackCart" object:nil];
+    
+    static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
+    //注册接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
+}
 
-    //监听键盘出现和消失
-  //  [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+// 接收到通知实现方法
+- (void)tabBarSeleted {
 
-   // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // 如果是连续选中2次, 直接刷新
+    if (self.lastSelectedIndex == self.tabBarController.selectedIndex && [self isShowingOnKeyWindow]&&!self.CannotRefresh) {
+        self.CannotRefresh=YES;
+        _myTableView.contentOffset=CGPointZero;
+        //直接写刷新代码
+        [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
+    }
 
+    // 记录这一次选中的索引
+    self.lastSelectedIndex = self.tabBarController.selectedIndex;
 
 }
+
+/**
+ * 判断一个控件是否真正显示在主窗口
+ */
+- (BOOL)isShowingOnKeyWindow
+{
+    // 主窗口
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+
+    // 以主窗口左上角为坐标原点, 计算self的矩形框
+    CGRect newFrame = [keyWindow convertRect:self.view.frame fromView:self.view.superview];
+    CGRect winBounds = keyWindow.bounds;
+
+    // 主窗口的bounds 和 self的矩形框 是否有重叠
+    BOOL intersects = CGRectIntersectsRect(newFrame, winBounds);
+
+    return !self.view.isHidden && self.view.alpha > 0.01 && self.view.window == keyWindow && intersects;
+}
+
 //初始化属性、数组等等
 -(void)initProperty
 {
@@ -560,13 +596,13 @@
             [self.myTableView reloadData];
 
 
-            self.tabBarController.tabBar.userInteractionEnabled=YES;
-
+           // self.tabBarController.tabBar.userInteractionEnabled=YES;
+            self.CannotRefresh=NO;
 
         }else{
 
             [hud dismiss:YES];
-
+  self.CannotRefresh=NO;
             NSLog(@"error");
 
         }
@@ -3107,38 +3143,16 @@
 //下拉刷新
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
     
-    //    view1.hidden=YES;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addDataWithDirection:direction];
-        
-        //        view1.hidden=NO;
-        
     });
-    
-    self.tabBarController.tabBar.userInteractionEnabled=NO;
-    
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-        [hud dismiss:YES];
-        
-    });
-    
     
 }
 
 - (void)addDataWithDirection:(DJRefreshDirection)direction{
     
     if (direction==DJRefreshDirectionTop) {
-        
-        
-        //        [_StoreArrM removeAllObjects];
-        
-        //        [_FailureArrM removeAllObjects];
-        
         
         //创建导航栏
         [self initNav];
@@ -3160,10 +3174,7 @@
         
         
         [self getDatas];
-        
-        //回到头部
-        //        [_myTableView setContentOffset:CGPointZero animated:YES];
-        
+
     }
     
     [_refresh finishRefreshingDirection:direction animation:YES];

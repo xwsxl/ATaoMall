@@ -29,7 +29,7 @@
                                 <constraint firstAttribute="width" constant="30" id="Tc1-Fc-pCB"/>
                                 <constraint firstAttribute="height" constant="30" id="W2d-ln-HNS"/>
                             </constraints>
-                            <state key="normal" image="iconfont-fanhui2副本.png"/>
+                            <state key="normal" image="iconfont-fanhui2.png"/>
                             <connections>
                                 <action selector="backBtnClick:" destination="-1" eventType="touchUpInside" id="ONz-gM-r8N"/>
                             </connections>
@@ -68,6 +68,6 @@
         </view>
     </objects>
     <resources>
-        <image name="iconfont-fanhui2副本.png" width="22" height="22"/>
+        <image name="iconfont-fanhui2.png" width="22" height="22"/>
     </resources>
 </document>
