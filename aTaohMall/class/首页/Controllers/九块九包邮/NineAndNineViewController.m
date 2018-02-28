@@ -292,7 +292,7 @@
 //                footer.loadMoreBtn.enabled=YES;
 
             }else if (_dataSource.count == [string10 integerValue]){
-                _refresh.bottomEnabled=YES;
+                _refresh.bottomEnabled=NO;
 
 //
 //                 footer.hidden=NO;
@@ -545,7 +545,7 @@
 }
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addDataWithDirection:direction];
     });
     

@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NineAndNineViewController : UIViewController
-
-
 @property(nonatomic,copy) NSString *NineId;
 @end

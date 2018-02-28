@@ -554,7 +554,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-       // [SearchManager removeAllArray];
+        [SearchManager removeAllDingDanArray];
         _searchHistoryArr=@[];
         [self initScrollView];
     }]];

@@ -27,8 +27,6 @@
 @property (nonatomic,strong)UIScrollView  *ContentView;
 @property (nonatomic,strong)UIView *noDataView;
 
-
-
 @end
 
 @implementation PersonalAllDanVC
@@ -60,8 +58,6 @@
 
 }
 
-
-
 -(void)SetUI
 {
     [self InitNavi];
@@ -72,7 +68,6 @@
 }
 
 /*******************************************************      数据请求       ******************************************************/
-
 
 /*******************************************************      初始化视图       ******************************************************/
 
