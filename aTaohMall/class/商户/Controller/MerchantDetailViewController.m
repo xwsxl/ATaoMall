@@ -368,7 +368,7 @@
             }else if (_dataArrM.count == [string10 integerValue]){
 //                footer.hidden = NO;
                cell1.hidden=YES;
-                 _refresh.bottomEnabled=YES;
+                 _refresh.bottomEnabled=NO;
 //                footer.moreView.hidden=YES;
 //                [footer.loadMoreBtn setTitle:@"暂无更多数据" forState:0];
 //                [footer.loadMoreBtn setTitleColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0] forState:0];
@@ -835,12 +835,7 @@
         
         page=0;
         currentPageNo=1;
-        
-//        [_dataArrM removeAllObjects];
-//        
-//        [_headerArrM removeAllObjects];
-        
-        
+
         //获取数据
         [self GetDatas];
         
@@ -848,13 +843,7 @@
     {
         [self FooterViewClickedloadMoreData];
     }
-    
-    
 
-   // [_refresh finishRefreshingDirection:direction animation:YES];
-    
-  //  [_collectionView reloadData];
-    
 }
 
 -(void)HotBtnClick

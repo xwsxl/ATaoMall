@@ -138,7 +138,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
 
-
+    YLog(@"params=%@",params);
     NSString *url = [NSString stringWithFormat:@"%@orderSearch_mob.shtml",URL_Str];
 
   //  NSDictionary *dic = @{@"word":_searchKeyWord,@"flag":[NSString stringWithFormat:@"%d",flag]};
@@ -510,7 +510,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 
         UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,(kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2+100-KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, 20)];
         _lable.font=KNSFONT(15);
-        _lable.text = @"抱歉，没有搜索到相关商品~";
+        _lable.text = @"还没查询到相关订单";
         _lable.tag = 100;
         _lable.textColor =RGB(74,74,74);
         _lable.textAlignment = NSTextAlignmentCenter;
@@ -1163,7 +1163,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         [TrainToast showWithText:@"输入的搜索内容不能为空!" duration:2.0f];
     }else
     {
-        flag=1;
+        self.page=0;
         [self.searchTextField resignFirstResponder];
         [SearchManager SearchDingDanText:str];//缓存搜索记录
         [self readNSUserDefaults];

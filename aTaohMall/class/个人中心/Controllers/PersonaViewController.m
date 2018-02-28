@@ -172,8 +172,7 @@
     static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
     //注册接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
-    //**************
-   // [KNotificationCenter addObserver:self selector:@selector(login) name:@"login" object:nil];
+
     
     
    
