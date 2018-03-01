@@ -63,27 +63,32 @@
                     <rect key="frame" x="0.0" y="618" width="375" height="49"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jyr-hR-BkT">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                            <rect key="frame" x="10" y="0.0" width="355" height="44"/>
                             <color key="backgroundColor" red="1" green="0.36470588235294116" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="49" id="7tV-QB-YbW"/>
+                                <constraint firstAttribute="height" constant="44" id="7tV-QB-YbW"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="20"/>
                             <state key="normal" title="新增收货地址">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="YTAddAddress:" destination="-1" eventType="touchUpInside" id="pJq-lb-R53"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="Jyr-hR-BkT" secondAttribute="bottom" id="3no-lb-ziR"/>
-                        <constraint firstItem="Jyr-hR-BkT" firstAttribute="leading" secondItem="pkA-gR-aHk" secondAttribute="leading" id="67F-lb-AEq"/>
+                        <constraint firstAttribute="bottom" secondItem="Jyr-hR-BkT" secondAttribute="bottom" constant="5" id="3no-lb-ziR"/>
+                        <constraint firstItem="Jyr-hR-BkT" firstAttribute="leading" secondItem="pkA-gR-aHk" secondAttribute="leading" constant="10" id="67F-lb-AEq"/>
                         <constraint firstItem="Jyr-hR-BkT" firstAttribute="top" secondItem="pkA-gR-aHk" secondAttribute="top" id="Qvx-O8-EI1"/>
                         <constraint firstAttribute="height" constant="49" id="X8O-dX-ebJ"/>
-                        <constraint firstAttribute="trailing" secondItem="Jyr-hR-BkT" secondAttribute="trailing" id="Zhc-Mp-eu9"/>
+                        <constraint firstAttribute="trailing" secondItem="Jyr-hR-BkT" secondAttribute="trailing" constant="10" id="Zhc-Mp-eu9"/>
                     </constraints>
                 </view>
             </subviews>

@@ -364,6 +364,9 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     [self.searchTextField addTarget:self action:@selector(changeValue:) forControlEvents:UIControlEventEditingChanged];
     self.searchTextField.returnKeyType = UIReturnKeySearch;//更改键盘的return
     self.searchTextField.contentVerticalAlignment=NSTextAlignmentCenter;
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, 0.01)];
+    self.searchTextField.inputAccessoryView=customView;
+
     self.searchTextField.delegate = self;
     self.searchTextField.font=KNSFONT(14);
 

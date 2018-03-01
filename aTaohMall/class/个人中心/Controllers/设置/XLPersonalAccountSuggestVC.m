@@ -169,6 +169,9 @@
 
     _feedBackTV=[[UITextView alloc] initWithFrame:CGRectMake(Width(15), 8, kScreen_Width-Width(30), 124)];
     _feedBackTV.delegate=self;
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, 0.01)];
+    _feedBackTV.inputAccessoryView=customView;
+
     _feedBackTV.font=KNSFONT(14);
     [_feedBackView addSubview:_feedBackTV];
 
@@ -298,17 +301,20 @@
 -(void)textViewDidChange:(UITextView *)textView
 {
     _placeHodleLab.hidden=YES;
-    _commitBut.backgroundColor = RGB(243, 73, 73);
-    _commitBut.userInteractionEnabled = YES;
+
     _stringLengthLab.text=[NSString stringWithFormat:@"%lu/500",textView.text.length];
     if (textView.text.length>=500) {
         textView.text=[textView.text substringToIndex:500];
         _stringLengthLab.text=@"500/500";
     }
 
-    if (textView.text.length==0) {
+    if (textView.text.length<10) {
         _commitBut.userInteractionEnabled=NO;
         _commitBut.backgroundColor=RGBA(243, 73, 73,0.5);
+    }else
+    {
+        _commitBut.backgroundColor = RGB(243, 73, 73);
+        _commitBut.userInteractionEnabled = YES;
     }
 
 }
@@ -333,7 +339,7 @@
 
 -(void)QurtBtnClick
 {
-    if (_feedBackTV.text.length==0) {
+    if (_feedBackTV.text.length==0&&_PhotoMArr.count==0) {
     [self.navigationController popViewControllerAnimated:YES];
     }else
     {

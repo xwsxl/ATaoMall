@@ -21,6 +21,9 @@
     XLNaviView *Navi=[[XLNaviView alloc] initWithMessage:@"关于我们" ImageName:@""];
     Navi.delegate=self;
     [self.view addSubview:Navi];
+    UIImageView *IV=[[UIImageView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
+    IV.image=KImage(@"xl-bg");
+    [self.view addSubview:IV];
 
     _scroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
     _scroll.showsVerticalScrollIndicator=NO;

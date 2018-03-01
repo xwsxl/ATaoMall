@@ -173,9 +173,6 @@
     //注册接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
 
-    
-    
-   
     [self createTableView];
     
     
@@ -1652,8 +1649,7 @@
     label1.textColor=[UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1.0];
     
     [view addSubview:label1];
-    
-    
+
     UILabel *label2=[[UILabel alloc] initWithFrame:CGRectMake(100, 210, view.frame.size.width-200, 20)];
     
     label2.text=@"请检查你的网络";

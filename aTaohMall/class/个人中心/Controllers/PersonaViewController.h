@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 #import "MallModel.h"//数据模型
 
 #import "AppDelegate.h"
@@ -42,4 +41,5 @@
 @property(nonatomic,copy)NSString *weidu;//纬度
 
 @property (nonatomic,strong)NSString *healthyInteger;
+
 @end

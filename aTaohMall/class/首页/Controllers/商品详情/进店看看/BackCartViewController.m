@@ -336,7 +336,9 @@
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;
     [self.view addSubview:self.myTableView];
-    
+    self.myTableView.estimatedRowHeight=0;
+    self.myTableView.estimatedSectionFooterHeight=0;
+    self.myTableView.estimatedSectionHeaderHeight=0;
     //去除系统分割线
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -582,7 +584,7 @@
     
     BackButton.frame = CGRectMake(10, 25+KSafeTopHeight, 30, 30);
     
-    [BackButton setBackgroundImage:[UIImage imageNamed:@"iconfont-fanhui2yt"] forState:0];
+    [BackButton setImage:[UIImage imageNamed:@"iconfont-fanhui2yt"] forState:0];
     
     [BackButton addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     

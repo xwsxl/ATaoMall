@@ -124,7 +124,7 @@
         return;
     }
     self.pickerView = [[JSAddressPickerView alloc] initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    [self.pickerView updateAddressAtProvince:@"湖南省" city:@"常德市" town:@"石门县"];
+    [self.pickerView updateAddressAtProvince:@"湖南省" city:@"岳阳市" town:@"岳阳楼区"];
     self.pickerView.delegate = self;
     self.pickerView.font = [UIFont boldSystemFontOfSize:14];
     [self.view addSubview:self.pickerView];
