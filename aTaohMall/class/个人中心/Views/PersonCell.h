@@ -16,8 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *myBusinessQurtButton;//我的商圈
 
-
 @property (weak, nonatomic) IBOutlet UIButton *TuiGuangfanliButton;//推广返利
-
 
 @end

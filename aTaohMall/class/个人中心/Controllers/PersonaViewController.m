@@ -9,7 +9,6 @@
 #import "PersonaViewController.h"
 #import "personHeaderView.h"
 #import "PersonCell.h"
-#import "MessageCell.h"
 #import "FristHomeCell.h"
 
 
@@ -532,8 +531,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PersonCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
     
-  //  [_tableView registerNib:[UINib nibWithNibName:@"MessageCell" bundle:nil] forCellReuseIdentifier:@"Cell1"];
-    
+
     //header
     [_tableView registerNib:[UINib nibWithNibName:@"personHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"HeaderCell"];
   //  [_tableView registerClass:[personHeaderView class] forCellReuseIdentifier:@"HeaderCell"];
