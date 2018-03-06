@@ -386,7 +386,6 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     Line.image=KImage(@"分割线-拷贝");
     [_navView addSubview:Line];
 
-
 }
 
 -(void)initScrollView

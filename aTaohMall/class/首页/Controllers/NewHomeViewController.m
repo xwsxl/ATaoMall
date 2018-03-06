@@ -858,7 +858,7 @@
 
 
                 for (NSDictionary *dict1 in dic[@"list1"]) {
-                    YLog(@"%@",dict1);
+                  //  YLog(@"%@",dict1);
                     HomeModel *model=[[HomeModel alloc] init];
 
                     model.ID = [NSString stringWithFormat:@"%@",dict1[@"id"]];
@@ -3126,6 +3126,7 @@
 -(void)setDatacount:(NSInteger)datacount
 {
     _datacount=datacount;
+    YLog(@"datacount=%ld",datacount);
     if (datacount==6) {
         [hud dismiss:YES];
         self.CanNotRefresh=NO;

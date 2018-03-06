@@ -415,12 +415,14 @@
     WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
 
     NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
+
     //读取数组NSArray类型的数据
     self.sigen=[userDefaultes stringForKey:@"sigen"];
 
     if (self.sigen.length==0) {
         self.sigen = @"";
     }
+
     if (!_datasArrM) {
         _datasArrM=[NSMutableArray new];
     }
