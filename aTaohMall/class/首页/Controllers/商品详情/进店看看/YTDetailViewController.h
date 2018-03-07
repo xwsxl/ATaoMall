@@ -13,6 +13,8 @@
 
 -(void)setGoodsPrice:(NSString *)price setGid:(NSString *)gid setSigen:(NSString *)sigen setStorename:(NSString *)storename setLogo:(NSString *)logo setSendWayType:(NSString *)SendWayType setGoodsType:(NSString *)good_type setMoneyType:(NSString *)MoneyType setmid:(NSString *)mid setYunFei:(NSString *)yunfei setPanduan:(NSString *)panduan setNum:(NSString *)num setexchange:(NSString *)exchange setdetailId:(NSString *)detailId setexchange2:(NSString *)exchange2 setYTString:(NSString *)yt;
 
+-(void)setShouCangString:(NSString *)str;
+
 @end
 @interface YTDetailViewController : UIViewController
 

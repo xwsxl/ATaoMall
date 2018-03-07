@@ -15,6 +15,9 @@ typedef void(^Success)(NSDictionary *responseObj);
 typedef void(^Failure)(NSError *error);
 
 @interface ATHRequestManager : NSObject
+
++(void)POST:(NSString *)urlString parameters:(id)parameters successBlock:(Success)success faildBlock:(Failure)faild;
+
 /*******************************************************      首页改版       ******************************************************/
 /**
 获取大牌推荐列表数据

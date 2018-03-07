@@ -224,6 +224,7 @@
 @property (nonatomic,strong)YTGoodsDetailViewController *YTView;
 @property (nonatomic,strong)DJRefresh *refresh;
 @property (nonatomic, weak) GGClockView *clockView;
+@property (nonatomic,strong)NSString *shouCangStr;
 @end
 
 @implementation YTDetailViewController
@@ -1603,12 +1604,7 @@
     dispatch_after(time, dispatch_get_main_queue(), ^{
         
     });
-    
-//    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    
-    
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -1617,8 +1613,7 @@
     
     NSDictionary *dic = @{@"id":self.gid};//,@"page":@"0",@"currentPageNo":@"1"};
     
-    //    NSDictionary *dic=nil;
-    
+
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
         NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
@@ -1664,10 +1659,7 @@
                             
                             self.StockString = dict1[@"total_stock"];//判断库存为0，设置遮罩层
                             
-//                            if (self.StockString.length==0 || [self.StockString isEqualToString:@"0"]) {
-//                                
-//                                self.StockString = dict1[@"stock"];
-//                            }
+
                             
                         }else{
                             
@@ -1703,11 +1695,6 @@
             
             
             [self initWebView];
-            
-            
-            
-            
-            
         }
         
         
@@ -1991,18 +1978,12 @@
        
         
         
-//        if ([self.webString isEqualToString:@"100"]) {
-//            
-//            [self NoWebSeveice];
-//            
-//        }else{
+
             _tableView.hidden=NO;
         
            _webView.hidden=YES;
            view2.hidden=YES;
-            
-//        }
-        
+
         [self.view removeGestureRecognizer:self.rightSwipeGestureRecognizer];
         
         [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
@@ -2551,18 +2532,18 @@
             
                         NSLog(@"=====商品详情xmlStr%@",xmlStr);
             //菊花消失
-//            [hud dismiss:YES];
-//
+
             NSData *data = [[NSData alloc] initWithData:[xmlStr dataUsingEncoding:NSUTF8StringEncoding]];
             
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             NSLog(@"=====商品详情：%@",dic);
+
             view.hidden=YES;
             for (NSDictionary *dict1 in dic) {
                 NSLog(@"dict1=%@",dict1);
-                
+                self.shouCangStr=[NSString stringWithFormat:@"%@",dict1[@"is_status"]];
                 self.String=dict1[@"status"];
                 
                 //进入商品详情显示购物车数量
@@ -3946,7 +3927,7 @@
             vc.YTStatus=self.status;
             vc.YTBackString=self.Attribute_back;
             vc.TTTTTTT = self.TTTTTT;
-            
+
             [self.navigationController pushViewController:vc animated:NO];
             
             self.navigationController.navigationBar.hidden=YES;
@@ -4455,4 +4436,13 @@
 {
     NSLog(@"定位失败:%@", error);
 }
+
+-(void)setShouCangStr:(NSString *)shouCangStr
+{
+    _shouCangStr=shouCangStr;
+    if (_delegate&&[_delegate respondsToSelector:@selector(setShouCangString:)]) {
+        [_delegate setShouCangString:shouCangStr];
+    }
+}
+
 @end

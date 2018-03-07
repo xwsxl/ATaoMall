@@ -29,6 +29,7 @@ typedef void(^AlertViewBlock)(NSInteger buttonTag);
    viewController:(UIViewController *)vc
           confirm:(AlertViewBlock)confirm;
 
+
 typedef void (^CallBackBlock)(NSInteger btnIndex);
 
 /**

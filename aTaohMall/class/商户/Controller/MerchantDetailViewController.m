@@ -39,6 +39,7 @@
 #import "YTGoodsDetailViewController.h"
 
 #import "MerchantMapViewController.h"
+#import "ATHLoginViewController.h"
 @interface MerchantDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,DJRefreshDelegate,FooterViewDelegate>
 {
     
@@ -59,7 +60,10 @@
     int page;
     int currentPageNo;
     NSString *string10;
+    //NSString *ShouCangStr;
     MerchantNoDataCell *cell1;
+
+    UIButton *ShouCangBut;
     
 }
 
@@ -67,6 +71,7 @@
 
 @property(nonatomic,strong) UILabel *NoDataLabel;
 
+@property (nonatomic,strong)NSString *ShouCangStr;
 
 @property (nonatomic, strong) NSTimer        *m_timer; //定时器
 
@@ -248,8 +253,78 @@
     label.textAlignment = NSTextAlignmentCenter;
     
     [titleView addSubview:label];
-    
-    
+
+
+    ShouCangBut=[UIButton buttonWithType:UIButtonTypeCustom];
+    ShouCangBut.frame=CGRectMake(kScreen_Width-15-18-11, 20+KSafeTopHeight, 40, 40);
+
+    [ShouCangBut addTarget:self action:@selector(shouCangBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [titleView addSubview:ShouCangBut];
+
+}
+
+-(void)shouCangBtnClick:(UIButton *)sender
+{
+    ShouCangBut.userInteractionEnabled=NO;
+    if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
+
+    sender.selected=!sender.selected;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSString *url=[NSString stringWithFormat:@"%@updateCollectionGoodsOrShop_mob.shtml",URL_Str];
+   /* 收藏店铺参数：sigen：
+    is_status：收藏状态：1收藏2取消收藏（这里传1）
+    type：类型：1商品2商铺（这里传2）
+    mid：商户ID
+    取消收藏店铺参数：sigen：
+    is_status：收藏状态：1收藏2取消收藏（这里传2）
+    type：类型：1商品2商铺（这里传2）
+    mid：商户ID */
+    if (sender.selected) {
+        NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"2",@"mid":self.mid};
+        [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                self.ShouCangStr=@"1";
+            }
+
+            [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                ShouCangBut.userInteractionEnabled=YES;
+            });
+        } faildBlock:^(NSError *error) {
+            [TrainToast showWithText:error.localizedDescription duration:2.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                ShouCangBut.userInteractionEnabled=YES;
+            });
+        }];
+
+
+    }else
+    {
+        NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"2",@"type":@"2",@"mid":self.mid};
+        [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                self.ShouCangStr=@"2";
+            }
+
+            [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                ShouCangBut.userInteractionEnabled=YES;
+            });
+        } faildBlock:^(NSError *error) {
+            [TrainToast showWithText:error.localizedDescription duration:2.0];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                ShouCangBut.userInteractionEnabled=YES;
+            });
+        }];
+
+    }
+    }else
+    {
+        ATHLoginViewController *VC=[[ATHLoginViewController alloc] init];
+        [self.navigationController pushViewController:VC animated:NO];
+    }
 }
 
 //获取数据源
@@ -264,7 +339,7 @@
     
     NSString *url = [NSString stringWithFormat:@"%@getShopDetails_mob.shtml",URL_Str];
     
-    NSDictionary *dic = @{@"mid":self.mid,@"flag":[NSString stringWithFormat:@"%d",page],@"type":self.Type};
+    NSDictionary *dic = @{@"mid":self.mid,@"flag":[NSString stringWithFormat:@"%d",page],@"type":self.Type,@"sigen":[kUserDefaults stringForKey:@"sigen"]};
     
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
@@ -296,6 +371,7 @@
             for (NSDictionary *dict1 in dic) {
                
                 string10 = dict1[@"totalCount"];
+                self.ShouCangStr=dict1[@"is_status"];
                 for (NSDictionary *dict2 in dict1[@"goodList"]) {
                     
                     MerchantModel *model=[[MerchantModel alloc] init];
@@ -905,7 +981,18 @@
     [self GetDatas];
     
 }
-
+-(void)setShouCangStr:(NSString *)ShouCangStr
+{
+    _ShouCangStr=ShouCangStr;
+    if ([ShouCangStr isEqualToString:@"1"]) {
+        ShouCangBut.selected=YES;
+        [ShouCangBut setImage:KImage(@"13btn_collection") forState:0];
+    }else
+    {
+        ShouCangBut.selected=NO;
+        [ShouCangBut setImage:KImage(@"13btn_notcollected") forState:0];
+    }
+}
 
 -(void)Tap:(UITapGestureRecognizer *)Gr
 {

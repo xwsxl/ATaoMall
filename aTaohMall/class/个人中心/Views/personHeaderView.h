@@ -36,5 +36,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *DengLuLAbel;
 
 @property (weak, nonatomic) IBOutlet UILabel *UserHeathyLab;
+@property (weak, nonatomic) IBOutlet UIButton *ShopShouCangBut;
+@property (weak, nonatomic) IBOutlet UIButton *MerchantShouCangBut;
+@property (weak, nonatomic) IBOutlet UIButton *ShouCangHistoryBut;
 
 @end

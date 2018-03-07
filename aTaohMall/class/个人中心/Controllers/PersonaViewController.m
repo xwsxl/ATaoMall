@@ -101,7 +101,10 @@
     NSString *wait_delivery_sum;
     NSString *wait_payment_sum;
     NSString *wait_receive_goods_sum;
-    
+    NSString *shop_total_count;
+    NSString *goods_total_count;
+
+
     UIButton *_zhiding;
     UITapGestureRecognizer *tap;
     BOOL CannotRefresh;
@@ -157,7 +160,6 @@
     self.navigationController.navigationBar.hidden=YES;
     self.navigationController.interactivePopGestureRecognizer.enabled=NO;
     self.view.frame=[UIScreen mainScreen].bounds;
-
     
     [self initData];//初始化数据
     //登录通知
@@ -294,6 +296,8 @@
 -(void)initData
 {
     self.CartString = @"100";//判断购物车是否加载完成
+    goods_total_count=@"0";
+    shop_total_count=@"0";
     [self GetDatas];
 }
 
@@ -353,6 +357,8 @@
                     wait_payment_sum=[NSString stringWithFormat:@"%@",dict[@"wait_payment_sum"]];
                     wait_delivery_sum=[NSString stringWithFormat:@"%@",dict[@"wait_delivery_sum"]];
                     wait_receive_goods_sum=[NSString stringWithFormat:@"%@",dict[@"wait_receive_goods_sum"]];
+                    goods_total_count=[NSString stringWithFormat:@"%@",dict[@"goods_total_count"]];
+                    shop_total_count=[NSString stringWithFormat:@"%@",dict[@"shop_total_count"]];
                     if ([wait_payment_sum isEqualToString:@"(null)"]) {
                         wait_payment_sum=@"0";
                     }
@@ -361,6 +367,12 @@
                     }if ([wait_receive_goods_sum isEqualToString:@"(null)"]) {
                         wait_receive_goods_sum=@"0";
                     }
+                    if ([goods_total_count isEqualToString:@"(null)"]) {
+                        goods_total_count=@"0";
+                    }if ([shop_total_count isEqualToString:@"(null)"]) {
+                        shop_total_count=@"0";
+                    }
+                    
                     //缓存用户名
                     [UserMessageManager UserInteger:dict[@"integer"]];
                     
@@ -605,7 +617,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section==0) {
-        return 335;
+        return 400;
     }else
     {
         return 0.01;
@@ -620,6 +632,8 @@
     _headerView.headerImageView.layer.masksToBounds=YES;
     _headerView.headerImageView.layer.cornerRadius=35;
     NSLog(@"======%@",self.portrait);
+
+    CGSize size=[@"商品收藏" sizeWithFont:[UIFont systemFontOfSize:13] maxSize:KMAXSIZE];
     //显示账户名与积分
     if ([[kUserDefaults objectForKey:@"status"] isEqualToString:@"YES"]) {
         _headerView.loginButton.hidden=YES;
@@ -654,6 +668,21 @@
         _headerView.UserHeathyLab.text=[NSString stringWithFormat:@"健康积分：%.02f",[self.healthyInteger doubleValue]];
         //用户名
         _headerView.UserNameLabel.text=self.UserName;
+
+
+
+        [_headerView.ShopShouCangBut setTitle:[NSString stringWithFormat:@"%@\n商品收藏",goods_total_count] forState:0];
+        [_headerView.MerchantShouCangBut setTitle:[NSString stringWithFormat:@"%@\n店铺收藏",shop_total_count] forState:0];
+
+
+        [_headerView.ShopShouCangBut setTitleEdgeInsets:UIEdgeInsetsMake(0, (size.width-kScreen_Width/3)/2, 0, 0)];
+
+
+        [UILabel changeLineSpaceForLabel:_headerView.MerchantShouCangBut.titleLabel WithSpace:5];
+        [UILabel changeLineSpaceForLabel:_headerView.ShopShouCangBut.titleLabel WithSpace:5];
+
+
+
         
         [_headerView.UserMessageBut addTarget:self action:@selector(UserMessageBtnClick) forControlEvents:UIControlEventTouchUpInside];
         //设置
@@ -670,6 +699,18 @@
         _headerView.UserNameLabel.hidden=YES;
         _headerView.UserScoreLabel.hidden=YES;
         _headerView.UserHeathyLab.hidden=YES;
+
+        [_headerView.ShopShouCangBut setTitle:@"商品收藏" forState:0];
+        [_headerView.ShopShouCangBut setImage:KImage(@"13icon_commoditycollections") forState:0];
+        [_headerView.ShopShouCangBut setTitleEdgeInsets:UIEdgeInsetsMake(25, -(kScreen_Width/3-size.width)/2, 0, 0)];
+        [_headerView.ShopShouCangBut setImageEdgeInsets:UIEdgeInsetsMake(-20, (16+size.width)/2, 0, 0)];
+
+        [_headerView.MerchantShouCangBut setTitle:@"店铺收藏" forState:0];
+        [_headerView.MerchantShouCangBut setImage:KImage(@"13icon_shopCollection") forState:0];
+        [_headerView.MerchantShouCangBut setTitleEdgeInsets:UIEdgeInsetsMake(25, 0, 0, 0)];
+        [_headerView.MerchantShouCangBut setImageEdgeInsets:UIEdgeInsetsMake(-20, size.width+14, 0, 0)];
+
+
     }
     //全部订单点击事件
     [_headerView.GoAllDingDanButton addTarget:self action:@selector(goAllDingDanBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -714,7 +755,23 @@
     
     //退款单
     [_headerView.TuiHuoDanButton addTarget:self action:@selector(TuiHuoDanBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
+
+    [_headerView.ShouCangHistoryBut setImage:KImage(@"13icon_browseRecords") forState:0];
+    [_headerView.ShouCangHistoryBut setTitle:@"浏览记录" forState:0];
+    [_headerView.ShopShouCangBut addTarget:self action:@selector(ShopShouCangBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView.MerchantShouCangBut addTarget:self action:@selector(MerchantShouCangBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView.ShouCangHistoryBut addTarget:self action:@selector(HistoryShouCangBtnClick) forControlEvents:UIControlEventTouchUpInside];
+
+
+    [_headerView.ShouCangHistoryBut setTitleEdgeInsets:UIEdgeInsetsMake(25, (kScreen_Width/3-size.width)/2, 0, 0)];
+    [_headerView.ShouCangHistoryBut setImageEdgeInsets:UIEdgeInsetsMake(-20, (kScreen_Width/3-size.width)/2+(16+size.width)/2, 0, 0)];
+    _headerView.ShopShouCangBut.titleLabel.numberOfLines=0;
+    _headerView.MerchantShouCangBut.titleLabel.numberOfLines=0;
+    _headerView.ShouCangHistoryBut.titleLabel.numberOfLines=0;
+    _headerView.ShouCangHistoryBut.titleLabel.textAlignment=NSTextAlignmentCenter;
+    _headerView.MerchantShouCangBut.titleLabel.textAlignment=NSTextAlignmentCenter;
+    _headerView.ShopShouCangBut.titleLabel.textAlignment=NSTextAlignmentCenter;
+
     _tableView.backgroundColor =[UIColor whiteColor];
     return _headerView;
     }
@@ -725,6 +782,11 @@
         return view1;
     }
 }
+
+
+
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.01;
@@ -1262,6 +1324,81 @@
     
     
 }
+//商品收藏事件
+-(void)ShopShouCangBtnClick
+{
+
+    if (self.sigen.length==0) {
+
+        //        NewLoginViewController *login=[[NewLoginViewController alloc] init];
+
+        ATHLoginViewController *login=[[ATHLoginViewController alloc] init];
+
+        //   login.delegate=self;
+
+        [self.navigationController pushViewController:login animated:NO];
+
+        self.navigationController.navigationBar.hidden=YES;
+        self.tabBarController.tabBar.hidden=YES;
+
+    }else{
+
+        YLog(@"商品收藏");
+    }
+
+
+}
+//店铺收藏事件
+-(void)MerchantShouCangBtnClick
+{
+
+    if (self.sigen.length==0) {
+
+        //        NewLoginViewController *login=[[NewLoginViewController alloc] init];
+
+        ATHLoginViewController *login=[[ATHLoginViewController alloc] init];
+
+        //   login.delegate=self;
+
+        [self.navigationController pushViewController:login animated:NO];
+
+        self.navigationController.navigationBar.hidden=YES;
+        self.tabBarController.tabBar.hidden=YES;
+
+    }else{
+        YLog(@"店铺收藏");
+
+
+    }
+
+
+}
+//历史记录事件
+-(void)HistoryShouCangBtnClick
+{
+
+    if (self.sigen.length==0) {
+
+        //        NewLoginViewController *login=[[NewLoginViewController alloc] init];
+
+        ATHLoginViewController *login=[[ATHLoginViewController alloc] init];
+
+        //   login.delegate=self;
+
+        [self.navigationController pushViewController:login animated:NO];
+
+        self.navigationController.navigationBar.hidden=YES;
+        self.tabBarController.tabBar.hidden=YES;
+
+    }else{
+
+        YLog(@"浏览记录");
+
+    }
+
+
+}
+
 
 /*******************************************************      协议方法       ******************************************************/
 

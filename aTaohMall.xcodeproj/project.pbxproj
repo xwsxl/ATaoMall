@@ -1722,6 +1722,7 @@
 		DBB652F2204E6C620033AE20 /* WaitePayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBB652EC204E6C560033AE20 /* WaitePayCell.xib */; };
 		DBB652F3204E6C620033AE20 /* XiaoFeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB652ED204E6C5C0033AE20 /* XiaoFeiCell.m */; };
 		DBB652F4204E6C620033AE20 /* XiaoFeiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBB652EE204E6C610033AE20 /* XiaoFeiCell.xib */; };
+		DBB652F7204E6FE80033AE20 /* XLPersonalShouCangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB652F6204E6FE80033AE20 /* XLPersonalShouCangCell.m */; };
 		DBBA121D1FD92D1C005674ED /* NewGoodsUnNoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBA121C1FD92D1B005674ED /* NewGoodsUnNoViewController.m */; };
 		DBBAD6071FC586F800819177 /* PersonalAddRefundShoppingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBAD6061FC586F800819177 /* PersonalAddRefundShoppingVC.m */; };
 		DBBEEC6C1FEBA252007FD57E /* PersonalDanCheckPhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBEEC6B1FEBA252007FD57E /* PersonalDanCheckPhotoVC.m */; };
@@ -1769,9 +1770,7 @@
 		EEB46CC01F31695800F318CF /* ATHBreakRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB46CBC1F31695800F318CF /* ATHBreakRulesViewController.m */; };
 		EEBE36691F2ADF12002106E9 /* PeccSelectCityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EEBE36681F2ADF12002106E9 /* PeccSelectCityVC.m */; };
 		EEC6127F1F395E79004FBDB9 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC6127E1F395E79004FBDB9 /* UILabel+Extension.m */; };
-		EECAC8B61F1C955D000D77AA /* NSObject+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = EECAC8AF1F1C955D000D77AA /* NSObject+Common.m */; };
 		EECAC8B71F1C955D000D77AA /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EECAC8B11F1C955D000D77AA /* NSString+Extension.m */; };
-		EECAC8B81F1C955D000D77AA /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = EECAC8B31F1C955D000D77AA /* UIColor+Extension.m */; };
 		EECAC8B91F1C955D000D77AA /* UITabBar+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EECAC8B51F1C955D000D77AA /* UITabBar+Badge.m */; };
 		EEE1F2501F32FD7700D5DE7A /* PecOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE1F24F1F32FD7700D5DE7A /* PecOrderModel.m */; };
 		EEE1F2571F348F0300D5DE7A /* ServiceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE1F2561F348F0300D5DE7A /* ServiceVC.m */; };
@@ -4398,6 +4397,8 @@
 		DBB652EC204E6C560033AE20 /* WaitePayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitePayCell.xib; sourceTree = "<group>"; };
 		DBB652ED204E6C5C0033AE20 /* XiaoFeiCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiaoFeiCell.m; sourceTree = "<group>"; };
 		DBB652EE204E6C610033AE20 /* XiaoFeiCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiaoFeiCell.xib; sourceTree = "<group>"; };
+		DBB652F5204E6FE80033AE20 /* XLPersonalShouCangCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalShouCangCell.h; sourceTree = "<group>"; };
+		DBB652F6204E6FE80033AE20 /* XLPersonalShouCangCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalShouCangCell.m; sourceTree = "<group>"; };
 		DBBA121B1FD92D1B005674ED /* NewGoodsUnNoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGoodsUnNoViewController.h; sourceTree = "<group>"; };
 		DBBA121C1FD92D1B005674ED /* NewGoodsUnNoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGoodsUnNoViewController.m; sourceTree = "<group>"; };
 		DBBAD6051FC586F800819177 /* PersonalAddRefundShoppingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalAddRefundShoppingVC.h; sourceTree = "<group>"; };
@@ -4490,12 +4491,8 @@
 		EECAC8AA1F1C9259000D77AA /* JMSHT_NSENUM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMSHT_NSENUM.h; sourceTree = "<group>"; };
 		EECAC8AB1F1C92B1000D77AA /* NormalHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormalHeaderFile.h; sourceTree = "<group>"; };
 		EECAC8AC1F1C92DD000D77AA /* ConstHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstHeader.h; sourceTree = "<group>"; };
-		EECAC8AE1F1C955D000D77AA /* NSObject+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Common.h"; path = "aTaohMall/Category/NSObject+Common.h"; sourceTree = SOURCE_ROOT; };
-		EECAC8AF1F1C955D000D77AA /* NSObject+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Common.m"; path = "aTaohMall/Category/NSObject+Common.m"; sourceTree = SOURCE_ROOT; };
 		EECAC8B01F1C955D000D77AA /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extension.h"; path = "aTaohMall/Category/NSString+Extension.h"; sourceTree = SOURCE_ROOT; };
 		EECAC8B11F1C955D000D77AA /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extension.m"; path = "aTaohMall/Category/NSString+Extension.m"; sourceTree = SOURCE_ROOT; };
-		EECAC8B21F1C955D000D77AA /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Extension.h"; path = "aTaohMall/Category/UIColor+Extension.h"; sourceTree = SOURCE_ROOT; };
-		EECAC8B31F1C955D000D77AA /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Extension.m"; path = "aTaohMall/Category/UIColor+Extension.m"; sourceTree = SOURCE_ROOT; };
 		EECAC8B41F1C955D000D77AA /* UITabBar+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITabBar+Badge.h"; path = "aTaohMall/Category/UITabBar+Badge.h"; sourceTree = SOURCE_ROOT; };
 		EECAC8B51F1C955D000D77AA /* UITabBar+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITabBar+Badge.m"; path = "aTaohMall/Category/UITabBar+Badge.m"; sourceTree = SOURCE_ROOT; };
 		EEE1F24E1F32FD7700D5DE7A /* PecOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PecOrderModel.h; path = Model/PecOrderModel.h; sourceTree = "<group>"; };
@@ -6557,6 +6554,8 @@
 				727D5BE71D30A41C0062BE73 /* personHeaderView.h */,
 				727D5BE81D30A41C0062BE73 /* personHeaderView.m */,
 				727D5BE91D30A41C0062BE73 /* personHeaderView.xib */,
+				DBB652F5204E6FE80033AE20 /* XLPersonalShouCangCell.h */,
+				DBB652F6204E6FE80033AE20 /* XLPersonalShouCangCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -10184,8 +10183,6 @@
 		EE4B79121F593B0800C515F5 /* UI界面等等 */ = {
 			isa = PBXGroup;
 			children = (
-				EECAC8B21F1C955D000D77AA /* UIColor+Extension.h */,
-				EECAC8B31F1C955D000D77AA /* UIColor+Extension.m */,
 				EECAC8B41F1C955D000D77AA /* UITabBar+Badge.h */,
 				EECAC8B51F1C955D000D77AA /* UITabBar+Badge.m */,
 				EE93D9821F3877F800270C6F /* UIImage+Color.h */,
@@ -10203,8 +10200,6 @@
 			children = (
 				667E03931F456DAE00160C1E /* NSObject+Category.h */,
 				667E03941F456DAE00160C1E /* NSObject+Category.m */,
-				EECAC8AE1F1C955D000D77AA /* NSObject+Common.h */,
-				EECAC8AF1F1C955D000D77AA /* NSObject+Common.m */,
 				EECAC8B01F1C955D000D77AA /* NSString+Extension.h */,
 				EECAC8B11F1C955D000D77AA /* NSString+Extension.m */,
 			);
@@ -11660,7 +11655,6 @@
 				EE2427201F287C9D00C265A2 /* NewPagedFlowView.m in Sources */,
 				66C2AE721F72444F00548276 /* AppStartADVC.m in Sources */,
 				72A530821EA7621E00BEEDFF /* FristHomeCell.m in Sources */,
-				EECAC8B61F1C955D000D77AA /* NSObject+Common.m in Sources */,
 				72D74D0E1EA46F5B00491690 /* QianShouCell.m in Sources */,
 				72160F2A1E9B929900D41ACD /* NewClassifyHeaderView.m in Sources */,
 				DB35FD9D1FC65A7700677584 /* UIBarButtonItem+YYAdd.m in Sources */,
@@ -11741,7 +11735,6 @@
 				DB90ED311FF0F4A400772E79 /* XLNaviVIew.m in Sources */,
 				DB35FD871FC65A7700677584 /* YYTextSelectionView.m in Sources */,
 				723D22641ED40E1E00AE554D /* AirManTypeView.m in Sources */,
-				EECAC8B81F1C955D000D77AA /* UIColor+Extension.m in Sources */,
 				DB35FD741FC65A7700677584 /* YYImage.m in Sources */,
 				727D5F061D30A41D0062BE73 /* AllFooterView.m in Sources */,
 				DB35FDAD1FC65A7700677584 /* NSNotificationCenter+YYAdd.m in Sources */,
@@ -11771,6 +11764,7 @@
 				726F95C11EB1B67000F168AE /* SelectServiceCell.m in Sources */,
 				DB849C70200344FD00186704 /* XLHomeRemenModel.m in Sources */,
 				727D60341D30A41D0062BE73 /* NineAndNineViewController.m in Sources */,
+				DBB652F7204E6FE80033AE20 /* XLPersonalShouCangCell.m in Sources */,
 				728EFE161EEF848F000BB020 /* UIView+Frame.m in Sources */,
 				72A1B9A71DEFC726000615E7 /* SSPopup.m in Sources */,
 				723D22581ED3C79800AE554D /* AirPlaneReserveGoBackViewController.m in Sources */,

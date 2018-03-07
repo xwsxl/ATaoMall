@@ -81,6 +81,8 @@
     YTTuWenViewController *vc2;
     UIView *slider1;
     UIView *slider2;
+
+    UIButton *ShouCangBut;
     
 }
 @property (nonatomic, strong) UIScrollView *contentScrollView; //!< 作为容器的ScrollView
@@ -90,6 +92,7 @@
 @property (nonatomic, strong) UILabel *label;//标题；
 @property (nonatomic, strong) UIView *slider;//选择时的红线；
 
+@property (nonatomic,strong)NSString *ShouCangStr;
 
 @property (nonatomic, strong) UILabel *currentTitleLabel;//当前标题
 @property (nonatomic, strong) UILabel *nextTitleLabel;//滑动下一个标题
@@ -178,14 +181,18 @@
 
 
     [_allView addSubview:self.backButton];
-    
+    ShouCangBut=[UIButton buttonWithType:UIButtonTypeCustom];
+    ShouCangBut.frame=CGRectMake(kScreen_Width-15-18-11, 20+KSafeTopHeight, 40, 40);
+
+    [ShouCangBut addTarget:self action:@selector(shouCangBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_allView addSubview:ShouCangBut];
     
     vc2=[[YTTuWenViewController alloc] init];
     vc2.ID=self.gid;
     
     YLog(@"goodtype=%@",self.good_type);
     YTDetailViewController *vc1=[[YTDetailViewController alloc] init];
-    
+    vc1.delegate=self;
     vc1.NewHomeString = self.NewHomeString;
     vc1.YXZattribute=self.YXZattribute;
     vc1.delegate=self;
@@ -316,6 +323,87 @@
     
 }
 
+
+-(void)shouCangBtnClick:(UIButton *)sender
+{
+    ShouCangBut.userInteractionEnabled=NO;
+    if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
+
+        sender.selected=!sender.selected;
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *url=[NSString stringWithFormat:@"%@updateCollectionGoodsOrShop_mob.shtml",URL_Str];
+        YLog(@"self.gid=%@",self.gid);
+/*收藏商品参数：sigen：
+        is_status：收藏状态：1收藏2取消收藏（这里传1）
+        gid：商品ID
+        type：类型：1商品2商铺（这里传1）
+
+        取消收藏商品参数：sigen：
+        is_status：收藏状态：1收藏2取消收藏（这里传2）
+        gid：商品ID
+        type：类型：1商品2商铺（这里传1）*/
+        if (sender.selected) {
+            NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"1",@"gid":self.gid};
+            [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                    self.ShouCangStr=@"1";
+                }
+
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            } faildBlock:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            }];
+
+
+        }else
+        {
+            NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"2",@"type":@"1",@"gid":self.gid};
+            [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                    self.ShouCangStr=@"2";
+                }
+
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            } faildBlock:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            }];
+
+        }
+    }else
+    {
+        ATHLoginViewController *VC=[[ATHLoginViewController alloc] init];
+        [self.navigationController pushViewController:VC animated:NO];
+    }
+}
+
+
+-(void)setShouCangStr:(NSString *)ShouCangStr
+{
+    _ShouCangStr=ShouCangStr;
+    if ([ShouCangStr isEqualToString:@"1"]) {
+        ShouCangBut.selected=YES;
+        [ShouCangBut setImage:KImage(@"13btn_collection") forState:0];
+    }else
+    {
+        ShouCangBut.selected=NO;
+        [ShouCangBut setImage:KImage(@"13btn_notcollected") forState:0];
+    }
+}
+
 -(void)BackNotificationBegin
 {
     
@@ -365,6 +453,11 @@
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
     
+}
+
+-(void)setShouCangString:(NSString *)str
+{
+    self.ShouCangStr=str;
 }
 
 -(void)xiangqingGr:(UITapGestureRecognizer *)Gr

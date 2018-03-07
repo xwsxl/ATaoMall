@@ -36,7 +36,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *GoodsShuXingLabel;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *YangGoodsLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *clickBtn;

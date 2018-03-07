@@ -10,6 +10,26 @@
 //#import "UIAlertController+Alert.h"
 #import "PersonalShoppingReplyRefundVC.h"
 @implementation UIAlertTools
+
+
+//取消
++ (UIAlertController *)showAlertWithMessage:(NSString *)message
+                              cancelTitle:(NSString *)cancelTitle
+                           viewController:(UIViewController *)vc
+{
+    return [self showAlertWithMessage:message cancelTitle:cancelTitle titleArray:nil viewController:vc];
+}
+//取消和确认
++ (UIAlertController *)showAlertWithMessage:(NSString *)message
+                              cancelTitle:(NSString *)cancelTitle
+                               titleArray:(NSArray *)titleArray
+                           viewController:(UIViewController *)vc
+{
+    return [self showAlertWithTitle:@"" message:message cancelTitle:cancelTitle titleArray:titleArray viewController:vc confirm:^(NSInteger buttonTag) {
+
+    }];
+}
+
 /**
  创建alert   titleArray数组为nil时,不创建确定按钮，否则都会创建
  
@@ -37,14 +57,7 @@
     }
     if (titleArray)
     {
-        UIAlertAction  *confirmAction = [UIAlertAction actionWithTitle:@"确认"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * _Nonnull action) {
-                                                                   if (confirm)confirm(0);
-                                                               }];
-        
-        [alert addAction:confirmAction];
-        
+
         if (titleArray.count>0) {
             for (NSInteger i = 0; i<titleArray.count; i++) {
                 UIAlertAction  *action = [UIAlertAction actionWithTitle:titleArray[i]
@@ -55,12 +68,25 @@
                 // [action setValue:UIColorFrom16RGB(0x00AE08) forKey:@"titleTextColor"]; // 此代码 可以修改按钮颜色
                 [alert addAction:action];
             }
+        }else
+        {
+            UIAlertAction  *confirmAction = [UIAlertAction actionWithTitle:@"确认"
+                                                                     style:UIAlertActionStyleDefault
+                                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                                       if (confirm)confirm(0);
+                                                                   }];
+
+            [alert addAction:confirmAction];
+
         }
     }
     
     [vc presentViewController:alert animated:NO completion:nil];
     return alert;
 }
+
+
+
 
 
 +(UIAlertController *)showAlertCntrollerWithViewController:(UIViewController *)viewController alertControllerStyle:(UIAlertControllerStyle)alertControllerStyle title:(NSString *)title message:(NSString *)message CallBackBlock:(CallBackBlock)block cancelButtonTitle:(NSString *)cancelBtnTitle destructiveButtonTitle:(NSString *)destructiveBtnTitle otherButtonTitles:(NSString *)otherBtnTitles, ...

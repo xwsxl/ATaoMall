@@ -811,7 +811,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         //10000为可以确认收货、有确定按钮
         if ([responseObj[@"status"] isEqualToString:@"10000"]) {
             [UIAlertTools showAlertWithTitle:@"" message:responseObj[@"message"]
-                                 cancelTitle:@"取消" titleArray:@[] viewController:self confirm:^(NSInteger buttonTag) {
+                                 cancelTitle:@"取消" titleArray:@[@"确认"] viewController:self confirm:^(NSInteger buttonTag) {
                                      //点击了确认收货调确认收货接口
                                      if (buttonTag==0) {
 

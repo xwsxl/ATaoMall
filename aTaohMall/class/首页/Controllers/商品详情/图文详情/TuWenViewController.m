@@ -161,7 +161,8 @@
     //定位管理器
     CLLocationManager *_locationManager;
     
-    
+    UIButton *ShouCangBut;
+
 }
 
 @property (strong, nonatomic) UIView *redView;//加入购物车红点
@@ -171,6 +172,8 @@
 @property (nonatomic,strong)UIWebView *webView;
 
 @property (nonatomic,strong)DJRefresh *refresh;
+
+@property (nonatomic,strong)NSString *ShouCangStr;
 
 @end
 
@@ -239,7 +242,14 @@
     
     
     [self.view addSubview:ShopView];
-    
+
+
+    ShouCangBut=[UIButton buttonWithType:UIButtonTypeCustom];
+    ShouCangBut.frame=CGRectMake(kScreen_Width-15-18-11, 20+KSafeTopHeight, 40, 40);
+
+    [ShouCangBut addTarget:self action:@selector(shouCangBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:ShouCangBut];
+
     UIImageView *Shop = [[UIImageView alloc] initWithFrame:CGRectMake((49-20)/2, 5, 20, 20)];
     
     Shop.image = [UIImage imageNamed:@"店铺"];
@@ -528,6 +538,70 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GoodsDetailAndTuWenCartNumber) name:@"GoodsDetailAndTuWenCartNumber" object:nil];
     
+}
+
+-(void)shouCangBtnClick:(UIButton *)sender
+{
+    ShouCangBut.userInteractionEnabled=NO;
+    if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
+
+        sender.selected=!sender.selected;
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        NSString *url=[NSString stringWithFormat:@"%@updateCollectionGoodsOrShop_mob.shtml",URL_Str];
+        YLog(@"self.id=%@",self.ID);
+        /* 收藏店铺参数：sigen：
+         is_status：收藏状态：1收藏2取消收藏（这里传1）
+         type：类型：1商品2商铺（这里传2）
+         mid：商户ID
+         取消收藏店铺参数：sigen：
+         is_status：收藏状态：1收藏2取消收藏（这里传2）
+         type：类型：1商品2商铺（这里传2）
+         mid：商户ID */
+        if (sender.selected) {
+            NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"1",@"gid":self.ID};
+            [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                    self.ShouCangStr=@"1";
+                }
+
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            } faildBlock:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            }];
+
+
+        }else
+        {
+            NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"2",@"type":@"1",@"gid":self.ID};
+            [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                    self.ShouCangStr=@"2";
+                }
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            } faildBlock:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    ShouCangBut.userInteractionEnabled=YES;
+                });
+            }];
+
+        }
+    }else
+    {
+        ATHLoginViewController *VC=[[ATHLoginViewController alloc] init];
+        [self.navigationController pushViewController:VC animated:NO];
+    }
 }
 
 -(void)GoodsDetailAndTuWenCartNumber
@@ -1102,7 +1176,7 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
     NSDictionary *dic = @{@"sigen":self.sigen,@"id":self.ID};//,@"page":@"0",@"currentPageNo":@"1"};
     
     //    NSDictionary *dic=nil;
-    
+    YLog(@"canshu=%@",dic);
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
         NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];
@@ -1126,7 +1200,7 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
             NSLog(@"tuwen  = %@",dic);
             view.hidden=YES;
             for (NSDictionary *dict in dic) {
-                
+                self.ShouCangStr=[NSString stringWithFormat:@"%@",dict[@"is_status"]];
                 if ([dict[@"status"] isEqualToString:@"10000"]) {
                     
                     
@@ -2756,5 +2830,16 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
     NSLog(@"定位失败:%@", error);
 }
 
-
+-(void)setShouCangStr:(NSString *)ShouCangStr
+{
+    _ShouCangStr=ShouCangStr;
+    if ([ShouCangStr isEqualToString:@"1"]) {
+        ShouCangBut.selected=YES;
+        [ShouCangBut setImage:KImage(@"13btn_collection") forState:0];
+    }else
+    {
+        ShouCangBut.selected=NO;
+        [ShouCangBut setImage:KImage(@"13btn_notcollected") forState:0];
+    }
+}
 @end
