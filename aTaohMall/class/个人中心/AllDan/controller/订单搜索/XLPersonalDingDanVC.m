@@ -68,7 +68,9 @@
     XLDingDanModel *selectModel;
     BMDanModel *SelectModel;
 
+    UITapGestureRecognizer * tap ;
 
+    UIControl *_huiseControl;
 }
 @property (strong, nonatomic) IBOutlet UIView *navView;
 @property (strong, nonatomic) IBOutlet UIImageView *searchBackView;
@@ -87,6 +89,10 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 /*******************************************************      控制器生命周期       ******************************************************/
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.modalPresentationStyle =UIModalPresentationCustom;
+
+    tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickWindow:)];
+    [self.view addGestureRecognizer:tap];
     [self initUI];
     _dataSource=[NSMutableArray new];
     // Do any additional setup after loading the view.
@@ -331,8 +337,8 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 {
     self.navigationController.interactivePopGestureRecognizer.enabled=NO;
     self.view.frame=[UIScreen mainScreen].bounds;
-    [self.view setBackgroundColor:RGBA(0, 0, 0, 0.4)];
     [self initNavi];
+
     _scroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
     _scroll.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:_scroll];
@@ -448,6 +454,13 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         }
         height+=Width(3)+leading+29;
     }
+    if (height>(kScreenHeight-KSafeAreaTopNaviHeight)) {
+        _scroll.frame=CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight);
+    }else
+    {
+        _scroll.frame=CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, height);
+    }
+  //  _scroll.backgroundColor=[UIColor blueColor];
     _scroll.contentSize=CGSizeMake(kScreen_Width, height);
 }
 //初始化表视图
@@ -496,14 +509,14 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     [header setImages:refreshingImages forState:MJRefreshStateRefreshing];
 
     _tableView.mj_header=header;
-    [self.view addSubview:_tableView];
+    [self.view insertSubview:_tableView belowSubview:_scroll];
 
 }
 //
 -(void)initview{
     if (!nodataView) {
         nodataView=[[UIView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
-        [self.view addSubview:nodataView];
+        [self.view insertSubview:nodataView belowSubview:_tableView];
         nodataView.backgroundColor=[UIColor whiteColor];
 
         UIImageView *IV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreen_Width-90)/2, (kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2-KSafeAreaTopNaviHeight, 90, 90)];
@@ -530,16 +543,48 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 //
 -(void)qurtBtnClick
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.searchTextField resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+
+    }];
+   // [self.navigationController popViewControllerAnimated:NO];
 }
+/*****  <#desc#> *****/
+-(void)clickWindow:(UITapGestureRecognizer *)tap
+{
+    CGPoint point=[tap locationInView:self.view];
+    if (point.y>_scroll.frame.size.height+KSafeAreaTopNaviHeight) {
+        [self qurtBtnClick];
+    }
+}
+
 //
 -(void)changeValue:(UITextField *)tf
 {
     if (tf.text.length==0) {
-        _tableView.hidden=YES;
+      //  _tableView.hidden=YES;
         nodataView.hidden=YES;
         _scroll.hidden=NO;
     }
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (!tap.enabled&&!_huiseControl) {
+    _huiseControl=[[UIControl alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
+    _huiseControl.backgroundColor=RGBA(0, 0, 0, 0.5);
+    [_huiseControl addTarget:self action:@selector(hidenHuiseControll:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view insertSubview:_huiseControl belowSubview:_scroll];
+    }
+    return YES;
+}
+
+-(void)hidenHuiseControll:(UIControl *)controll
+{
+    [self.searchTextField resignFirstResponder];
+    _huiseControl.backgroundColor=[UIColor clearColor];
+    [_huiseControl removeFromSuperview];
+    _huiseControl=nil;
 }
 //点击历史记录
 -(void)clickHistoryBtn:(UIButton *)sender
@@ -1034,6 +1079,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 }
 
 
+
 #pragma BM
 
 #pragma mark-cell协议
@@ -1165,6 +1211,10 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         [TrainToast showWithText:@"输入的搜索内容不能为空!" duration:2.0f];
     }else
     {
+        if (_huiseControl) {
+            [self hidenHuiseControll:nil];
+        }
+        tap.enabled=NO;
         self.page=0;
         [self.searchTextField resignFirstResponder];
         [SearchManager SearchDingDanText:str];//缓存搜索记录

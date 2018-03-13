@@ -153,12 +153,16 @@
 {
 
     XLPersonalDingDanVC *VC=[[XLPersonalDingDanVC alloc] init];
+    VC.view.backgroundColor=RGBA(0, 0, 0, 0.5);
     CGPoint point=self.ContentView.contentOffset;
     VC.ISKindOfShop=@"0";
     if (point.x>0) {
         VC.ISKindOfShop=@"1";
     }
-    [self.navigationController pushViewController:VC animated:NO];
+    [self presentViewController:VC animated:YES completion:^{
+
+    }];
+    //[self.navigationController pushViewController:VC animated:NO];
 }
 
 -(void)selectorBMDan:(UIButton *)sender
