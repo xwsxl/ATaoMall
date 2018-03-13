@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface XLPersonalDingDanVC : UIViewController
 
 @property (nonatomic,strong)NSString *ISKindOfShop;
+
 @end
