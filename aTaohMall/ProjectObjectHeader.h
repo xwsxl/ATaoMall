@@ -42,7 +42,7 @@
 #import "CCNetWorkManager.h"
 #import "ASIFormDataRequest.h"
 #import "MJRefresh.h"
-
+#import "MJExtension.h"
 //百度api
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 #import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件

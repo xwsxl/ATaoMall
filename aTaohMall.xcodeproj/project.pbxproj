@@ -1451,6 +1451,13 @@
 		DB0A40AC20440C8200F49B48 /* XLPersonalHopeHandVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40AB20440C8200F49B48 /* XLPersonalHopeHandVC.m */; };
 		DB0A40AF204463AD00F49B48 /* XLPersonalAccountSuggestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40AE204463AD00F49B48 /* XLPersonalAccountSuggestVC.m */; };
 		DB0A40B32044E86D00F49B48 /* XLPersonalDingDanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */; };
+		DB17E4AC20523562007A3801 /* XLGoodsCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4AB20523562007A3801 /* XLGoodsCollectionCell.m */; };
+		DB17E4AF2052690A007A3801 /* XLShopsCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4AE2052690A007A3801 /* XLShopsCollectionCell.m */; };
+		DB17E4BA205293CD007A3801 /* LYEmptyBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4B1205293CD007A3801 /* LYEmptyBaseView.m */; };
+		DB17E4BB205293CD007A3801 /* UIScrollView+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4B3205293CD007A3801 /* UIScrollView+Empty.m */; };
+		DB17E4BC205293CD007A3801 /* UIView+LYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4B4205293CD007A3801 /* UIView+LYExtension.m */; };
+		DB17E4BD205293CD007A3801 /* LYEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4B7205293CD007A3801 /* LYEmptyView.m */; };
+		DB17E4C0205294F4007A3801 /* MyDIYEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17E4BE205294F2007A3801 /* MyDIYEmpty.m */; };
 		DB188CC41FB42959001B47C0 /* HomeBigHealthyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC31FB42959001B47C0 /* HomeBigHealthyVC.m */; };
 		DB188CC71FB53E89001B47C0 /* PersonAllScoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC61FB53E89001B47C0 /* PersonAllScoreVC.m */; };
 		DB188CCA1FB53EDF001B47C0 /* PersonHealthyScoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB188CC91FB53EDF001B47C0 /* PersonHealthyScoreVC.m */; };
@@ -1541,6 +1548,18 @@
 		DB35FDCB1FC6730700677584 /* PersonalShoppingRefundFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35FDCA1FC6730700677584 /* PersonalShoppingRefundFooterView.m */; };
 		DB35FDD01FC69F3500677584 /* PersonalShoppingRefundDanDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35FDCF1FC69F3500677584 /* PersonalShoppingRefundDanDetailVC.m */; };
 		DB3D99691FF4843900D39095 /* 返回键.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3D99681FF4843800D39095 /* 返回键.png */; };
+		DB49FD0D204FEB340009D4B3 /* XLCollectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD0C204FEB340009D4B3 /* XLCollectListVC.m */; };
+		DB49FD25204FEC220009D4B3 /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD12204FEC210009D4B3 /* MJPropertyType.m */; };
+		DB49FD26204FEC220009D4B3 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD15204FEC210009D4B3 /* NSObject+MJKeyValue.m */; };
+		DB49FD27204FEC220009D4B3 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD16204FEC210009D4B3 /* MJProperty.m */; };
+		DB49FD28204FEC220009D4B3 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD18204FEC210009D4B3 /* NSObject+MJCoding.m */; };
+		DB49FD29204FEC220009D4B3 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD1A204FEC210009D4B3 /* MJExtensionConst.m */; };
+		DB49FD2A204FEC220009D4B3 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD1B204FEC210009D4B3 /* NSObject+MJProperty.m */; };
+		DB49FD2B204FEC220009D4B3 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD1D204FEC210009D4B3 /* NSObject+MJClass.m */; };
+		DB49FD2C204FEC220009D4B3 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD1E204FEC210009D4B3 /* NSString+MJExtension.m */; };
+		DB49FD2D204FEC220009D4B3 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD1F204FEC210009D4B3 /* MJPropertyKey.m */; };
+		DB49FD2E204FEC220009D4B3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB49FD23204FEC210009D4B3 /* Info.plist */; };
+		DB49FD2F204FEC220009D4B3 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = DB49FD24204FEC210009D4B3 /* MJFoundation.m */; };
 		DB4A4B75200EFEC90006EE17 /* HomeLatestGoodsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4B58200EFEC20006EE17 /* HomeLatestGoodsListVC.m */; };
 		DB4A4B79200EFEC90006EE17 /* HomeGoodGoodsHotSaleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4B61200EFEC50006EE17 /* HomeGoodGoodsHotSaleVC.m */; };
 		DB4A4B7A200EFEC90006EE17 /* HomeGeekGoodsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4B64200EFEC60006EE17 /* HomeGeekGoodsListVC.m */; };
@@ -1554,6 +1573,7 @@
 		DB6BAE6820202223005D54BE /* AllSingleShoppingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6220202221005D54BE /* AllSingleShoppingModel.m */; };
 		DB6BAE6920202223005D54BE /* HomeAbroadShoppingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6320202221005D54BE /* HomeAbroadShoppingVC.m */; };
 		DB6BAE6A20202223005D54BE /* XLShoppingCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6720202221005D54BE /* XLShoppingCollectionCell.m */; };
+		DB6FC3B72056C92100937C90 /* XLCellectionEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6FC3B62056C92100937C90 /* XLCellectionEditVC.m */; };
 		DB78EECC1FBD822600C861BA /* PersonalAllDanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB78EEAB1FBD822500C861BA /* PersonalAllDanVC.m */; };
 		DB78EECD1FBD822600C861BA /* PersonalBMDanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB78EEAE1FBD822500C861BA /* PersonalBMDanVC.m */; };
 		DB78EECE1FBD822600C861BA /* PersonalShoppingDanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB78EEB21FBD822500C861BA /* PersonalShoppingDanCell.m */; };
@@ -3984,6 +4004,21 @@
 		DB0A40AE204463AD00F49B48 /* XLPersonalAccountSuggestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalAccountSuggestVC.m; sourceTree = "<group>"; };
 		DB0A40B12044E86D00F49B48 /* XLPersonalDingDanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLPersonalDingDanVC.h; sourceTree = "<group>"; };
 		DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLPersonalDingDanVC.m; sourceTree = "<group>"; };
+		DB17E4AA20523562007A3801 /* XLGoodsCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLGoodsCollectionCell.h; sourceTree = "<group>"; };
+		DB17E4AB20523562007A3801 /* XLGoodsCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLGoodsCollectionCell.m; sourceTree = "<group>"; };
+		DB17E4AD2052690A007A3801 /* XLShopsCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLShopsCollectionCell.h; sourceTree = "<group>"; };
+		DB17E4AE2052690A007A3801 /* XLShopsCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLShopsCollectionCell.m; sourceTree = "<group>"; };
+		DB17E4B1205293CD007A3801 /* LYEmptyBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYEmptyBaseView.m; sourceTree = "<group>"; };
+		DB17E4B2205293CD007A3801 /* LYEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYEmptyView.h; sourceTree = "<group>"; };
+		DB17E4B3205293CD007A3801 /* UIScrollView+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Empty.m"; sourceTree = "<group>"; };
+		DB17E4B4205293CD007A3801 /* UIView+LYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LYExtension.m"; sourceTree = "<group>"; };
+		DB17E4B5205293CD007A3801 /* LYEmptyBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYEmptyBaseView.h; sourceTree = "<group>"; };
+		DB17E4B6205293CD007A3801 /* LYEmptyViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYEmptyViewHeader.h; sourceTree = "<group>"; };
+		DB17E4B7205293CD007A3801 /* LYEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYEmptyView.m; sourceTree = "<group>"; };
+		DB17E4B8205293CD007A3801 /* UIScrollView+Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Empty.h"; sourceTree = "<group>"; };
+		DB17E4B9205293CD007A3801 /* UIView+LYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LYExtension.h"; sourceTree = "<group>"; };
+		DB17E4BE205294F2007A3801 /* MyDIYEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDIYEmpty.m; sourceTree = "<group>"; };
+		DB17E4BF205294F3007A3801 /* MyDIYEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDIYEmpty.h; sourceTree = "<group>"; };
 		DB188CC21FB42959001B47C0 /* HomeBigHealthyVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeBigHealthyVC.h; sourceTree = "<group>"; };
 		DB188CC31FB42959001B47C0 /* HomeBigHealthyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeBigHealthyVC.m; sourceTree = "<group>"; };
 		DB188CC51FB53E89001B47C0 /* PersonAllScoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonAllScoreVC.h; sourceTree = "<group>"; };
@@ -4167,6 +4202,30 @@
 		DB35FDCE1FC69F3500677584 /* PersonalShoppingRefundDanDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalShoppingRefundDanDetailVC.h; sourceTree = "<group>"; };
 		DB35FDCF1FC69F3500677584 /* PersonalShoppingRefundDanDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalShoppingRefundDanDetailVC.m; sourceTree = "<group>"; };
 		DB3D99681FF4843800D39095 /* 返回键.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回键.png"; sourceTree = "<group>"; };
+		DB49FD0B204FEB340009D4B3 /* XLCollectListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLCollectListVC.h; sourceTree = "<group>"; };
+		DB49FD0C204FEB340009D4B3 /* XLCollectListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLCollectListVC.m; sourceTree = "<group>"; };
+		DB49FD0F204FEC210009D4B3 /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
+		DB49FD10204FEC210009D4B3 /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
+		DB49FD11204FEC210009D4B3 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
+		DB49FD12204FEC210009D4B3 /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
+		DB49FD13204FEC210009D4B3 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
+		DB49FD14204FEC210009D4B3 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
+		DB49FD15204FEC210009D4B3 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		DB49FD16204FEC210009D4B3 /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
+		DB49FD17204FEC210009D4B3 /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		DB49FD18204FEC210009D4B3 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		DB49FD19204FEC210009D4B3 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		DB49FD1A204FEC210009D4B3 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
+		DB49FD1B204FEC210009D4B3 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
+		DB49FD1C204FEC210009D4B3 /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
+		DB49FD1D204FEC210009D4B3 /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
+		DB49FD1E204FEC210009D4B3 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		DB49FD1F204FEC210009D4B3 /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
+		DB49FD20204FEC210009D4B3 /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
+		DB49FD21204FEC210009D4B3 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		DB49FD22204FEC210009D4B3 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		DB49FD23204FEC210009D4B3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB49FD24204FEC210009D4B3 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
 		DB4A4B57200EFEC20006EE17 /* HomeLatestGoodsListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeLatestGoodsListVC.h; sourceTree = "<group>"; };
 		DB4A4B58200EFEC20006EE17 /* HomeLatestGoodsListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeLatestGoodsListVC.m; sourceTree = "<group>"; };
 		DB4A4B61200EFEC50006EE17 /* HomeGoodGoodsHotSaleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeGoodGoodsHotSaleVC.m; sourceTree = "<group>"; };
@@ -4193,6 +4252,8 @@
 		DB6BAE6520202221005D54BE /* AllSingleShoppingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSingleShoppingModel.h; sourceTree = "<group>"; };
 		DB6BAE6620202221005D54BE /* HomeAbroadShoppingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeAbroadShoppingVC.h; sourceTree = "<group>"; };
 		DB6BAE6720202221005D54BE /* XLShoppingCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLShoppingCollectionCell.m; sourceTree = "<group>"; };
+		DB6FC3B52056C92100937C90 /* XLCellectionEditVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLCellectionEditVC.h; sourceTree = "<group>"; };
+		DB6FC3B62056C92100937C90 /* XLCellectionEditVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLCellectionEditVC.m; sourceTree = "<group>"; };
 		DB78EEAA1FBD822500C861BA /* PersonalAllDanVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalAllDanVC.h; sourceTree = "<group>"; };
 		DB78EEAB1FBD822500C861BA /* PersonalAllDanVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalAllDanVC.m; sourceTree = "<group>"; };
 		DB78EEAD1FBD822500C861BA /* PersonalBMDanVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalBMDanVC.h; sourceTree = "<group>"; };
@@ -4884,6 +4945,8 @@
 		667E02281F4472F700160C1E /* Vendors(第三方库) */ = {
 			isa = PBXGroup;
 			children = (
+				DB17E4B0205293CD007A3801 /* LYEmptyView */,
+				DB49FD0E204FEC210009D4B3 /* MJExtension */,
 				DB35FCBC1FC65A7600677584 /* YYKit */,
 				6638461B1F8F43F400DCA4E9 /* fmdb */,
 				663845BE1F8F197F00DCA4E9 /* MJRefresh */,
@@ -6120,6 +6183,7 @@
 			children = (
 				727D5ADA1D30A41C0062BE73 /* PersonaViewController.h */,
 				727D5ADB1D30A41C0062BE73 /* PersonaViewController.m */,
+				DB49FD0A204FE7AC0009D4B3 /* 商品(店铺)收藏 */,
 				72512A721EEA309F0083E54B /* 重构全部订单 */,
 				727D5AE11D30A41C0062BE73 /* 全部订单 */,
 				727D5B091D30A41C0062BE73 /* 我的商圈 */,
@@ -8729,6 +8793,52 @@
 			path = "订单搜索";
 			sourceTree = "<group>";
 		};
+		DB17E4A7205234A2007A3801 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		DB17E4A8205234B0007A3801 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				DB17E4AA20523562007A3801 /* XLGoodsCollectionCell.h */,
+				DB17E4AB20523562007A3801 /* XLGoodsCollectionCell.m */,
+				DB17E4AD2052690A007A3801 /* XLShopsCollectionCell.h */,
+				DB17E4AE2052690A007A3801 /* XLShopsCollectionCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		DB17E4A9205234B8007A3801 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				DB6FC3B42056C8E600937C90 /* 编辑页面 */,
+				DB49FD0B204FEB340009D4B3 /* XLCollectListVC.h */,
+				DB49FD0C204FEB340009D4B3 /* XLCollectListVC.m */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		DB17E4B0205293CD007A3801 /* LYEmptyView */ = {
+			isa = PBXGroup;
+			children = (
+				DB17E4BF205294F3007A3801 /* MyDIYEmpty.h */,
+				DB17E4BE205294F2007A3801 /* MyDIYEmpty.m */,
+				DB17E4B2205293CD007A3801 /* LYEmptyView.h */,
+				DB17E4B7205293CD007A3801 /* LYEmptyView.m */,
+				DB17E4B8205293CD007A3801 /* UIScrollView+Empty.h */,
+				DB17E4B3205293CD007A3801 /* UIScrollView+Empty.m */,
+				DB17E4B9205293CD007A3801 /* UIView+LYExtension.h */,
+				DB17E4B4205293CD007A3801 /* UIView+LYExtension.m */,
+				DB17E4B5205293CD007A3801 /* LYEmptyBaseView.h */,
+				DB17E4B1205293CD007A3801 /* LYEmptyBaseView.m */,
+				DB17E4B6205293CD007A3801 /* LYEmptyViewHeader.h */,
+			);
+			path = LYEmptyView;
+			sourceTree = "<group>";
+		};
 		DB188CC11FB4290D001B47C0 /* 大健康专区 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9059,6 +9169,45 @@
 			path = "退款详情";
 			sourceTree = "<group>";
 		};
+		DB49FD0A204FE7AC0009D4B3 /* 商品(店铺)收藏 */ = {
+			isa = PBXGroup;
+			children = (
+				DB17E4A7205234A2007A3801 /* model */,
+				DB17E4A8205234B0007A3801 /* view */,
+				DB17E4A9205234B8007A3801 /* controller */,
+			);
+			path = "商品(店铺)收藏";
+			sourceTree = "<group>";
+		};
+		DB49FD0E204FEC210009D4B3 /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				DB49FD19204FEC210009D4B3 /* MJExtension.h */,
+				DB49FD10204FEC210009D4B3 /* NSObject+MJClass.h */,
+				DB49FD1D204FEC210009D4B3 /* NSObject+MJClass.m */,
+				DB49FD11204FEC210009D4B3 /* NSString+MJExtension.h */,
+				DB49FD1E204FEC210009D4B3 /* NSString+MJExtension.m */,
+				DB49FD13204FEC210009D4B3 /* NSObject+MJProperty.h */,
+				DB49FD1B204FEC210009D4B3 /* NSObject+MJProperty.m */,
+				DB49FD14204FEC210009D4B3 /* MJExtensionConst.h */,
+				DB49FD1A204FEC210009D4B3 /* MJExtensionConst.m */,
+				DB49FD21204FEC210009D4B3 /* NSObject+MJKeyValue.h */,
+				DB49FD15204FEC210009D4B3 /* NSObject+MJKeyValue.m */,
+				DB49FD20204FEC210009D4B3 /* MJProperty.h */,
+				DB49FD16204FEC210009D4B3 /* MJProperty.m */,
+				DB49FD22204FEC210009D4B3 /* NSObject+MJCoding.h */,
+				DB49FD18204FEC210009D4B3 /* NSObject+MJCoding.m */,
+				DB49FD1C204FEC210009D4B3 /* MJPropertyType.h */,
+				DB49FD12204FEC210009D4B3 /* MJPropertyType.m */,
+				DB49FD0F204FEC210009D4B3 /* MJPropertyKey.h */,
+				DB49FD1F204FEC210009D4B3 /* MJPropertyKey.m */,
+				DB49FD23204FEC210009D4B3 /* Info.plist */,
+				DB49FD17204FEC210009D4B3 /* MJFoundation.h */,
+				DB49FD24204FEC210009D4B3 /* MJFoundation.m */,
+			);
+			path = MJExtension;
+			sourceTree = "<group>";
+		};
 		DB4A4B56200EFEC20006EE17 /* 最近新品 */ = {
 			isa = PBXGroup;
 			children = (
@@ -9133,6 +9282,15 @@
 			);
 			name = "海外购物佳";
 			path = "../../../../../备份/ATaoMall-优化/aTaohMall/class/首页/Controllers/海外购物佳";
+			sourceTree = "<group>";
+		};
+		DB6FC3B42056C8E600937C90 /* 编辑页面 */ = {
+			isa = PBXGroup;
+			children = (
+				DB6FC3B52056C92100937C90 /* XLCellectionEditVC.h */,
+				DB6FC3B62056C92100937C90 /* XLCellectionEditVC.m */,
+			);
+			path = "编辑页面";
 			sourceTree = "<group>";
 		};
 		DB78EEA91FBD822500C861BA /* AllDan */ = {
@@ -10853,6 +11011,7 @@
 				723C74671D7D042200ECA85D /* spinner_xiala.png in Resources */,
 				727D61EE1D30A6B10062BE73 /* iconfont-fanhui2.png in Resources */,
 				728F49BD1E2CD22200AB8BD9 /* 分类选中111@2x.png in Resources */,
+				DB49FD2E204FEC220009D4B3 /* Info.plist in Resources */,
 				729AE03D1EE65E1F001A9E2B /* ring-alt.gif in Resources */,
 				727D63C61D30B82C0062BE73 /* 登录按钮@2x 11-27-35-084.png in Resources */,
 				727D5EBE1D30A41D0062BE73 /* NewZhuCeViewController.xib in Resources */,
@@ -11347,6 +11506,7 @@
 				725FB3DC1DF82A7D001D8AD8 /* RecordModel.m in Sources */,
 				727D5EC41D30A41D0062BE73 /* STPickerArea.m in Sources */,
 				663846001F8F197F00DCA4E9 /* MJRefreshNormalHeader.m in Sources */,
+				DB6FC3B72056C92100937C90 /* XLCellectionEditVC.m in Sources */,
 				EE059CD01F26E87E00644E5A /* PeccancecyBaseModel.m in Sources */,
 				727D60491D30A41D0062BE73 /* AddPayCardViewController.m in Sources */,
 				DBBEEC6C1FEBA252007FD57E /* PersonalDanCheckPhotoVC.m in Sources */,
@@ -11361,12 +11521,14 @@
 				721F50DB1DEC043A00EB4EE3 /* YTSearchOtherCell.m in Sources */,
 				7264FDD51D3E4E74003EA0B4 /* HomeLookAllViewController.m in Sources */,
 				72E9BCB51DC1A77800D8010F /* AVHeaderRefresh.m in Sources */,
+				DB49FD29204FEC220009D4B3 /* MJExtensionConst.m in Sources */,
 				721905F11D339C1B006ADA4F /* HomeLookFooter.m in Sources */,
 				726B89DC1E76711A00A150E0 /* MerchantMapViewController.m in Sources */,
 				EE36C50E1F2F20E4005F2797 /* PeccCityModel.m in Sources */,
 				72A16C091EB9CDD5007A96C7 /* GameNameCell.m in Sources */,
 				729D3DC21E9CC8F000E648BC /* loadMoreCell.m in Sources */,
 				727D61681D30A5A30062BE73 /* MallBaseTabBarController.m in Sources */,
+				DB17E4BB205293CD007A3801 /* UIScrollView+Empty.m in Sources */,
 				663845F61F8F197F00DCA4E9 /* MJRefreshComponent.m in Sources */,
 				727D5EC61D30A41D0062BE73 /* ChangeGoodsAddressViewController.m in Sources */,
 				72FD241B1F0B26F40047662A /* BMNewGameAndPhoneViewController.m in Sources */,
@@ -11430,6 +11592,7 @@
 				72A73DB41E163C96005EACFA /* BackCartViewController.m in Sources */,
 				727D5EE71D30A41D0062BE73 /* UserModel.m in Sources */,
 				7251B8191E2DF409001B718A /* CartDingDanCell.m in Sources */,
+				DB49FD2D204FEC220009D4B3 /* MJPropertyKey.m in Sources */,
 				DB35FD8B1FC65A7700677584 /* YYTextRunDelegate.m in Sources */,
 				7276B9261DA9D85200C489A8 /* YTTuWenViewController.m in Sources */,
 				727D5F381D30A41D0062BE73 /* BusinessQurtCell.m in Sources */,
@@ -11478,12 +11641,14 @@
 				666A4CCE1F4EB07000D7394F /* AirRefundUploadImgVC.m in Sources */,
 				727D60431D30A41D0062BE73 /* QueDingPayViewController.m in Sources */,
 				DB35FDA61FC65A7700677584 /* NSData+YYAdd.m in Sources */,
+				DB17E4C0205294F4007A3801 /* MyDIYEmpty.m in Sources */,
 				DB35FDA01FC65A7700677584 /* UIControl+YYAdd.m in Sources */,
 				727D5E8F1D30A41D0062BE73 /* MyPayCardCell.m in Sources */,
 				6638462A1F8F43F500DCA4E9 /* FMDatabaseQueue.m in Sources */,
 				729E95981E127720008A1439 /* NewBusinessSearchViewController.m in Sources */,
 				DB35FD821FC65A7700677584 /* YYTextContainerView.m in Sources */,
 				729D3DB61E9C826C00E648BC /* NoDataFenLeiCell.m in Sources */,
+				DB17E4AC20523562007A3801 /* XLGoodsCollectionCell.m in Sources */,
 				EE4B79161F593B7900C515F5 /* NSDateFormatter+Category.m in Sources */,
 				72FD240A1F0B266C0047662A /* DPOtherHeaderView.m in Sources */,
 				72FA6FCF1ED2FBF6000F164A /* AirOneDetailView.m in Sources */,
@@ -11539,6 +11704,7 @@
 				72B86B7C1EC5B8DE00CF9B7B /* GaoJiView.m in Sources */,
 				72D7EEFB1D347C8D00A8CB4B /* NineFooterView.m in Sources */,
 				72F8A4A61EC46A6F0049AD8F /* CalendarHomeViewController.m in Sources */,
+				DB49FD2B204FEC220009D4B3 /* NSObject+MJClass.m in Sources */,
 				727D60951D30A41D0062BE73 /* GGClockView.m in Sources */,
 				72160F241E9B337900D41ACD /* NewHomeCell.m in Sources */,
 				726B89E21E76711A00A150E0 /* MerchantCell.m in Sources */,
@@ -11580,8 +11746,10 @@
 				72796B011D78425A00A63572 /* UIButton+ImageTitleSpacing.m in Sources */,
 				722BB3551D9A17B900EAE50D /* APNumberPadDefaultStyle.m in Sources */,
 				7299A1751EE5387100B8FAA1 /* AirWaitePayGoBackView.m in Sources */,
+				DB49FD0D204FEB340009D4B3 /* XLCollectListVC.m in Sources */,
 				727D60911D30A41D0062BE73 /* ChunJIFenNoCell.m in Sources */,
 				334DE59F1D6444DF005B2E6C /* MsButton.m in Sources */,
+				DB49FD2C204FEC220009D4B3 /* NSString+MJExtension.m in Sources */,
 				727D614B1D30A5210062BE73 /* WBPopMenuModel.m in Sources */,
 				723D225B1ED3CC0200AE554D /* AirGoBackDetailView.m in Sources */,
 				EE2427261F29D6BB00C265A2 /* PeccancecyInfoCell.m in Sources */,
@@ -11637,6 +11805,7 @@
 				DB78EECE1FBD822600C861BA /* PersonalShoppingDanCell.m in Sources */,
 				EECAC8B91F1C955D000D77AA /* UITabBar+Badge.m in Sources */,
 				667E02CD1F44A09000160C1E /* IQKeyboardManager.m in Sources */,
+				DB17E4BD205293CD007A3801 /* LYEmptyView.m in Sources */,
 				72C21FEE1F022ECE00994CE5 /* AirPlaneBackDetailViewController.m in Sources */,
 				DB4A4B7C200EFEC90006EE17 /* HomeDPModel.m in Sources */,
 				EEC6127F1F395E79004FBDB9 /* UILabel+Extension.m in Sources */,
@@ -11656,6 +11825,7 @@
 				66C2AE721F72444F00548276 /* AppStartADVC.m in Sources */,
 				72A530821EA7621E00BEEDFF /* FristHomeCell.m in Sources */,
 				72D74D0E1EA46F5B00491690 /* QianShouCell.m in Sources */,
+				DB49FD25204FEC220009D4B3 /* MJPropertyType.m in Sources */,
 				72160F2A1E9B929900D41ACD /* NewClassifyHeaderView.m in Sources */,
 				DB35FD9D1FC65A7700677584 /* UIBarButtonItem+YYAdd.m in Sources */,
 				667E02D01F44A09000160C1E /* IQBarButtonItem.m in Sources */,
@@ -11681,6 +11851,7 @@
 				727D5EE21D30A41D0062BE73 /* STUI.m in Sources */,
 				DBE4825E1FCFA65E00D422F8 /* XLAirplaneModel.m in Sources */,
 				663845FF1F8F197F00DCA4E9 /* MJRefreshGifHeader.m in Sources */,
+				DB17E4AF2052690A007A3801 /* XLShopsCollectionCell.m in Sources */,
 				723A66641ECADE1D000825DC /* TrainRetuenSuccessViewController.m in Sources */,
 				7202E13E1C9AA9B800B2FA42 /* DESUtil.m in Sources */,
 				7264FDD91D3E4E74003EA0B4 /* HomeLookAllViewController2.m in Sources */,
@@ -11699,6 +11870,7 @@
 				7264FDE71D3E5AFC003EA0B4 /* NowGoingViewController.m in Sources */,
 				DBB652F1204E6C620033AE20 /* WaitePayCell.m in Sources */,
 				DB35FD801FC65A7700677584 /* YYTextView.m in Sources */,
+				DB49FD28204FEC220009D4B3 /* NSObject+MJCoding.m in Sources */,
 				667E02CC1F44A09000160C1E /* IQUIWindow+Hierarchy.m in Sources */,
 				727D5EE81D30A41D0062BE73 /* XSInfoView.m in Sources */,
 				7202E1261C9AA9B800B2FA42 /* AppDelegate.m in Sources */,
@@ -11730,6 +11902,7 @@
 				727D61511D30A5210062BE73 /* RDVTabBar.m in Sources */,
 				72FD24101F0B266C0047662A /* KTPageControl.m in Sources */,
 				72E862661DADD94E00EEE8A7 /* YTAddressCell.m in Sources */,
+				DB49FD2A204FEC220009D4B3 /* NSObject+MJProperty.m in Sources */,
 				727D60761D30A41D0062BE73 /* MyRecordViewController.m in Sources */,
 				DB78EED61FBD822600C861BA /* PersonalSingleShoppingDetailModel.m in Sources */,
 				DB90ED311FF0F4A400772E79 /* XLNaviVIew.m in Sources */,
@@ -11858,6 +12031,7 @@
 				33D077631D6EF13800D6A379 /* UITextField+Helper.m in Sources */,
 				727D5EBF1D30A41D0062BE73 /* PassWordSettingViewController.m in Sources */,
 				667E02D81F44A09000160C1E /* NSNumber+JZExtension.m in Sources */,
+				DB49FD2F204FEC220009D4B3 /* MJFoundation.m in Sources */,
 				663846191F8F1B1D00DCA4E9 /* MJRefreshFooterView.m in Sources */,
 				66F145E31F459DF30044C370 /* NSStringHelper.m in Sources */,
 				66F21E511F4FD0740038E35A /* TrainProgressModel.m in Sources */,
@@ -11917,6 +12091,7 @@
 				DB9E09C31FCE520400AAB808 /* PersonalBMDanCell.m in Sources */,
 				729D3DC51E9CCF8800E648BC /* NoMoreDataCell.m in Sources */,
 				72FD24141F0B266C0047662A /* ZTSelectViewCell.m in Sources */,
+				DB17E4BC205293CD007A3801 /* UIView+LYExtension.m in Sources */,
 				727D60691D30A41D0062BE73 /* GotoShopLookHeaderView.m in Sources */,
 				727D60A61D30A41D0062BE73 /* HomeModel.m in Sources */,
 				729CC6781EDEBBCF00E83E86 /* PublicAnnouncementViewController.m in Sources */,
@@ -11935,6 +12110,7 @@
 				72F8A4A41EC46A6F0049AD8F /* CalendarDayCell.m in Sources */,
 				666A4CCB1F4EB02E00D7394F /* AirRefundTypeVC.m in Sources */,
 				727D60B91D30A41D0062BE73 /* HomeLookAllCell4.m in Sources */,
+				DB49FD26204FEC220009D4B3 /* NSObject+MJKeyValue.m in Sources */,
 				727D5ED51D30A41D0062BE73 /* GoodsAddressCell1.m in Sources */,
 				DBE5D81C1FECFF0F0067D57C /* CartChoseView.m in Sources */,
 				727D60471D30A41D0062BE73 /* AddCell.m in Sources */,
@@ -12034,6 +12210,7 @@
 				721897931DE2F16D00F953A9 /* MD5DataSigner.m in Sources */,
 				721897911DE2F16D00F953A9 /* DataSigner.m in Sources */,
 				727D5ED91D30A41D0062BE73 /* GoodsAddressDetailViewController.m in Sources */,
+				DB49FD27204FEC220009D4B3 /* MJProperty.m in Sources */,
 				72DCDD8F1ECD3E7300AEC8C3 /* AirPlaneCell.m in Sources */,
 				DB4A4B79200EFEC90006EE17 /* HomeGoodGoodsHotSaleVC.m in Sources */,
 				72DB7E3F1ECE775700235CE2 /* AirPlaneHBCell.m in Sources */,
@@ -12096,6 +12273,7 @@
 				7248D5AC1D40ADEE0038B276 /* XieYiCell.m in Sources */,
 				7279A9BB1E9F073F00A18B21 /* NewHomeCell3.m in Sources */,
 				DB35FDAC1FC65A7700677584 /* NSString+YYAdd.m in Sources */,
+				DB17E4BA205293CD007A3801 /* LYEmptyBaseView.m in Sources */,
 				DB35FD9C1FC65A7700677584 /* UIView+YYAdd.m in Sources */,
 				722842BA1D48D9E20029D96C /* EmailCell.m in Sources */,
 				727D5ECC1D30A41D0062BE73 /* ChangeMesssage2ViewController.m in Sources */,

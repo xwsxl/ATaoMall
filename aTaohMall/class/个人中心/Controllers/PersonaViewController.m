@@ -72,6 +72,8 @@
 #import "YTGoodsDetailViewController.h"
 #import "WKProgressHUD.h"
 
+#import "XLCollectListVC.h"
+
 @interface PersonaViewController ()<UITableViewDataSource,UITableViewDelegate,OutMessageDelegate,DJRefreshDelegate,ChangHeaderImageDelegate,MKMapViewDelegate, CLLocationManagerDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 {
     UITableView *_tableView;
@@ -81,10 +83,9 @@
     CGFloat  cellHeight;
     
     NSMutableArray *_datasArrM;
-    
+
     personHeaderView *_headerView;//表头
-    
-    
+
     UIView *view;
     AFHTTPRequestOperationManager *manager;
     
@@ -114,6 +115,7 @@
 @property (nonatomic,strong)NSString *hahahahahah;
 /** 上次选中的索引(或者控制器) */
 @property (nonatomic, assign) NSInteger lastSelectedIndex;
+
 
 @end
 
@@ -173,6 +175,8 @@
     static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
     //注册接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
+
+
 
     [self createTableView];
     
@@ -1343,6 +1347,10 @@
 
     }else{
 
+        XLCollectListVC *VC=[[XLCollectListVC alloc] init];
+        VC.hidesBottomBarWhenPushed=YES;
+        VC.isSelectshop=NO;
+        [self.navigationController pushViewController:VC animated:NO];
         YLog(@"商品收藏");
     }
 
@@ -1366,12 +1374,12 @@
         self.tabBarController.tabBar.hidden=YES;
 
     }else{
+        XLCollectListVC *VC=[[XLCollectListVC alloc] init];
+        VC.hidesBottomBarWhenPushed=YES;
+        VC.isSelectshop=YES;
+        [self.navigationController pushViewController:VC animated:NO];
         YLog(@"店铺收藏");
-
-
     }
-
-
 }
 //历史记录事件
 -(void)HistoryShouCangBtnClick
@@ -1391,7 +1399,7 @@
         self.tabBarController.tabBar.hidden=YES;
 
     }else{
-
+        [TrainToast showWithText:@"即将开放，敬请期待！" duration:2.0];
         YLog(@"浏览记录");
 
     }

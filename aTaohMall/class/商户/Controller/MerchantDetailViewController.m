@@ -886,7 +886,7 @@
         
         self.navigationController.navigationBar.hidden=YES;
         
-        self.tabBarController.tabBar.hidden=NO;
+        self.tabBarController.tabBar.hidden=YES;
         
         [self.navigationController popViewControllerAnimated:NO];
         

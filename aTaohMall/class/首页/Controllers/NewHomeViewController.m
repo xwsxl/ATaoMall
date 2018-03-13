@@ -2144,6 +2144,7 @@
 {
 
     NSInteger count=0;
+    NSLog(@"%ld,%ld,%ld",_new_product_list.count,_datasArrM1.count,_RemenSMArr.count);
     if (_new_product_list.count>0&&_datasArrM1.count>0&&_RemenSMArr.count>0) {
         count=_RemenSMArr.count+2;
     }

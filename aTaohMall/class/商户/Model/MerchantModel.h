@@ -18,6 +18,8 @@
 @property(nonatomic,copy)NSString *gid;
 @property(nonatomic,copy)NSString *OneCoordinates;
 @property(nonatomic,copy)NSString *scope;//经营范围
+@property(nonatomic,copy)NSString *collectionId;
+
 
 //店铺详情
 @property(nonatomic,copy)NSString *HeaderLogo;//店铺头像
@@ -38,6 +40,9 @@
 @property(nonatomic,copy)NSString *Goods_amount;//商品付款人数
 @property(nonatomic,copy)NSString *Goods_is_attribute;//商品是否为属性商品
 @property(nonatomic,copy)NSString *current_time_stamp;
+
+@property(nonatomic,copy)NSString *status;
+
 
 //地址
 @property(nonatomic,copy)NSString *AddressId;//地址id
