@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol XLPersonalDingDanVCDelegate<NSObject>
 
+-(void)refrshDataBecuseDeleteDingDan;
+
+@end
 
 
 @interface XLPersonalDingDanVC : UIViewController
 
 @property (nonatomic,strong)NSString *ISKindOfShop;
-
+@property (nonatomic,strong)NSString *searchStr;
+@property (nonatomic,weak)id<XLPersonalDingDanVCDelegate> delegate;
 @end

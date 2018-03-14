@@ -87,6 +87,7 @@ static NSString * const XLConstPersonalShoppingSectionHeaderView=@"PersonalShopp
 static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShoppingSectionFooterView";
 
 /*******************************************************      控制器生命周期       ******************************************************/
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.modalPresentationStyle =UIModalPresentationCustom;
@@ -95,6 +96,9 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     [self.view addGestureRecognizer:tap];
     [self initUI];
     _dataSource=[NSMutableArray new];
+    if (_searchStr&&![_searchStr isEqualToString:@""]) {
+    [self searchText:_searchStr];
+    }
     // Do any additional setup after loading the view.
 }
 /*******************************************************      数据请求       ******************************************************/
@@ -345,6 +349,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
    // [self initScrollView];
     [self readNSUserDefaults];
     [self initTableView];
+
 }
 
 -(void)initNavi
@@ -515,6 +520,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 //
 -(void)initview{
     if (!nodataView) {
+
         nodataView=[[UIView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
         [self.view insertSubview:nodataView belowSubview:_tableView];
         nodataView.backgroundColor=[UIColor whiteColor];
@@ -530,6 +536,9 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         _lable.textColor =RGB(74,74,74);
         _lable.textAlignment = NSTextAlignmentCenter;
         [nodataView addSubview:_lable];
+        nodataView.hidden=NO;
+        _tableView.hidden=YES;
+        _scroll.hidden=YES;
     }else
     {
         nodataView.hidden=NO;
@@ -544,10 +553,12 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 -(void)qurtBtnClick
 {
     [self.searchTextField resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:^{
 
-    }];
-   // [self.navigationController popViewControllerAnimated:NO];
+   // [self dismissViewControllerAnimated:YES completion:^{
+
+   // }];
+
+    [self.navigationController popViewControllerAnimated:NO];
 }
 /*****  <#desc#> *****/
 -(void)clickWindow:(UITapGestureRecognizer *)tap
@@ -910,6 +921,9 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
                                          NSUInteger index=[_dataSource indexOfObject:model];
                                          [_dataSource removeObject:model];
                                          [_tableView deleteSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationRight];
+                                         if (_delegate&&[_delegate respondsToSelector:@selector(refrshDataBecuseDeleteDingDan)]) {
+                                             [_delegate refrshDataBecuseDeleteDingDan];
+                                         }
                                      }else
                                      {
                                          [TrainToast showWithText:responseObj[@"message"] duration:2.0];
@@ -1222,11 +1236,10 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         [self.searchTextField setText:str];
         _searchKeyWord=str;
         [_dataSource removeAllObjects];
-        [self getDatas];
-
         _scroll.hidden=YES;
         nodataView.hidden=YES;
         _tableView.hidden=NO;
+        [self getDatas];
 
     }
 

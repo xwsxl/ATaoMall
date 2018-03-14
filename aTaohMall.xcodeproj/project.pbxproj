@@ -1559,6 +1559,7 @@
 		DB4A4B7F200EFEC90006EE17 /* XLShoppingListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4B71200EFEC70006EE17 /* XLShoppingListTableViewCell.m */; };
 		DB4A4B80200EFEC90006EE17 /* HomeHotSaleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4B73200EFEC80006EE17 /* HomeHotSaleVC.m */; };
 		DB4A4BDB200F52090006EE17 /* XLHomeTopBangModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4A4BDA200F52090006EE17 /* XLHomeTopBangModel.m */; };
+		DB4DE3312058C2FD008F1525 /* XLDingDanSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4DE3302058C2FD008F1525 /* XLDingDanSearchVC.m */; };
 		DB6BAE6820202223005D54BE /* AllSingleShoppingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6220202221005D54BE /* AllSingleShoppingModel.m */; };
 		DB6BAE6920202223005D54BE /* HomeAbroadShoppingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6320202221005D54BE /* HomeAbroadShoppingVC.m */; };
 		DB6BAE6A20202223005D54BE /* XLShoppingCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6BAE6720202221005D54BE /* XLShoppingCollectionCell.m */; };
@@ -4202,6 +4203,8 @@
 		DB4A4B74200EFEC80006EE17 /* HomeHotSaleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeHotSaleVC.h; sourceTree = "<group>"; };
 		DB4A4BD9200F52090006EE17 /* XLHomeTopBangModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLHomeTopBangModel.h; sourceTree = "<group>"; };
 		DB4A4BDA200F52090006EE17 /* XLHomeTopBangModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLHomeTopBangModel.m; sourceTree = "<group>"; };
+		DB4DE32F2058C2FC008F1525 /* XLDingDanSearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLDingDanSearchVC.h; sourceTree = "<group>"; };
+		DB4DE3302058C2FD008F1525 /* XLDingDanSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLDingDanSearchVC.m; sourceTree = "<group>"; };
 		DB6BAE6220202221005D54BE /* AllSingleShoppingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSingleShoppingModel.m; sourceTree = "<group>"; };
 		DB6BAE6320202221005D54BE /* HomeAbroadShoppingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeAbroadShoppingVC.m; sourceTree = "<group>"; };
 		DB6BAE6420202221005D54BE /* XLShoppingCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLShoppingCollectionCell.h; sourceTree = "<group>"; };
@@ -8734,6 +8737,8 @@
 			children = (
 				DB0A40B12044E86D00F49B48 /* XLPersonalDingDanVC.h */,
 				DB0A40B22044E86D00F49B48 /* XLPersonalDingDanVC.m */,
+				DB4DE32F2058C2FC008F1525 /* XLDingDanSearchVC.h */,
+				DB4DE3302058C2FD008F1525 /* XLDingDanSearchVC.m */,
 			);
 			path = "订单搜索";
 			sourceTree = "<group>";
@@ -12145,6 +12150,7 @@
 				727D5EDF1D30A41D0062BE73 /* SexCell.m in Sources */,
 				7253C0761ECC2C0300AE505F /* AirPlaneViewController.m in Sources */,
 				72DF0B6F1EADD24A007A2805 /* ABButton.m in Sources */,
+				DB4DE3312058C2FD008F1525 /* XLDingDanSearchVC.m in Sources */,
 				727D60631D30A41D0062BE73 /* GoodsDetailHeaderView.m in Sources */,
 				727D60BD1D30A41D0062BE73 /* NewHomeHeaderView.m in Sources */,
 				667E038B1F44A48C00160C1E /* ATHBaseModel.m in Sources */,

@@ -10,4 +10,5 @@
 
 @interface PersonalBMDanVC : UIViewController
 -(void)selectedIndexType:(NSInteger )index;
+-(void)refreshData;
 @end
