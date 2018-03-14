@@ -572,15 +572,12 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
 //
 -(void)changeValue:(UITextField *)tf
 {
-    if (tf.text.length==0) {
-      //  _tableView.hidden=YES;
-        nodataView.hidden=YES;
-        _scroll.hidden=NO;
-    }
+
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    _scroll.hidden=NO;
     if (!tap.enabled&&!_huiseControl) {
     _huiseControl=[[UIControl alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight)];
     _huiseControl.backgroundColor=RGBA(0, 0, 0, 0.5);
@@ -590,12 +587,15 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
     return YES;
 }
 
+
+
 -(void)hidenHuiseControll:(UIControl *)controll
 {
     [self.searchTextField resignFirstResponder];
     _huiseControl.backgroundColor=[UIColor clearColor];
     [_huiseControl removeFromSuperview];
     _huiseControl=nil;
+    _scroll.hidden=YES;
 }
 //点击历史记录
 -(void)clickHistoryBtn:(UIButton *)sender
@@ -1234,11 +1234,12 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         [SearchManager SearchDingDanText:str];//缓存搜索记录
         [self readNSUserDefaults];
         [self.searchTextField setText:str];
+        [_tableView setContentOffset:CGPointZero];
         _searchKeyWord=str;
-        [_dataSource removeAllObjects];
         _scroll.hidden=YES;
         nodataView.hidden=YES;
         _tableView.hidden=NO;
+
         [self getDatas];
 
     }
