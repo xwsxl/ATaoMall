@@ -11,8 +11,9 @@
 #import "PersonalBMDanVC.h"
 #import "PersonalShoppingDanDetailVC.h"
 #import "XLPersonalDingDanVC.h"
+#import "XLDingDanSearchVC.h"
 
-@interface PersonalAllDanVC ()<UIScrollViewDelegate>
+@interface PersonalAllDanVC ()<UIScrollViewDelegate,XLDingDanSearchVCDelegate,XLPersonalDingDanVCDelegate>
 {
     NSString *indextype;
     NSInteger indexcount;
@@ -152,17 +153,34 @@
 -(void)searchButClick
 {
 
-    XLPersonalDingDanVC *VC=[[XLPersonalDingDanVC alloc] init];
+    XLDingDanSearchVC *VC=[[XLDingDanSearchVC alloc] init];
     VC.view.backgroundColor=RGBA(0, 0, 0, 0.5);
+    VC.delegate=self;
+   // CGPoint point=self.ContentView.contentOffset;
+    [self presentViewController:VC animated:YES completion:^{
+
+    }];
+   // [self.navigationController pushViewController:VC animated:NO];
+}
+
+-(void)searchText:(NSString *)str
+{
+    XLPersonalDingDanVC *VC=[[XLPersonalDingDanVC alloc] init];
+   // VC.view.backgroundColor=RGBA(0, 0, 0, 0.5);
     CGPoint point=self.ContentView.contentOffset;
     VC.ISKindOfShop=@"0";
     if (point.x>0) {
         VC.ISKindOfShop=@"1";
     }
-    [self presentViewController:VC animated:YES completion:^{
+    VC.searchStr=str;
+    VC.delegate=self;
+    [self.navigationController pushViewController:VC animated:NO];
 
-    }];
-    //[self.navigationController pushViewController:VC animated:NO];
+}
+
+-(void)refrshDataBecuseDeleteDingDan
+{
+    [self.ShoppingDanVC refreshData];
 }
 
 -(void)selectorBMDan:(UIButton *)sender

@@ -11,5 +11,5 @@
 @interface PersonalShoppingDanVC : UIViewController
 
 -(void)selectedIndexType:(NSInteger )index;
-
+-(void)refreshData;
 @end
