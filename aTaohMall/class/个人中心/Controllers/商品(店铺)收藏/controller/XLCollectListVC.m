@@ -25,6 +25,7 @@
     UITableView *_tableView;
     UITableView *_tableView2;
     NSString *_searchWord;
+    NSMutableArray *_tempArrM;
     BOOL _isEdit;
 }
 @property (nonatomic,strong)UIView *normalNavi;
@@ -49,6 +50,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 /*****  <#desc#> *****/
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _tempArrM=[[NSMutableArray alloc] init];
     [self SetUI];
 }
 
@@ -293,28 +295,44 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 {
     self.normalNavi.hidden=NO;
     self.searchNavi.hidden=YES;
+
+
     _searchWord=@"";
     UITextField *textfield=[self.view viewWithTag:500];
     [textfield resignFirstResponder];
-    [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    _tableView.ly_emptyView=nil;
-    [_tableView.ly_emptyView removeFromSuperview];
-    [_tableView2.ly_emptyView removeFromSuperview];
-    _tableView2.ly_emptyView=nil;
 
-    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
+    if (SELECTGOODS) {
+        self.goodsPage=0;
+        self.goodsDataSource=[_tempArrM mutableCopy];
+        [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [_tableView.ly_emptyView removeFromSuperview];
+        _tableView.ly_emptyView=nil;
+        _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_collectionempty" titleStr:@"" detailStr:@"" btnTitleStr:@"还没有任何收藏呢，不如去首页逛逛~" btnClickBlock:^{
 
-        self.tabBarController.selectedIndex=0;
-        [self.navigationController popToRootViewControllerAnimated:NO];
+            self.tabBarController.selectedIndex=0;
+            [self.navigationController popToRootViewControllerAnimated:NO];
 
-    }];
-    _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_collectionempty" titleStr:@"" detailStr:@"" btnTitleStr:@"还没有任何收藏呢，不如去首页逛逛~" btnClickBlock:^{
+        }];
 
-        self.tabBarController.selectedIndex=0;
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        [self goodsButtonClick:nil];
+    }else
+    {
+        self.shopsPage=0;
+        self.shopsDataSource=[_tempArrM mutableCopy];
+        [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
-    }];
+        [_tableView2.ly_emptyView removeFromSuperview];
+        _tableView2.ly_emptyView=nil;
+
+        _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
+
+            self.tabBarController.selectedIndex=0;
+            [self.navigationController popToRootViewControllerAnimated:NO];
+
+        }];
+
+        [self shopsButtonClick:nil];
+    }
     [self getdatas];
 }
 
@@ -570,18 +588,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         textfield.placeholder=@"搜索您收藏的店铺";
     }
     [textfield becomeFirstResponder];
-    [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    _tableView.ly_emptyView=nil;
-    [_tableView.ly_emptyView removeFromSuperview];
-    _tableView2.ly_emptyView=nil;
-    [_tableView2.ly_emptyView removeFromSuperview];
-    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到店铺哦，用其他关键字试试吧~" btnClickBlock:^{
 
-    }];
-    _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到商品哦，用其他关键字试试吧~" btnClickBlock:^{
+    if (SELECTGOODS) {
+        _tempArrM=[self.goodsDataSource mutableCopy];
+    }else
+    {
+        _tempArrM=[self.shopsDataSource mutableCopy];
+    }
 
-    }];
 //    self.leftSwipeGestureRecognizer.enabled=NO;
 //    self.rightSwipeGestureRecognizer.enabled=NO;
 }
@@ -699,6 +713,25 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 //    self.rightSwipeGestureRecognizer.enabled=YES;
     SELECTGOODS?(self.goodsPage=0):(self.shopsPage=0);
     _searchWord=textField.text;
+
+    if (SELECTGOODS) {
+        [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [_tableView.ly_emptyView removeFromSuperview];
+        _tableView.ly_emptyView=nil;
+        _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到商品哦，用其他关键字试试吧~" btnClickBlock:^{
+
+        }];
+    }else
+    {
+        [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+        [_tableView2.ly_emptyView removeFromSuperview];
+        _tableView2.ly_emptyView=nil;
+
+        _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到店铺哦，用其他关键字试试吧~" btnClickBlock:^{
+
+        }];
+    }
     [self getdatas];
     return YES;
 }
