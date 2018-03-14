@@ -167,6 +167,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _scroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreenWidth, kScreenHeight-KSafeAreaTopNaviHeight)];
     _scroll.scrollEnabled=NO;
     _scroll.userInteractionEnabled=YES;
+   // _scroll.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:_scroll];
 
 //    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
@@ -200,6 +201,13 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 
     [_tableView registerClass:[XLGoodsCollectionCell class] forCellReuseIdentifier:XLGoodsCollectionCellReuse];
+    _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_collectionempty" titleStr:@"" detailStr:@"" btnTitleStr:@"还没有任何收藏呢，不如去首页逛逛~" btnClickBlock:^{
+
+        self.tabBarController.selectedIndex=0;
+        [self.navigationController popToRootViewControllerAnimated:NO];
+
+    }];
+
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     // [footer setBackgroundColor:[UIColor whiteColor]];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
@@ -239,7 +247,10 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _tableView2.estimatedSectionFooterHeight=0;
     _tableView2.estimatedSectionHeaderHeight=0;
     _tableView2.separatorStyle=UITableViewCellSeparatorStyleNone;
-    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"" titleStr:@"找不到商品哦，用其他关键字试试吧~" detailStr:@"" btnTitleStr:@"" btnClickBlock:^{
+    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
+
+            self.tabBarController.selectedIndex=0;
+            [self.navigationController popToRootViewControllerAnimated:NO];
 
     }];
     [_tableView2 registerClass:[XLShopsCollectionCell class] forCellReuseIdentifier:XLShopsCollectionCellReuse];
@@ -285,8 +296,26 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _searchWord=@"";
     UITextField *textfield=[self.view viewWithTag:500];
     [textfield resignFirstResponder];
-//    self.leftSwipeGestureRecognizer.enabled=YES;
-//    self.rightSwipeGestureRecognizer.enabled=YES;
+    [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    _tableView.ly_emptyView=nil;
+    [_tableView.ly_emptyView removeFromSuperview];
+    [_tableView2.ly_emptyView removeFromSuperview];
+    _tableView2.ly_emptyView=nil;
+
+    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
+
+        self.tabBarController.selectedIndex=0;
+        [self.navigationController popToRootViewControllerAnimated:NO];
+
+    }];
+    _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_collectionempty" titleStr:@"" detailStr:@"" btnTitleStr:@"还没有任何收藏呢，不如去首页逛逛~" btnClickBlock:^{
+
+        self.tabBarController.selectedIndex=0;
+        [self.navigationController popToRootViewControllerAnimated:NO];
+
+    }];
+    [self getdatas];
 }
 
 /*****  <#desc#> *****/
@@ -541,6 +570,18 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         textfield.placeholder=@"搜索您收藏的店铺";
     }
     [textfield becomeFirstResponder];
+    [_tableView2.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_tableView.ly_emptyView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    _tableView.ly_emptyView=nil;
+    [_tableView.ly_emptyView removeFromSuperview];
+    _tableView2.ly_emptyView=nil;
+    [_tableView2.ly_emptyView removeFromSuperview];
+    _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到店铺哦，用其他关键字试试吧~" btnClickBlock:^{
+
+    }];
+    _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"xl-img-empty" titleStr:@"" detailStr:@"" btnTitleStr:@"找不到商品哦，用其他关键字试试吧~" btnClickBlock:^{
+
+    }];
 //    self.leftSwipeGestureRecognizer.enabled=NO;
 //    self.rightSwipeGestureRecognizer.enabled=NO;
 }
@@ -560,7 +601,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return SELECTGOODS?self.goodsDataSource.count:self.shopsDataSource.count;
+    NSInteger count=SELECTGOODS?self.goodsDataSource.count:self.shopsDataSource.count;
+    if (count==0) {
+        tableView.backgroundColor=[UIColor whiteColor];
+    }else
+    {
+        tableView.backgroundColor=RGB(244, 244, 244);
+    }
+    return count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

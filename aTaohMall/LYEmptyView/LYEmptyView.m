@@ -161,6 +161,7 @@
     
     if (self.imageSize.width && self.imageSize.height) {//设置了宽高大小
         if (imgViewWidth > imgViewHeight) {//以宽为基准，按比例缩放高度
+
             imgViewHeight = (imgViewHeight / imgViewWidth) * self.imageSize.width;
             imgViewWidth = self.imageSize.width;
         
@@ -234,14 +235,25 @@
     btnWidth = btnWidth > contentMaxWidth ? contentMaxWidth : btnWidth;
     
     self.actionButton.frame = CGRectMake(0, contentHeight + subViweMargin, btnWidth, btnHeight);
-    [self.actionButton setTitle:btnTitle forState:UIControlStateNormal];
+
+
     self.actionButton.titleLabel.font = font;
     self.actionButton.backgroundColor = backGColor;
     [self.actionButton setTitleColor:titleColor forState:UIControlStateNormal];
     self.actionButton.layer.borderColor = borderColor.CGColor;
     self.actionButton.layer.borderWidth = borderWidth;
     self.actionButton.layer.cornerRadius = cornerRadius;
-    
+    if ([btnTitle containsString:@"首页"]) {
+
+        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",btnTitle]];
+        NSRange range=[btnTitle rangeOfString:@"首页"];
+        [str addAttribute:NSForegroundColorAttributeName value:RGB(255, 93, 94) range:range];
+        [self.actionButton setAttributedTitle:str forState:UIControlStateNormal];
+    }else
+    {
+        [self.actionButton setTitle:btnTitle forState:UIControlStateNormal];
+    }
+
     //添加事件
     if (target && action) {
         [self.actionButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];

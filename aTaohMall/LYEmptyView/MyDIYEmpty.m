@@ -62,16 +62,20 @@
     [super prepare];
     
     self.subViewMargin = 20.f;
-    
-    self.titleLabFont = [UIFont systemFontOfSize:25];
-    self.titleLabTextColor = RGB(90, 180, 160);
+
+    self.contentViewY=150;
+   // self.superview.backgroundColor=[UIColor whiteColor];
+   // self.backgroundColor=[UIColor whiteColor];
+    self.titleLabFont = KNSFONT(14);
+    self.titleLabTextColor = RGB(74, 74, 74);
     
     self.detailLabFont = [UIFont systemFontOfSize:17];
     self.detailLabTextColor = RGB(180, 120, 90);
     self.detailLabMaxLines = 5;
     
-    self.actionBtnBackGroundColor = RGB(90, 180, 160);
-    self.actionBtnTitleColor = [UIColor whiteColor];
+    self.actionBtnBackGroundColor = [UIColor clearColor];
+    self.actionBtnTitleColor = RGB(74, 74, 74);
+
 }
 
 @end

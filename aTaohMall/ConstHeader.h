@@ -17,7 +17,7 @@ static NSString *const URL_Str=@"http://192.168.1.24:8085/";
 static NSString *const URL_Str1=@"http://120.76.245.90:8089/pay/";
 //*/
 
-//*http://39.108.151.219:8089/index.shtml
+//*
 //测试
 static NSString *const URL_Str=@"http://39.108.151.219:8089/";
 //测试支付
