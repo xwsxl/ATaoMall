@@ -449,7 +449,7 @@
     }else{
 
         self.sigen = [userDefaultes stringForKey:@"sigen"];
-
+        WKProgressHUD *hud=[WKProgressHUD showInView:self.view withText:@"" animated:YES];
         [HTTPRequestManager POST:@"getShoppingSum_mob.shtml" NSDictWithString:@{@"sigen":self.sigen} parameters:nil result:^(id responseObj, NSError *error) {
 
             YLog(@"response=%@",responseObj);
@@ -458,9 +458,12 @@
                     self.goods_num=responseObj[@"goods_num"];
 
                     if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
+
                         [self CartNoGoods];
 
                     }else{
+
+                        self.CannotRefresh=YES;
 
                         [_FailureArrM removeAllObjects];
                         [_StoreArrM removeAllObjects];
@@ -473,7 +476,7 @@
                     }
 
                 }
-
+                 [hud dismiss:YES];
         }];
 
     }

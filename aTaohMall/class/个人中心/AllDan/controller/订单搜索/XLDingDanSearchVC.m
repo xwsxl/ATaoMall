@@ -72,7 +72,7 @@
         UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(leading, height+top, 70, 15)];
         lab.font=KNSFONTM(15);
         lab.textColor=RGB(51, 51, 51);
-        lab.text=@"历史搜索";
+        lab.text=@"搜索记录";
         [_scroll addSubview:lab];
 
         UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];

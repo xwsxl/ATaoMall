@@ -45,6 +45,7 @@
     UIView *view;
     NSMutableArray *_datasSource;
 }
+@property (weak, nonatomic) IBOutlet UIButton *QuitLogBut;
 @end
 
 @implementation YTAddressManngerViewController
@@ -54,7 +55,19 @@
     // Do any additional setup after loading the view from its nib.
     
     [self initTableView];
-    
+    CALayer *layer = [CALayer layer];
+
+    layer.frame = CGRectMake(10, kScreenHeight-KSafeAreaBottomHeight-15-44, kScreen_Width-20, 44);
+
+    layer.backgroundColor = RGBA(0, 0, 0,0.18).CGColor;
+
+    layer.shadowOffset = CGSizeMake(5, 5);
+
+    layer.shadowOpacity = 0.8;
+
+    layer.cornerRadius = 22;
+    [self.view.layer insertSublayer:layer below:_QuitLogBut.layer];
+
     _datasSource=[NSMutableArray new];
     
     self.view.frame=[UIScreen mainScreen].bounds;
@@ -77,7 +90,7 @@
 -(void)initTableView
 {
     
-    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight-49) style:UITableViewStylePlain];
+    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight-49-10-KSafeAreaBottomHeight) style:UITableViewStyleGrouped];
     
     _tableView.delegate=self;
     _tableView.dataSource=self;
@@ -338,10 +351,11 @@
         if ([model.defaultstate isEqualToString:@"1"]) {
             
             cell.YTMoRenImageView.image=[UIImage imageNamed:@"勾"];
-            
+            cell.YTMorenLabel.text=@"默认地址";
         }else{
             
             cell.YTMoRenImageView.image=[UIImage imageNamed:@"为勾选"];
+            cell.YTMorenLabel.text=@"设为默认";
         }
         
         
@@ -357,6 +371,21 @@
         
         return cell;
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_datasSource.count==0) {
+        return 0.01;
+    }else
+    {
+        return 10;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
 }
 
 -(void)morenBtnClick:(UIButton*)button event:(id)event

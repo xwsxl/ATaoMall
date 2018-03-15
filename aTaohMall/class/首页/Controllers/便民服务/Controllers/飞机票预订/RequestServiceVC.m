@@ -90,7 +90,7 @@
     }
     label.textColor = [UIColor blackColor];
     
-    label.font = [UIFont fontWithName:@"PingFang-SC-Medium" size:19];
+    label.font = KNSFONT(17);
     
     label.textAlignment = NSTextAlignmentCenter;
     

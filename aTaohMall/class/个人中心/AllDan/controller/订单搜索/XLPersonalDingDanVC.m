@@ -413,7 +413,7 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         UILabel * lab = [[UILabel alloc]initWithFrame:CGRectMake(leading, height+top, 70, 15)];
         lab.font=KNSFONTM(15);
         lab.textColor=RGB(51, 51, 51);
-        lab.text=@"历史搜索";
+        lab.text=@"搜索记录";
         [_scroll addSubview:lab];
 
         UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -525,11 +525,11 @@ static NSString * const XLConstPersonalShoppingSectionFooterView=@"PersonalShopp
         [self.view insertSubview:nodataView belowSubview:_tableView];
         nodataView.backgroundColor=[UIColor whiteColor];
 
-        UIImageView *IV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreen_Width-90)/2, (kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2-KSafeAreaTopNaviHeight, 90, 90)];
+        UIImageView *IV=[[UIImageView alloc]initWithFrame:CGRectMake((kScreen_Width-90)/2, Height(100), 90, 90)];
         IV.image=[UIImage imageNamed:@"xl-img-empty"];
         [nodataView addSubview:IV];
 
-        UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,(kScreenHeight-KSafeAreaTopNaviHeight-100-20)/2+100-KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, 20)];
+        UILabel * _lable = [[UILabel alloc]initWithFrame:CGRectMake(0,Height(100)+90+Height(20), [UIScreen mainScreen].bounds.size.width, 20)];
         _lable.font=KNSFONT(15);
         _lable.text = @"还没查询到相关订单";
         _lable.tag = 100;

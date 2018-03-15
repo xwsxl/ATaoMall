@@ -39,16 +39,30 @@
     NSArray *dataArr3;
     
 }
+@property (weak, nonatomic) IBOutlet UIButton *QuitLogBut;
 @end
 
 @implementation SettingPassWordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    CALayer *layer = [CALayer layer];
+
+    layer.frame = CGRectMake(10, kScreenHeight-KSafeAreaBottomHeight-15-44, kScreen_Width-20, 44);
+
+    layer.backgroundColor = RGBA(0, 0, 0,0.18).CGColor;
+
+    layer.shadowOffset = CGSizeMake(5, 5);
+
+    layer.shadowOpacity = 0.8;
+
+    layer.cornerRadius = 22;
+    [self.view.layer insertSublayer:layer below:_QuitLogBut.layer];
     dataArr=@[@"账户信息",@"收货地址",@"修改密码"];
     dataArr2=@[@"关于我们",@"联系客服",@"反馈",@"帮助"];
     dataArr3=@[@"清除缓存"];
-    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight-49) style:UITableViewStyleGrouped];
+    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreen_Width, kScreenHeight-KSafeAreaTopNaviHeight-KSafeAreaBottomHeight-49-10) style:UITableViewStyleGrouped];
     _tableView.delegate=self;
     _tableView.dataSource=self;
     _tableView.bounces=NO;
