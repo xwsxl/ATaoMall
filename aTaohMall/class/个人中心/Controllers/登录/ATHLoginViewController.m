@@ -1177,11 +1177,7 @@
                 
                 
                 
-                //通知购物车，加载数据
                 
-                //                NSNotification *TongZhiCartLoginSuccess = [[NSNotification alloc] initWithName:@"TongZhiCartLoginSuccess" object:nil userInfo:nil];
-                //
-                //                [[NSNotificationCenter defaultCenter] postNotification:TongZhiCartLoginSuccess];
                 
                 //缓存登录次数
                 [UserMessageManager UserTime:self.again];
@@ -1191,10 +1187,6 @@
                     
                     [JRToast showWithText:@"登录成功" duration:1.0f];
                     
-                    //通知购物车显示件数
-                    NSNotification *changeCartNumber = [[NSNotification alloc] initWithName:@"LoginSuccessShowCartNumber" object:nil userInfo:nil];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotification:changeCartNumber];
                     
                     
                     //缓存登录状态

@@ -230,6 +230,9 @@
 //当前商品所选规格model数组
 @property (nonatomic, strong) NSMutableArray *selectSpecificationsArray;
 
+@property (nonatomic,assign)BOOL isRefresh;
+
+
 /** 上次选中的索引(或者控制器) */
 @property (nonatomic, assign) NSInteger lastSelectedIndex;
 
@@ -259,6 +262,7 @@
     [self initProperty];
     //初始化位置信息
     [self MakeSelfMessage];
+    [self SetUI];
     //初始化数据
     [self LookCartNumber];
 
@@ -268,15 +272,17 @@
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CartBdeagChange:) name:@"CartBdeagChange" object:nil];
 
-    //注册通知
+    /*****  控制属性修改时底部tabbar会挡住确定按钮 *****/
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CartTabbarShow:) name:@"CartTabbarShow" object:nil];
 
-    //登录成功，通知修改购物车件数
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LoginSuccessShowCartNumber:) name:@"LoginSuccessShowCartNumber" object:nil];
+    //登录成功
+    [KNotificationCenter addObserver:self selector:@selector(loginSuccess:) name:JMSHTLoginSuccessNoti object:nil];
 
-    //退出登录，购物车件数为0
+    //退出登录
+    [KNotificationCenter addObserver:self selector:@selector(QuitLoginSuccess:) name:JMSHTLogOutSuccessNoti object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuitLoginCartShowNoNumber:) name:@"QuitLoginCartShowNoNumber" object:nil];
+
+    
 
     //登录，点击返回，跳到首页
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LoginBackHome:) name:@"LoginBackHome" object:nil];
@@ -284,15 +290,22 @@
     //注册成功，清空购物车原先数据
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ZhuCeSuccessCartReloadData:) name:@"ZhuCeSuccessCartReloadData" object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HomeShowCartNumber:) name:@"HomeShowCartNumber" object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TongZhiCartLoginSuccess:) name:@"TongZhiCartLoginSuccess" object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PaySuccessBackCart:) name:@"PaySuccessBackCart" object:nil];
+
     
     static NSString *tabBarDidSelectedNotification = @"tabBarDidSelectedNotification";
     //注册接收通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarSeleted) name:tabBarDidSelectedNotification object:nil];
+}
+
+-(void)loginSuccess:(NSNotification *)noti
+{
+    [self LookCartNumber];
+}
+-(void)QuitLoginSuccess:(NSNotification *)noti
+{
+
 }
 
 // 接收到通知实现方法
@@ -304,6 +317,9 @@
         _myTableView.contentOffset=CGPointZero;
         //直接写刷新代码
         [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
+    }
+    if ((self.tabBarController.selectedIndex==2)&&([kUserDefaults stringForKey:@"sigen"].length==0)) {
+
     }
 
     // 记录这一次选中的索引
@@ -435,16 +451,12 @@
 
         [HTTPRequestManager POST:@"getShoppingSum_mob.shtml" NSDictWithString:@{@"sigen":self.sigen} parameters:nil result:^(id responseObj, NSError *error) {
 
-            //        NSLog(@"====%@===",responseObj);
-
+            YLog(@"response=%@",responseObj);
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
 
                     self.goods_num=responseObj[@"goods_num"];
 
                     if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
-
-                        view.hidden=YES;
-                        tabView.hidden=YES;
                         [self CartNoGoods];
 
                     }else{
@@ -452,10 +464,11 @@
                         [_FailureArrM removeAllObjects];
                         [_StoreArrM removeAllObjects];
 
-                        [self SetUI];
-
+                        editButton.hidden=NO;
+                        tabView.hidden=NO;
+                        _myTableView.hidden=NO;
+                        CartNoGoodsView5.hidden=YES;
                         [self getDatas];
-
                     }
 
                 }
@@ -592,17 +605,15 @@
 
             NSNotification *CartDataFinish = [[NSNotification alloc] initWithName:@"CartDataFinish" object:nil userInfo:nil];
             [[NSNotificationCenter defaultCenter] postNotification:CartDataFinish];
-
             [self.myTableView reloadData];
 
-
-           // self.tabBarController.tabBar.userInteractionEnabled=YES;
             self.CannotRefresh=NO;
-
+            _isRefresh=NO;
         }else{
 
             [hud dismiss:YES];
-  self.CannotRefresh=NO;
+            _isRefresh=NO;
+          self.CannotRefresh=NO;
             NSLog(@"error");
 
         }
@@ -783,6 +794,57 @@
 
 
 }
+//购物车为空
+-(void)CartNoGoods
+{
+
+    editButton.hidden=YES;
+    tabView.hidden=YES;
+    _myTableView.hidden=YES;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tabBarController.tabBar.userInteractionEnabled=YES;
+
+    if (!CartNoGoodsView5) {
+
+        CartNoGoodsView5 = [[UIView alloc] initWithFrame:CGRectMake(0, ([UIScreen mainScreen].bounds.size.height-120)/2, [UIScreen mainScreen].bounds.size.width, 120)];
+        [self.view addSubview:CartNoGoodsView5];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width-75/2)/2, 10, 75/2, 75/2)];
+        imgView.image=[UIImage imageNamed:@"购物车为空"];
+        [CartNoGoodsView5 addSubview:imgView];
+
+
+        UILabel *imgLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, 20)];
+
+        imgLabel.text=@"您的购物车是空的，快去挑选商品吧！";
+
+        imgLabel.textAlignment = NSTextAlignmentCenter;
+
+        imgLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+
+        imgLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+
+        [CartNoGoodsView5 addSubview:imgLabel];
+
+        UIButton *imgButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
+        imgButton.backgroundColor=[UIColor whiteColor];
+
+        imgButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width-100)/2, 90, 100, 30);
+
+        [imgButton setTitle:@"逛一逛" forState:0];
+
+        imgButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
+
+        [imgButton setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]forState:0];
+
+        [imgButton setBackgroundImage:[UIImage imageNamed:@"积分框"] forState:0];
+
+        [imgButton addTarget:self action:@selector(GoToLookGoods) forControlEvents:UIControlEventTouchUpInside];
+
+        [CartNoGoodsView5 addSubview:imgButton];
+    }
+    CartNoGoodsView5.hidden=NO;
+}
 
 /*******************************************************      各种button执行方法、页面间的跳转       ******************************************************/
 
@@ -920,8 +982,6 @@
 
 
         ShopModel *goods = model.shop[indexPath.row];
-
-        //        NSLog(@"===model===%@",goods.number);
 
         cell.model = goods;
 
@@ -1515,42 +1575,12 @@
     self.tabBarController.selectedIndex=0;
 
 }
-- (void)QuitLoginCartShowNoNumber:(NSNotification *)text{
 
-
-    NSLog(@"====购物车件数为空====");
-
-    self.tabBarItem.badgeValue = nil;
-
-
-    //    [self LookCartNumber];
-
-}
 
 
 - (void)PaySuccessBackCart:(NSNotification *)text{
 
-
-    [_refresh finishRefreshing];
-
-    _refresh.topEnabled=NO;
-
-
-    NSLog(@"*****************9999999999999999*********************");
-
-
-    [_myTableView removeFromSuperview];
-
-    [view5 removeFromSuperview];
-    [line5 removeFromSuperview];
-
-    [CartNoGoodsView5 removeFromSuperview];
-
-    [bgView5 removeFromSuperview];
-
-
     self.tabBarController.tabBar.userInteractionEnabled=NO;
-
     [self LookCartNumber];
 
 
@@ -1559,133 +1589,11 @@
 
 
     //    NSLog(@"=====购物车刷新数据======");
-    self.navigationController.navigationBar.hidden=YES;
-    self.tabBarController.tabBar.hidden=NO;
-    [self.navigationController popToRootViewControllerAnimated:NO];
-
-
-
-    [_FailureArrM removeAllObjects];
-
-    [_StoreArrM removeAllObjects];
-
-
-    [_refresh finishRefreshing];
-
-    _refresh.topEnabled=NO;
-
-    [dibuDelete removeFromSuperview];
-    [tabView removeFromSuperview];
-    [priceLabel removeFromSuperview];
-    [yunfeiLabel removeFromSuperview];
-    [JieSuan removeFromSuperview];
-
-
-    dibuDelete.hidden=YES;
-    editButton.hidden = YES;
-    tabView.hidden=YES;
-    priceLabel.hidden = YES;
-    yunfeiLabel.hidden = YES;
-    dibuDelete.hidden=YES;
-    JieSuan.hidden=YES;
-
-
-    NSLog(@"*******222233334444**********9999999999999999*********************");
-
-
-    [_myTableView removeFromSuperview];
-
-    [view5 removeFromSuperview];
-    [line5 removeFromSuperview];
-
-    //    [tabView removeFromSuperview];
-    //
-    //    tabView.hidden=YES;
-
-    [CartNoGoodsView5 removeFromSuperview];
-
-    [bgView5 removeFromSuperview];
-
-    self.tabBarController.tabBar.userInteractionEnabled=NO;
-
     [self LookCartNumber];
-
-    //    ATHLoginViewController *login=[[ATHLoginViewController alloc] init];
-    //    login.delegate=self;
-    //    login.backString=@"333";
-    //    login.CartBack = @"100";
-    //    login.HeindBack = @"100";
-    //
-    //    [self.navigationController pushViewController:login animated:NO];
-    //
-    //    self.navigationController.navigationBar.hidden=YES;
-    //    self.tabBarController.tabBar.hidden=YES;
-
-
 }
 
--(void)TongZhiCartLoginSuccess:(NSNotification *)text
-{
-
-    [self LookCartNumber];
-
-}
-//初始显示购物车件数
-- (void)HomeShowCartNumber:(NSNotification *)text{
 
 
-    NSLog(@"&&&&&&&&&&&&&&&&&&&&");
-
-    //    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-    //
-    //
-    //    self.sigen = [userDefaultes stringForKey:@"sigen"];
-    //
-    //
-    //    if (self.sigen.length > 0) {
-    //
-    //
-    //        [HTTPRequestManager POST:@"getShoppingSum_mob.shtml" NSDictWithString:@{@"sigen":self.sigen} parameters:nil result:^(id responseObj, NSError *error) {
-    //
-    //
-    //            //        NSLog(@"====%@===",responseObj);
-    //
-    //
-    //            if (responseObj) {
-    //
-    //
-    //                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-    //
-    //
-    //                    if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
-    //
-    //                        self.tabBarItem.badgeValue = nil;
-    //
-    //                    }else{
-    //
-    //                        self.tabBarItem.badgeValue = responseObj[@"goods_sum"];
-    //
-    //                    }
-    //
-    //
-    //
-    //
-    //                }
-    //
-    //
-    //
-    //            }else{
-    //
-    //
-    //                NSLog(@"error");
-    //
-    //            }
-    //
-    //
-    //        }];
-    //
-    //    }
-}
 
 - (void)ZhuCeSuccessCartReloadData:(NSNotification *)text{
 
@@ -1755,57 +1663,7 @@
 
 - (void)LoginSuccessShowCartNumber:(NSNotification *)text{
 
-    [_FailureArrM removeAllObjects];
-
-    [_StoreArrM removeAllObjects];
-
-
-    [_myTableView reloadData];
-
-
-    NSUserDefaults *userDefaultes = [NSUserDefaults standardUserDefaults];
-
-
-    self.sigen = [userDefaultes stringForKey:@"sigen"];
-
-
-    [HTTPRequestManager POST:@"getShoppingSum_mob.shtml" NSDictWithString:@{@"sigen":self.sigen} parameters:nil result:^(id responseObj, NSError *error) {
-
-
-        //        NSLog(@"====%@===",responseObj);
-
-
-        if (responseObj) {
-
-
-            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-
-
-                if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
-
-                    self.tabBarItem.badgeValue = nil;
-
-                }else{
-
-                    self.tabBarItem.badgeValue = responseObj[@"goods_sum"];
-
-                }
-
-
-
-            }
-
-
-
-        }else{
-
-
-            NSLog(@"error");
-
-        }
-
-
-    }];
+    [self LookCartNumber];
 
 }
 
@@ -1879,31 +1737,7 @@
 -(void)CartGoToDingDanReloadData
 {
 
-    [_FailureArrM removeAllObjects];
-
-    [_StoreArrM removeAllObjects];
-
-    [_myTableView removeFromSuperview];
-
-
-    [view5 removeFromSuperview];
-    [line5 removeFromSuperview];
-
-    [CartNoGoodsView5 removeFromSuperview];
-
-    [bgView5 removeFromSuperview];
-
-    //创建导航栏
-    [self initNav];
-
-    //创建底部结算视图
-    [self initTabbar];
-
-
-    [self initTableView];
-
-
-    [self getDatas];
+    [self LookCartNumber];
 
 }
 
@@ -1922,156 +1756,11 @@
     self.sigen = string1;
 
     //获取购物车件数
-    //    [self LookCartNumber];
-
-
-    [HTTPRequestManager POST:@"getShoppingSum_mob.shtml" NSDictWithString:@{@"sigen":self.sigen} parameters:nil result:^(id responseObj, NSError *error) {
-
-
-
-        if (responseObj) {
-
-
-            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-
-                if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
-
-                    self.tabBarItem.badgeValue = nil;
-
-                }else{
-
-                    self.tabBarItem.badgeValue = responseObj[@"goods_sum"];
-
-                }
-
-
-                if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
-
-                    NSLog(@"=====>>>.=====222222");
-
-                    view.hidden=YES;
-                    tabView.hidden=YES;
-                    [self CartNoGoods];
-
-                }else{
-
-
-                    [_FailureArrM removeAllObjects];
-
-                    [_StoreArrM removeAllObjects];
-
-
-                    //创建导航栏
-                    [self initNav];
-
-                    //创建底部结算视图
-                    [self initTabbar];
-
-
-
-                    [self initTableView];
-
-                    [self getDatas];
-
-                }
-
-            }
-
-        }else{
-
-
-            NSLog(@"error");
-
-        }
-
-
-    }];
-
+    [self LookCartNumber];
 
 }
 
 
-//购物车为空
--(void)CartNoGoods
-{
-    
-    self.tabBarController.tabBar.userInteractionEnabled=YES;
-    
-    _myTableView.backgroundColor = [UIColor whiteColor];
-    
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    view.hidden=YES;
-    
-    
-    view5 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 64)];
-    view5.backgroundColor = [UIColor whiteColor];
-    
-    [self.view addSubview:view5];
-    
-    line5 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 65, [UIScreen mainScreen].bounds.size.width, 1)];
-    
-    line5.image = [UIImage imageNamed:@"分割线-拷贝"];
-    
-    [self.view addSubview:line5];
-    
-    
-    UILabel *titleLabel5 = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, [UIScreen mainScreen].bounds.size.width-200, 30)];
-    titleLabel5.text = @"购物车";
-    titleLabel5.textAlignment=NSTextAlignmentCenter;
-    titleLabel5.font=[UIFont systemFontOfSize:20];
-    [view5 addSubview:titleLabel5];
-    
-    
-    CartNoGoodsView5 = [[UIView alloc] initWithFrame:CGRectMake(0, ([UIScreen mainScreen].bounds.size.height-120)/2, [UIScreen mainScreen].bounds.size.width, 120)];
-    
-    //    CartNoGoodsView.backgroundColor = [UIColor orangeColor];
-    
-    [self.view addSubview:CartNoGoodsView5];
-    
-    
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width-75/2)/2, 10, 75/2, 75/2)];
-    imgView.image=[UIImage imageNamed:@"购物车为空"];
-    [CartNoGoodsView5 addSubview:imgView];
-    
-    
-    UILabel *imgLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, 20)];
-    
-    imgLabel.text=@"您的购物车是空的，快去挑选商品吧！";
-    
-    imgLabel.textAlignment = NSTextAlignmentCenter;
-    
-    imgLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
-    
-    imgLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
-    
-    [CartNoGoodsView5 addSubview:imgLabel];
-    
-    UIButton *imgButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    imgButton.backgroundColor=[UIColor whiteColor];
-    
-    imgButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width-100)/2, 90, 100, 30);
-    
-    [imgButton setTitle:@"逛一逛" forState:0];
-    
-    imgButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
-    
-    [imgButton setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0]forState:0];
-    
-    [imgButton setBackgroundImage:[UIImage imageNamed:@"积分框"] forState:0];
-    
-    [imgButton addTarget:self action:@selector(GoToLookGoods) forControlEvents:UIControlEventTouchUpInside];
-    
-    [CartNoGoodsView5 addSubview:imgButton];
-    
-    bgView5 = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-50-40, [UIScreen mainScreen].bounds.size.width, 40)];
-    bgView5.backgroundColor=[UIColor whiteColor];
-    
-    [self.view addSubview:bgView5];
-    
-}
 
 //逛一逛
 -(void)GoToLookGoods
@@ -3070,8 +2759,6 @@
 
 //滑动删除
 
-
-
 -(void)DeleteGoodsNone
 {
     
@@ -3142,38 +2829,19 @@
 
 //下拉刷新
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
-    
-
+    if (!_isRefresh) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addDataWithDirection:direction];
+        _isRefresh=YES;
     });
-    
+    }
 }
 
 - (void)addDataWithDirection:(DJRefreshDirection)direction{
     
     if (direction==DJRefreshDirectionTop) {
-        
-        //创建导航栏
-        [self initNav];
-        
-        //创建底部结算视图
-        [self initTabbar];
-        
-        editButton.selected = NO;
-        
-        
-        priceLabel.hidden = NO;
-        yunfeiLabel.hidden = NO;
-        dibuDelete.hidden=YES;
-        JieSuan.hidden=NO;
-        dibuDelete.enabled=NO;
-        
-        [self initTableView];
-        
-        
-        
-        [self getDatas];
+        [self LookCartNumber];
+//        //创建导航栏
 
     }
     
@@ -3705,24 +3373,12 @@
                 
                 
                 if ([dict[@"status"] isEqualToString:@"10000"]) {
-                    
-                    
-                    //                    [_StoreArrM removeAllObjects];
-                    //                    [_FailureArrM removeAllObjects];
-                    
-                    
-                    
+
                     //清除属性
-                    
                     [UserMessageManager removeAllGoodsAttribute];
                     [UserMessageManager removeAllImageSecect];
                     
-                    //创建导航栏
-                    [self initNav];
-                    
-                    //创建底部结算视图
-                    [self initTabbar];
-                    
+
                     editButton.selected = NO;
                     
                     
@@ -3731,11 +3387,7 @@
                     dibuDelete.hidden=YES;
                     JieSuan.hidden=NO;
                     dibuDelete.enabled=NO;
-                    
-                    //                    [self initTableView];
-                    //
-                    //                    [self getDatas];
-                    
+
                     
                     for (int i =0; i<_StoreArrM.count-1; i++) {
                         
@@ -3762,31 +3414,18 @@
                             
                         }
                     }
-                    
-                    
-                    //刷新数据源
-                  //  [_myTableView reloadData];
-                     [self getDatas];
-                    
+
+                    [self LookCartNumber];
+
                 }else if ([dict[@"status"] isEqualToString:@"10002"]){
-                    
-                    
-                    //                    [_StoreArrM removeAllObjects];
-                    //                    [_FailureArrM removeAllObjects];
-                    
-                    
-                    
+
                     //清除属性
                     
                     [UserMessageManager removeAllGoodsAttribute];
                     [UserMessageManager removeAllImageSecect];
                     
-                    
-                    //创建导航栏
-                    [self initNav];
-                    
-                    //创建底部结算视图
-                    [self initTabbar];
+
+
                     
                     editButton.selected = NO;
                     
@@ -3796,12 +3435,7 @@
                     dibuDelete.hidden=YES;
                     JieSuan.hidden=NO;
                     dibuDelete.enabled=NO;
-                    
-                    //                    [self initTableView];
-                    //
-                    //                    [self getDatas];
-                    
-                    
+
                     for (int i =0; i<_StoreArrM.count-1; i++) {
                         
                         StoreModel *buyer = _StoreArrM[i];
@@ -3826,11 +3460,7 @@
                             
                         }
                     }
-                    
-                    
-                    //刷新数据源
-                   // [_myTableView reloadData];
-                     [self getDatas];
+                    [self LookCartNumber];
                     
                 }
                 
@@ -3886,11 +3516,7 @@
                     [UserMessageManager removeAllGoodsAttribute];
                     [UserMessageManager removeAllImageSecect];
                     //
-                    //创建导航栏
-                    [self initNav];
-                    
-                    //创建底部结算视图
-                    [self initTabbar];
+
                     
                     editButton.selected = NO;
                     
@@ -3933,9 +3559,7 @@
                         }
                     }
                     
-                    //刷新数据源
-                   // [_myTableView reloadData];
-                     [self getDatas];
+                    [self LookCartNumber];
                     
                 }else if ([dict[@"status"] isEqualToString:@"10002"]){
                     
@@ -3949,13 +3573,7 @@
                     
                     [UserMessageManager removeAllGoodsAttribute];
                     [UserMessageManager removeAllImageSecect];
-                    //
-                    //
-                    //创建导航栏
-                    [self initNav];
-                    
-                    //创建底部结算视图
-                    [self initTabbar];
+
                     
                     editButton.selected = NO;
                     
@@ -3965,12 +3583,7 @@
                     dibuDelete.hidden=YES;
                     JieSuan.hidden=NO;
                     dibuDelete.enabled=NO;
-                    //
-                    //                    [self initTableView];
-                    //
-                    //
-                    //
-                    //                    [self getDatas];
+
                     
                     
                     for (int i =0; i<_StoreArrM.count-1; i++) {
@@ -3999,8 +3612,7 @@
                         }
                     }
                     
-                     [self getDatas];
-                   // [_myTableView reloadData];
+                    [self LookCartNumber];
                     
                 }
                 
@@ -4695,6 +4307,7 @@
 {
     NSLog(@"定位失败:%@", error);
 }
+
 
 @end
 

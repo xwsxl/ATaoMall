@@ -236,26 +236,6 @@
     
     UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"确认" style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction *action) {
         
-        
-        
-
-        //发送通知购物，不显示件数
-        
-        NSNotification *notification = [[NSNotification alloc] initWithName:@"QuitLoginCartShowNoNumber" object:nil userInfo:nil];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        
-        //发送通知，购物车刷新数据
-        
-        NSNotification *notification1 = [[NSNotification alloc] initWithName:@"QuitLoginCartReloadData" object:nil userInfo:nil];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification1];
-        
-        //通知AppDelegate不显示购物车件数
-        NSNotification *notification2 = [[NSNotification alloc] initWithName:@"AppDelegateShowNumber" object:nil userInfo:nil];
-    
-        [[NSNotificationCenter defaultCenter] postNotification:notification2];
-        
 
         
         for (UIViewController *controller in self.navigationController.viewControllers) {
@@ -299,7 +279,7 @@
     [alertController addAction:cancelAction];
     [alertController addAction:photoAction];
     
-//    [self showActionSheet2];
+
 }
 //账户信息
 - (IBAction)CheckPersonInfo:(UIButton *)sender {
