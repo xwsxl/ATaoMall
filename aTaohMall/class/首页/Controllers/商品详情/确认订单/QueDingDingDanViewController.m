@@ -528,34 +528,32 @@
 -(void)AddressReload
 {
     
-    self.UserPhone=@"";
-    self.UserName=@"";
-    self.UserAddress=@"";
-    self.UserType=@"";
-    self.UserID=@"";
-    self.AddressReloadString=@"1";
-    
-    
-    cell5.PhoneLabel.hidden=YES;
-    
-    cell5.UserAddressAndPhoneLabel.hidden=YES;
-    
-    cell5.UserAddressLabel.hidden=YES;
-    
-    cell5.ShuoMingLabel.hidden=NO;
-    
-    NSLog(@"======冲冲偶们1如==%@=“0",self.AddressReloadString);
+//    self.UserPhone=@"";
+//    self.UserName=@"";
+//    self.UserAddress=@"";
+//    self.UserType=@"";
+//    self.UserID=@"";
+//    self.AddressReloadString=@"1";
+//
+//
+//    cell5.PhoneLabel.hidden=YES;
+//
+//    cell5.UserAddressAndPhoneLabel.hidden=YES;
+//
+//    cell5.UserAddressLabel.hidden=YES;
+//
+//    cell5.ShuoMingLabel.hidden=NO;
+//
+//    NSLog(@"======冲冲偶们1如==%@=“0",self.AddressReloadString);
     [_addressArrM removeAllObjects];
-    
+//
     [_datas removeAllObjects];
     [_countArrM removeAllObjects];
-    
+//
     [self getDatas];
     
-    self.phone=@"";
-//    [_addressArrM removeAllObjects];
-    
-    [_tableView reloadData];
+//    self.phone=@"";
+
 }
 //获取确认订单数据
 -(void)getDatas

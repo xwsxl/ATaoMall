@@ -301,11 +301,12 @@
 
 -(void)loginSuccess:(NSNotification *)noti
 {
+    [self.navigationController popToRootViewControllerAnimated:NO];
     [self LookCartNumber];
 }
 -(void)QuitLoginSuccess:(NSNotification *)noti
 {
-
+    [self LookCartNumber];
 }
 
 // 接收到通知实现方法
@@ -313,7 +314,7 @@
 
     // 如果是连续选中2次, 直接刷新
     if (self.lastSelectedIndex == self.tabBarController.selectedIndex && [self isShowingOnKeyWindow]&&!self.CannotRefresh) {
-        self.CannotRefresh=YES;
+      //  self.CannotRefresh=YES;
         _myTableView.contentOffset=CGPointZero;
         //直接写刷新代码
         [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
@@ -348,8 +349,8 @@
 //初始化属性、数组等等
 -(void)initProperty
 {
-    nameDict = @{};
 
+    nameDict = @{};
 
     RemberStoreName = @"";
 
@@ -608,12 +609,10 @@
             [self.myTableView reloadData];
 
             self.CannotRefresh=NO;
-            _isRefresh=NO;
         }else{
 
             [hud dismiss:YES];
-            _isRefresh=NO;
-          self.CannotRefresh=NO;
+            self.CannotRefresh=NO;
             NSLog(@"error");
 
         }
@@ -802,7 +801,7 @@
     tabView.hidden=YES;
     _myTableView.hidden=YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tabBarController.tabBar.userInteractionEnabled=YES;
+  //  self.tabBarController.tabBar.userInteractionEnabled=YES;
 
     if (!CartNoGoodsView5) {
 
@@ -1580,7 +1579,6 @@
 
 - (void)PaySuccessBackCart:(NSNotification *)text{
 
-    self.tabBarController.tabBar.userInteractionEnabled=NO;
     [self LookCartNumber];
 
 
@@ -2829,11 +2827,13 @@
 
 //下拉刷新
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
-    if (!_isRefresh) {
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self addDataWithDirection:direction];
-        _isRefresh=YES;
+        [_refresh finishRefreshingDirection:direction animation:YES];
     });
+    if (!self.CannotRefresh) {
+        [self addDataWithDirection:direction];
+        self.CannotRefresh=YES;
     }
 }
 
@@ -2842,10 +2842,8 @@
     if (direction==DJRefreshDirectionTop) {
         [self LookCartNumber];
 //        //创建导航栏
-
     }
-    
-    [_refresh finishRefreshingDirection:direction animation:YES];
+
     
     
 }

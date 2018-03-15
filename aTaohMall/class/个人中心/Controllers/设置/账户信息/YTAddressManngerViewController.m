@@ -97,18 +97,8 @@
 -(void)YTAddressReload
 {
     
-    [_datasSource removeAllObjects];
-    //获取数据
-    [self getDatas];
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-        [hud dismiss:YES];
-    });
-    
-    [_tableView reloadData];
+     [self reshData];
+
     
 }
 //代理刷新方法
@@ -126,21 +116,14 @@
         
         [hud dismiss:YES];
     });
+    if (_delegate && [_delegate respondsToSelector:@selector(AddressReload)]) {
+        [_delegate AddressReload];
+    }
 }
 
 -(void)reshData1
 {
-    [_datasSource removeAllObjects];
-    //获取数据
-    [self getDatas];
-    
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-        [hud dismiss:YES];
-    });
+    [self reshData];
 }
 
 
@@ -571,7 +554,6 @@
         UserModel *model=_datasSource[indexPath.row];
         
         if ([self.back isEqualToString:@"100"]) {
-            
             
             //实现反向传值
             if (_delegate && [_delegate respondsToSelector:@selector(setUserNameWithString:andPhoneWithString:andDetailAddressWithString:andType:andIDWithString: andAddressReloadString:)]) {
