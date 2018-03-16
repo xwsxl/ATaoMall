@@ -182,11 +182,25 @@
 -(void)AddressReload
 {
     
-//    NSLog(@"=========返回地址条数===");
-//    
-//    [_tableView reloadData];
-    
+    [_AddressArrM removeAllObjects];
+
+    //
+    [self XLAddressgetdatas];
+
 }
+
+-(void)XLAddressgetdatas
+{
+    [HTTPRequestManager POST:@"getSettlementGoods_mob.shtml" NSDictWithString:@{@"sigen":self.sigen,@"json":self.json} parameters:nil result:^(id responseObj, NSError *error) {
+        for (NSDictionary *dict in responseObj) {
+            if ([dict[@"status"] isEqualToString:@"10000"]) {
+                self.responseObj=responseObj;
+                [self getDatas];
+            }
+        }
+    }];
+}
+
 
 //收货地址为空
 -(void)DeleteTheLastAddress
@@ -327,8 +341,39 @@
 
 -(void)getDatas
 {
-    
-    
+
+    isButtonOn=1;
+
+    _WordTfTag = 0;
+
+    deductionIntegral = @"";
+
+    self.AddressReloadString = @"66";
+
+    _isIntegerAdd_Reduce = @"11";
+
+    _GoodsCount = 0;
+
+    _GoodsAllPrice = 0;
+
+    _MaxInteger = 0;
+
+    _SelectSection = 0;
+
+    _SelectIndexPath = 0;
+
+    _WordSection = 0;
+    [_StoreArrM removeAllObjects];
+
+    [_GoodsArrM removeAllObjects];
+
+    [_LabelArrM removeAllObjects];
+
+    [_RedArrM removeAllObjects];
+
+    [_WordTextViewTag removeAllObjects];
+
+    [_NewAddressArrM removeAllObjects];
     NSLog(@"====确认订单json====%@",self.json);
     
 //    [HTTPRequestManager POST:@"getSettlementGoods_mob.shtml" NSDictWithString:@{@"sigen":self.sigen,@"json":self.json} parameters:nil result:^(id responseObj, NSError *error) {
@@ -500,20 +545,6 @@
                 
             }
         }
-    
-//        }else{
-//            
-//            
-//            NSLog(@"error");
-//            
-//        }
-//        
-//        
-//    }];
-    
-    
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

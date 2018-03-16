@@ -465,8 +465,7 @@
 
                         self.CannotRefresh=YES;
 
-                        [_FailureArrM removeAllObjects];
-                        [_StoreArrM removeAllObjects];
+
 
                         editButton.hidden=NO;
                         tabView.hidden=NO;
@@ -495,19 +494,10 @@
     //    status=10001  查询成功，没有数据
     //    status=10005  系统异常
 
-    //清楚再次缓存
-    [UserMessageManager RemoveAgain];
 
-    [UserMessageManager RemoveShuXingString];
-
-    [_CartDeleteCountArrM removeAllObjects];
-
-    [_JISuanDict removeAllObjects];
-
-    [_FailureArrM removeAllObjects];
-
-    [_StoreArrM removeAllObjects];
-
+    [tabView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [tabView removeFromSuperview];
+    [self initTabbar];
 
     WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
 
@@ -520,7 +510,19 @@
 
 
         NSLog(@"==购物车数据==%@===",responseObj);
+        //清楚再次缓存
+        [UserMessageManager RemoveAgain];
 
+        [UserMessageManager RemoveShuXingString];
+
+        [_CartDeleteCountArrM removeAllObjects];
+
+        [_JISuanDict removeAllObjects];
+
+        [_FailureArrM removeAllObjects];
+
+        [_StoreArrM removeAllObjects];
+        
         self.Failure = responseObj[@"type"];
 
         if ([responseObj[@"goods_sum"] isEqualToString:@"0"]) {
