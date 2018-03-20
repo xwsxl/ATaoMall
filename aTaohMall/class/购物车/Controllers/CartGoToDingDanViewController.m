@@ -195,7 +195,29 @@
         for (NSDictionary *dict in responseObj) {
             if ([dict[@"status"] isEqualToString:@"10000"]) {
                 self.responseObj=responseObj;
-                [self getDatas];
+                for (NSDictionary *dic in self.responseObj) {
+
+                    for (NSDictionary *dict1 in dic[@"addresslist"]) {
+                        CartAddressModel *model = [[CartAddressModel alloc] init];
+                        model.name = dict1[@"name"];
+                        model.phone = dict1[@"phone"];
+                        model.defaultstate = dict1[@"defaultstate"];
+                        model.province = dict1[@"province"];
+                        model.city = dict1[@"city"];
+                        model.county = dict1[@"county"];
+                        model.address = dict1[@"address"];
+                        model.addressId = dict1[@"id"];
+                        [_AddressArrM addObject:model];
+                        YLog(@"%@,%@",model.addressId,self.AddressAid);
+                        if ([[NSString stringWithFormat:@"%@",model.addressId]  isEqualToString:[NSString stringWithFormat:@"%@",self.AddressAid]]) {
+                            cell1.Name.text = [NSString stringWithFormat:@"收货人：%@",model.name];
+                            cell1.Phone.text = [NSString stringWithFormat:@"%@",model.phone];
+                            cell1.Address.text = [NSString stringWithFormat:@"收货地址：%@",model.address];
+                            self.AddressPhone = model.phone;
+                        }
+                    }
+                }
+
             }
         }
     }];
@@ -406,13 +428,8 @@
                             model.county = dict1[@"county"];
                             model.address = dict1[@"address"];
                             model.addressId = dict1[@"id"];
-                        
-                        
                             [_AddressArrM addObject:model];
-                            
-                        
                     }
-//
                     
                     
                     //商品信息
