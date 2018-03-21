@@ -198,11 +198,31 @@
     _commitBut.frame=CGRectMake(Width(10), 320, kScreen_Width-Width(20), 44);
     _commitBut.userInteractionEnabled=NO;
     _commitBut.backgroundColor=RGBA(243, 73, 73,0.5);
-    _commitBut.layer.cornerRadius=22;
+
     [_commitBut setTitle:@"提交" forState:UIControlStateNormal];
     [_commitBut setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _commitBut.titleLabel.font=KNSFONT(17);
     [_commitBut addTarget:self action:@selector(upLoadImage) forControlEvents:UIControlEventTouchUpInside];
+
+
+    CALayer *layer = [CALayer layer];
+
+    layer.frame = CGRectMake(Width(10), 320, kScreen_Width-Width(20), 44);
+
+    layer.backgroundColor = RGBA(0, 0, 0,0.18).CGColor;
+
+    layer.shadowOffset = CGSizeMake(5, 5);
+
+    layer.shadowOpacity = 0.8;
+
+    layer.cornerRadius = 22;
+    [_scroll.layer addSublayer:layer];
+
+    _commitBut.layer.cornerRadius=22;
+//    _commitBut.layer.shadowColor=[UIColor blackColor].CGColor;
+//    _commitBut.layer.shadowOffset =  CGSizeMake(5, 5);
+//    _commitBut.layer.shadowOpacity = 0.7;
+
     [_scroll addSubview:_commitBut];
 
 }
@@ -232,8 +252,8 @@
         [_photoView addSubview:but];
         [but setImage:KImage(@"copy2") forState:UIControlStateNormal];
         [but setTitleColor:RGB(155, 155, 155) forState:UIControlStateNormal];
-        [but setImageEdgeInsets:UIEdgeInsetsMake(0, 24, 10, 0)];
-        [but setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 20)];
+        [but setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 10, 0)];
+        [but setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 23)];
         but.titleLabel.font=KNSFONT(11);
         [but setTitle:[NSString stringWithFormat:@"%lu/3",_PhotoMArr.count] forState:UIControlStateNormal];
         [but addTarget:self action:@selector(addPhoto:) forControlEvents:UIControlEventTouchUpInside];

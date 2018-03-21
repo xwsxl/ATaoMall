@@ -528,34 +528,32 @@
 -(void)AddressReload
 {
     
-    self.UserPhone=@"";
-    self.UserName=@"";
-    self.UserAddress=@"";
-    self.UserType=@"";
-    self.UserID=@"";
-    self.AddressReloadString=@"1";
-    
-    
-    cell5.PhoneLabel.hidden=YES;
-    
-    cell5.UserAddressAndPhoneLabel.hidden=YES;
-    
-    cell5.UserAddressLabel.hidden=YES;
-    
-    cell5.ShuoMingLabel.hidden=NO;
-    
-    NSLog(@"======冲冲偶们1如==%@=“0",self.AddressReloadString);
+//    self.UserPhone=@"";
+//    self.UserName=@"";
+//    self.UserAddress=@"";
+//    self.UserType=@"";
+//    self.UserID=@"";
+//    self.AddressReloadString=@"1";
+//
+//
+//    cell5.PhoneLabel.hidden=YES;
+//
+//    cell5.UserAddressAndPhoneLabel.hidden=YES;
+//
+//    cell5.UserAddressLabel.hidden=YES;
+//
+//    cell5.ShuoMingLabel.hidden=NO;
+//
+//    NSLog(@"======冲冲偶们1如==%@=“0",self.AddressReloadString);
     [_addressArrM removeAllObjects];
-    
+//
     [_datas removeAllObjects];
     [_countArrM removeAllObjects];
-    
+//
     [self getDatas];
     
-    self.phone=@"";
-//    [_addressArrM removeAllObjects];
-    
-    [_tableView reloadData];
+//    self.phone=@"";
+
 }
 //获取确认订单数据
 -(void)getDatas
@@ -657,7 +655,7 @@
                         
                         //aid用于支付
                         
-                        self.aid=dict2[@"id"];
+                      //  self.aid=dict2[@"id"];
                         
                         model.id=dict2[@"id"];
                         model.name=dict2[@"name"];
@@ -912,9 +910,22 @@
                         
                         cell5.UserAddressLabel.text=[NSString stringWithFormat:@"收货地址:%@",self.UserAddress];
                         self.aid=model.id;
+                    }else  if (self.aid&&![[NSString stringWithFormat:@"%@",self.aid] isEqualToString:@""]) {
+                        if ([[NSString stringWithFormat:@"%@",self.aid] isEqualToString:[NSString stringWithFormat:@"%@",model.id]]) {
+                        NSLog(@"&&&&&&&&&&&&&%@",model.phone);
+                        NSLog(@"&&&&&&&&&&&&&%@",model.name);
+                        NSLog(@"&&&&&&&&&&&&&%@",model.address);
+
+                        cell5.PhoneLabel.text=[NSString stringWithFormat:@"%@",model.phone];
+
+                        cell5.UserAddressAndPhoneLabel.text=[NSString stringWithFormat:@"收货人:%@",model.name];
+
+                        cell5.UserAddressLabel.text=[NSString stringWithFormat:@"收货地址:%@",model.address];
+                        self.aid=model.id;
+                        break;
+                        }
                     }else{
-                        
-                        if ([model.defaultstate isEqualToString:@"1"]) {
+                         if ([model.defaultstate isEqualToString:@"1"]) {
                             
                             NSLog(@"&&&&&&&&&&&&&%@",model.phone);
                             NSLog(@"&&&&&&&&&&&&&%@",model.name);

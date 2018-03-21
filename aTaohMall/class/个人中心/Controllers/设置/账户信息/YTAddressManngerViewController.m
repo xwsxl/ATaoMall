@@ -45,6 +45,7 @@
     UIView *view;
     NSMutableArray *_datasSource;
 }
+@property (weak, nonatomic) IBOutlet UIButton *QuitLogBut;
 @end
 
 @implementation YTAddressManngerViewController
@@ -54,7 +55,19 @@
     // Do any additional setup after loading the view from its nib.
     
     [self initTableView];
-    
+    CALayer *layer = [CALayer layer];
+
+    layer.frame = CGRectMake(10, kScreenHeight-KSafeAreaBottomHeight-15-44, kScreen_Width-20, 44);
+
+    layer.backgroundColor = RGBA(0, 0, 0,0.18).CGColor;
+
+    layer.shadowOffset = CGSizeMake(5, 5);
+
+    layer.shadowOpacity = 0.8;
+
+    layer.cornerRadius = 22;
+    [self.view.layer insertSublayer:layer below:_QuitLogBut.layer];
+
     _datasSource=[NSMutableArray new];
     
     self.view.frame=[UIScreen mainScreen].bounds;
@@ -77,7 +90,7 @@
 -(void)initTableView
 {
     
-    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight-49) style:UITableViewStylePlain];
+    _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-KSafeAreaTopNaviHeight-49-10-KSafeAreaBottomHeight) style:UITableViewStyleGrouped];
     
     _tableView.delegate=self;
     _tableView.dataSource=self;
@@ -97,18 +110,8 @@
 -(void)YTAddressReload
 {
     
-    [_datasSource removeAllObjects];
-    //获取数据
-    [self getDatas];
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-        [hud dismiss:YES];
-    });
-    
-    [_tableView reloadData];
+     [self reshData];
+
     
 }
 //代理刷新方法
@@ -126,21 +129,14 @@
         
         [hud dismiss:YES];
     });
+    if (_delegate && [_delegate respondsToSelector:@selector(AddressReload)]) {
+        [_delegate AddressReload];
+    }
 }
 
 -(void)reshData1
 {
-    [_datasSource removeAllObjects];
-    //获取数据
-    [self getDatas];
-    
-    WKProgressHUD *hud = [WKProgressHUD showInView:self.view withText:nil animated:YES];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2ull * NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        
-        [hud dismiss:YES];
-    });
+    [self reshData];
 }
 
 
@@ -355,10 +351,11 @@
         if ([model.defaultstate isEqualToString:@"1"]) {
             
             cell.YTMoRenImageView.image=[UIImage imageNamed:@"勾"];
-            
+            cell.YTMorenLabel.text=@"默认地址";
         }else{
             
             cell.YTMoRenImageView.image=[UIImage imageNamed:@"为勾选"];
+            cell.YTMorenLabel.text=@"设为默认";
         }
         
         
@@ -374,6 +371,21 @@
         
         return cell;
     }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_datasSource.count==0) {
+        return 0.01;
+    }else
+    {
+        return 10;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    return [[UIView alloc] init];
 }
 
 -(void)morenBtnClick:(UIButton*)button event:(id)event
@@ -571,7 +583,6 @@
         UserModel *model=_datasSource[indexPath.row];
         
         if ([self.back isEqualToString:@"100"]) {
-            
             
             //实现反向传值
             if (_delegate && [_delegate respondsToSelector:@selector(setUserNameWithString:andPhoneWithString:andDetailAddressWithString:andType:andIDWithString: andAddressReloadString:)]) {

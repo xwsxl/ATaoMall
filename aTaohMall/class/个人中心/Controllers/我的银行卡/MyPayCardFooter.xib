@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="无银行卡" translatesAutoresizingMaskIntoConstraints="NO" id="ZeR-W9-AHd">
-                    <rect key="frame" x="18" y="13" width="284" height="124"/>
+                    <rect key="frame" x="20" y="13" width="280" height="124"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="124" id="UdD-QG-Tsc"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t8f-Jc-9bX">
-                    <rect key="frame" x="18" y="13" width="284" height="124"/>
+                    <rect key="frame" x="20" y="13" width="280" height="124"/>
                     <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="添加银行卡" image="添加.png">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -31,11 +31,11 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ZeR-W9-AHd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="8Sr-lD-K2q"/>
+                <constraint firstItem="ZeR-W9-AHd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="8Sr-lD-K2q"/>
                 <constraint firstItem="t8f-Jc-9bX" firstAttribute="height" secondItem="ZeR-W9-AHd" secondAttribute="height" id="Rlq-5G-ZrF"/>
                 <constraint firstItem="ZeR-W9-AHd" firstAttribute="top" secondItem="t8f-Jc-9bX" secondAttribute="top" id="UI4-zZ-olZ"/>
                 <constraint firstItem="t8f-Jc-9bX" firstAttribute="width" secondItem="ZeR-W9-AHd" secondAttribute="width" id="WlC-zb-X5S"/>
-                <constraint firstAttribute="trailing" secondItem="ZeR-W9-AHd" secondAttribute="trailing" constant="18" id="eIQ-gi-jqp"/>
+                <constraint firstAttribute="trailing" secondItem="ZeR-W9-AHd" secondAttribute="trailing" constant="20" id="eIQ-gi-jqp"/>
                 <constraint firstItem="ZeR-W9-AHd" firstAttribute="leading" secondItem="t8f-Jc-9bX" secondAttribute="leading" id="mZC-dn-1hP"/>
                 <constraint firstItem="ZeR-W9-AHd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="13" id="teZ-Qu-OJv"/>
             </constraints>

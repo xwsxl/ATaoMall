@@ -67,8 +67,7 @@ static  NSString * const JMSHTImageLoadComplete=@"JMSHTImageLoadComplete";
     //注册通知
     
     [KNotificationCenter addObserver:self selector:@selector(AppDelegateShowNumber) name:JMSHTLogOutSuccessNoti object:nil];
-    //不显示购物车件数
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AppDelegateShowNumber) name:@"AppDelegateShowNumber" object:nil];
+    
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BackBackCartChangeNumber:) name:@"BackBackCartChangeNumber" object:nil];
     [KNotificationCenter addObserver:self selector:@selector(SetCartBudgeNumber) name:JMSHTLoginSuccessNoti object:nil];

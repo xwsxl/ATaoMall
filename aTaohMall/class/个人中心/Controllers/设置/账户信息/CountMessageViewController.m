@@ -740,14 +740,14 @@
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
         
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"拍照" style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction *action) {
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"相机" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
             
             
             [self presentViewController:imagePickerController animated:YES completion:^{}];
         }];
         
-        UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
+        UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"相册" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action) {
             
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
         

@@ -182,11 +182,47 @@
 -(void)AddressReload
 {
     
-//    NSLog(@"=========返回地址条数===");
-//    
-//    [_tableView reloadData];
-    
+    [_AddressArrM removeAllObjects];
+
+    //
+    [self XLAddressgetdatas];
+
 }
+
+-(void)XLAddressgetdatas
+{
+    [HTTPRequestManager POST:@"getSettlementGoods_mob.shtml" NSDictWithString:@{@"sigen":self.sigen,@"json":self.json} parameters:nil result:^(id responseObj, NSError *error) {
+        for (NSDictionary *dict in responseObj) {
+            if ([dict[@"status"] isEqualToString:@"10000"]) {
+                self.responseObj=responseObj;
+                for (NSDictionary *dic in self.responseObj) {
+
+                    for (NSDictionary *dict1 in dic[@"addresslist"]) {
+                        CartAddressModel *model = [[CartAddressModel alloc] init];
+                        model.name = dict1[@"name"];
+                        model.phone = dict1[@"phone"];
+                        model.defaultstate = dict1[@"defaultstate"];
+                        model.province = dict1[@"province"];
+                        model.city = dict1[@"city"];
+                        model.county = dict1[@"county"];
+                        model.address = dict1[@"address"];
+                        model.addressId = dict1[@"id"];
+                        [_AddressArrM addObject:model];
+                        YLog(@"%@,%@",model.addressId,self.AddressAid);
+                        if ([[NSString stringWithFormat:@"%@",model.addressId]  isEqualToString:[NSString stringWithFormat:@"%@",self.AddressAid]]) {
+                            cell1.Name.text = [NSString stringWithFormat:@"收货人：%@",model.name];
+                            cell1.Phone.text = [NSString stringWithFormat:@"%@",model.phone];
+                            cell1.Address.text = [NSString stringWithFormat:@"收货地址：%@",model.address];
+                            self.AddressPhone = model.phone;
+                        }
+                    }
+                }
+
+            }
+        }
+    }];
+}
+
 
 //收货地址为空
 -(void)DeleteTheLastAddress
@@ -327,8 +363,39 @@
 
 -(void)getDatas
 {
-    
-    
+
+    isButtonOn=1;
+
+    _WordTfTag = 0;
+
+    deductionIntegral = @"";
+
+    self.AddressReloadString = @"66";
+
+    _isIntegerAdd_Reduce = @"11";
+
+    _GoodsCount = 0;
+
+    _GoodsAllPrice = 0;
+
+    _MaxInteger = 0;
+
+    _SelectSection = 0;
+
+    _SelectIndexPath = 0;
+
+    _WordSection = 0;
+    [_StoreArrM removeAllObjects];
+
+    [_GoodsArrM removeAllObjects];
+
+    [_LabelArrM removeAllObjects];
+
+    [_RedArrM removeAllObjects];
+
+    [_WordTextViewTag removeAllObjects];
+
+    [_NewAddressArrM removeAllObjects];
     NSLog(@"====确认订单json====%@",self.json);
     
 //    [HTTPRequestManager POST:@"getSettlementGoods_mob.shtml" NSDictWithString:@{@"sigen":self.sigen,@"json":self.json} parameters:nil result:^(id responseObj, NSError *error) {
@@ -361,13 +428,8 @@
                             model.county = dict1[@"county"];
                             model.address = dict1[@"address"];
                             model.addressId = dict1[@"id"];
-                        
-                        
                             [_AddressArrM addObject:model];
-                            
-                        
                     }
-//
                     
                     
                     //商品信息
@@ -500,20 +562,6 @@
                 
             }
         }
-    
-//        }else{
-//            
-//            
-//            NSLog(@"error");
-//            
-//        }
-//        
-//        
-//    }];
-    
-    
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -24,5 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *YTBianJiButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *YTDeleteButton;
+@property (weak, nonatomic) IBOutlet UILabel *YTMorenLabel;
 
 @end
