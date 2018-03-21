@@ -12423,7 +12423,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.AnTaoHui.aTaohMallsousuo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AnTaoHui.aTaohMall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -12550,7 +12550,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.AnTaoHui.aTaohMallsousuo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AnTaoHui.aTaohMall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
