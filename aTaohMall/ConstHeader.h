@@ -17,14 +17,14 @@ static NSString *const URL_Str=@"http://192.168.1.24:8085/";
 static NSString *const URL_Str1=@"http://120.76.245.90:8089/pay/";
 //*/
 
-/*
+//*
 //测试
 static NSString *const URL_Str=@"http://39.108.151.219:8089/";
 //测试支付
 static NSString *const URL_Str1=@"http://39.108.151.219:8089/pay/";
 //*/
 
-//*
+/*
 //线上支付
 static NSString *const URL_Str1=@"http://athmall.com/pay/";
 //线上
