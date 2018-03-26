@@ -121,9 +121,9 @@
     
     
     
-    self.barImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100+KSafeTopHeight, [UIScreen mainScreen].bounds.size.width-60-20, 60)];
+    self.barImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, [UIScreen mainScreen].bounds.size.width-60-20, 60)];
     
-    self.QRImgView = [[UIImageView alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width-60-20-200)/2, 200, 200, 200)];
+    self.QRImgView = [[UIImageView alloc] initWithFrame:CGRectMake(([UIScreen mainScreen].bounds.size.width-60-20-200)/2, 110, 200, 200)];
     
 //    [self.saosaoView addSubview:self.barImgView];
     
