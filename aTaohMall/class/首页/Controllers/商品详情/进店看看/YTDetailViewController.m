@@ -507,7 +507,10 @@
     
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(xiangqingGr) name:@"xiangqingGr" object:nil];
-    
+
+    [KNotificationCenter addObserver:self selector:@selector(getDatas) name:JMSHTLoginSuccessNoti object:Nil];
+    //[];
+
     //读取数组NSArray类型的数据
     
     if ([userDefaultes stringForKey:@"text"].length>0) {

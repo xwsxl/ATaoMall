@@ -13,7 +13,10 @@
 @property (nonatomic,strong)UIImageView *shopIV;
 @property (nonatomic,strong)UIImageView *moreIV;
 @property (nonatomic,strong)UILabel *shopsNameLab;
+@property (nonatomic,strong)UIButton *selectBut;
 
 @property (nonatomic,strong)MerchantModel *dataModel;
+
+@property (nonatomic,assign)BOOL isEdit;
 
 @end

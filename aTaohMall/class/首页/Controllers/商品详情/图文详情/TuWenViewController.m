@@ -543,9 +543,10 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
 -(void)shouCangBtnClick:(UIButton *)sender
 {
     ShouCangBut.userInteractionEnabled=NO;
+    sender.selected=!sender.selected;
+
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
 
-        sender.selected=!sender.selected;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -559,11 +560,12 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
          is_status：收藏状态：1收藏2取消收藏（这里传2）
          type：类型：1商品2商铺（这里传2）
          mid：商户ID */
-        if (sender.selected) {
+        if (![_ShouCangStr isEqualToString:@"1"]) {
             NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"1",@"gid":self.ID};
             [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
                     self.ShouCangStr=@"1";
+
                 }
 
                 [TrainToast showWithText:responseObj[@"message"] duration:2.0];
@@ -584,6 +586,7 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
             [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
                     self.ShouCangStr=@"2";
+
                 }
                 [TrainToast showWithText:responseObj[@"message"] duration:2.0];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

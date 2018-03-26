@@ -112,9 +112,14 @@
     
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TimeStop3:) name:@"TimeStop666" object:nil];
-    
-    
-    
+    /*****  登录成功需要刷新数据获取收藏状态 *****/
+    [KNotificationCenter addObserver:self selector:@selector(login) name:JMSHTLoginSuccessNoti object:nil];
+
+}
+
+-(void)login
+{
+    [self addDataWithDirection:DJRefreshDirectionTop];
 }
 
 - (void)createTimer {
@@ -268,7 +273,7 @@
     ShouCangBut.userInteractionEnabled=NO;
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
 
-    sender.selected=!sender.selected;
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -281,7 +286,7 @@
     is_status：收藏状态：1收藏2取消收藏（这里传2）
     type：类型：1商品2商铺（这里传2）
     mid：商户ID */
-    if (sender.selected) {
+    if (!sender.selected) {
         NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"2",@"mid":self.mid};
         [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
             if ([responseObj[@"status"] isEqualToString:@"10000"]) {
@@ -340,7 +345,7 @@
     NSString *url = [NSString stringWithFormat:@"%@getShopDetails_mob.shtml",URL_Str];
     
     NSDictionary *dic = @{@"mid":self.mid,@"flag":[NSString stringWithFormat:@"%d",page],@"type":self.Type,@"sigen":[kUserDefaults stringForKey:@"sigen"]};
-    
+    YLog(@"%@",dic);
     [manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *codeKey = [SecretCodeTool getDesCodeKey:operation.responseString];
         NSString *content = [SecretCodeTool getReallyDesCodeString:operation.responseString];

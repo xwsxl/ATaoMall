@@ -627,7 +627,7 @@
     }
     
     //    self.navigationController.navigationBar.hidden=YES;
-    //    self.tabBarController.tabBar.hidden=NO;
+    //
     //
     //    [self.navigationController popToRootViewControllerAnimated:YES];
     
@@ -714,7 +714,7 @@
         self.navigationController.navigationBar.hidden=YES;
         
         //恢复tabbar
-        self.tabBarController.tabBar.hidden=NO;
+
         
         [self.navigationController popToRootViewControllerAnimated:YES];
         
@@ -724,7 +724,7 @@
         
         
         //恢复tabbar
-        self.tabBarController.tabBar.hidden=NO;
+
         
         PersonaViewController *vc=[[PersonaViewController alloc] init];
         
@@ -751,7 +751,7 @@
     }else if([self.backString isEqualToString:@"400"]){
         
         
-        self.tabBarController.tabBar.hidden=NO;
+
         
         [self.navigationController popViewControllerAnimated:YES];
         
@@ -777,7 +777,7 @@
         self.navigationController.navigationBar.hidden=YES;
         
         //恢复tabbar
-        self.tabBarController.tabBar.hidden=NO;
+
     }
     
 }
@@ -1227,7 +1227,7 @@
                     
                     if ([self.backString isEqualToString:@"1"]){
                         //恢复tabbar
-                        self.tabBarController.tabBar.hidden=NO;
+
                         
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         
@@ -1236,7 +1236,7 @@
                     }else if([self.backString isEqualToString:@"200"]){
                         
                         //恢复tabbar
-                        self.tabBarController.tabBar.hidden=NO;
+
                         
                         [self.navigationController popToRootViewControllerAnimated:YES];
                         
@@ -1275,7 +1275,7 @@
                     }else if([self.backString isEqualToString:@"100"]){
                         
                         //恢复tabbar
-                        self.tabBarController.tabBar.hidden=NO;
+
                         
                         PersonaViewController *vc=[[PersonaViewController alloc] init];
                         
@@ -1579,7 +1579,7 @@
                         
                         
                         
-                        self.tabBarController.tabBar.hidden=NO;
+
                         
                         self.navigationController.navigationBar.hidden=YES;
                         [self.navigationController popViewControllerAnimated:YES];
@@ -1591,7 +1591,7 @@
                         //                            [self.navigationController pushViewController:home animated:YES];
                         
                         //恢复tabbar
-                        self.tabBarController.tabBar.hidden=NO;
+
                         
                         self.navigationController.navigationBar.hidden=YES;
                         

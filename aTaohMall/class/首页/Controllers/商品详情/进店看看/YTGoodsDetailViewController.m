@@ -104,6 +104,11 @@
 
 @implementation YTGoodsDetailViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden=YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -327,9 +332,9 @@
 -(void)shouCangBtnClick:(UIButton *)sender
 {
     ShouCangBut.userInteractionEnabled=NO;
+    sender.selected=!sender.selected;
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
 
-        sender.selected=!sender.selected;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -344,11 +349,12 @@
         is_status：收藏状态：1收藏2取消收藏（这里传2）
         gid：商品ID
         type：类型：1商品2商铺（这里传1）*/
-        if (sender.selected) {
+        if (![_ShouCangStr isEqualToString:@"1"]) {
             NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"is_status":@"1",@"type":@"1",@"gid":self.gid};
             [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
                     self.ShouCangStr=@"1";
+
                 }
 
                 [TrainToast showWithText:responseObj[@"message"] duration:2.0];
@@ -369,6 +375,7 @@
             [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
                     self.ShouCangStr=@"2";
+
                 }
 
                 [TrainToast showWithText:responseObj[@"message"] duration:2.0];

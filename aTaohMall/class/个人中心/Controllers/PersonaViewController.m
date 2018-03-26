@@ -1384,27 +1384,8 @@
 //历史记录事件
 -(void)HistoryShouCangBtnClick
 {
-
-    if (self.sigen.length==0) {
-
-        //        NewLoginViewController *login=[[NewLoginViewController alloc] init];
-
-        ATHLoginViewController *login=[[ATHLoginViewController alloc] init];
-
-        //   login.delegate=self;
-
-        [self.navigationController pushViewController:login animated:NO];
-
-        self.navigationController.navigationBar.hidden=YES;
-        self.tabBarController.tabBar.hidden=YES;
-
-    }else{
         [TrainToast showWithText:@"即将开放，敬请期待！" duration:2.0];
         YLog(@"浏览记录");
-
-    }
-
-
 }
 
 

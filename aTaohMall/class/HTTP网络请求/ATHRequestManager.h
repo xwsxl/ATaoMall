@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^Result)(id responseObj,NSError *error);
-//请求数据成功的Block
-typedef void(^Success)(NSDictionary *responseObj);
-//请求失败的Block
-typedef void(^Failure)(NSError *error);
+
 
 @interface ATHRequestManager : NSObject
 

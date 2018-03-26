@@ -13,32 +13,42 @@
 #import "AllSingleShoppingModel.h"
 #import "MerchantModel.h"
 
+#import "XLNaviVIew.h"
+
 #import "XLGoodsCollectionCell.h"
 #import "XLShopsCollectionCell.h"
 
 #import "LYEmptyViewHeader.h"
 #import "MyDIYEmpty.h"
+
+
 #define SELECTGOODS [_selectIndex isEqualToString:@"1"]
-@interface XLCollectListVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+
+@interface XLCollectListVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,XLNaviViewDelegate>
 {
-    UIScrollView *_scroll;
-    UITableView *_tableView;
-    UITableView *_tableView2;
-    NSString *_searchWord;
-    NSMutableArray *_tempArrM;
-    BOOL _isEdit;
+    UIScrollView *_scroll;/*****  控制两个tableview的滑动 *****/
+    UITableView *_tableView;/*****  商品收藏列表 *****/
+    UITableView *_tableView2;/*****  店铺收藏列表 *****/
+    NSString *_searchWord;/*****  搜索词 *****/
+    NSMutableArray *_tempArrM;/*****  搜索的时候缓存原数据 *****/
+    NSMutableArray *_FlagArrM;/*****  控制商品收藏选中状态的数组 *****/
+    BOOL _isUnuse;/*****  是否是失效列表 *****/
 }
-@property (nonatomic,strong)UIView *normalNavi;
-@property (nonatomic,strong)UIView *searchNavi;
-@property (nonatomic,strong)NSMutableArray *goodsDataSource;
-@property (nonatomic,strong)NSMutableArray *shopsDataSource;
-@property (nonatomic,assign)NSInteger goodsPage;
-@property (nonatomic,assign)NSInteger shopsPage;
-@property (nonatomic,assign)NSInteger invalid_totalCount;
-@property (nonatomic,assign)NSInteger totalCount;
-@property (nonatomic,strong)NSString *selectIndex;
-@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+@property (nonatomic,strong)UIView *normalNavi;/*****  导航栏 *****/
+@property (nonatomic,strong)UIView *searchNavi;/*****  搜索导航栏 *****/
+@property (nonatomic,strong)XLNaviView *editNavi;/*****  编辑导航栏 *****/
+@property (nonatomic,strong)UIView *tabbarView;/*****  编辑页面底部按钮 *****/
+@property (nonatomic,strong)NSMutableArray *goodsDataSource;/*****  商品数据源 *****/
+@property (nonatomic,strong)NSMutableArray *shopsDataSource;/*****  店铺数据源 *****/
+@property (nonatomic,assign)NSInteger goodsPage;/*****  商品分页 *****/
+@property (nonatomic,assign)NSInteger shopsPage;/*****  店铺分页 *****/
+@property (nonatomic,assign)NSInteger invalid_totalCount;/*****  失效商品收藏总数 *****/
+@property (nonatomic,assign)NSInteger totalCount;/*****  总收藏数 *****/
+@property (nonatomic,assign)NSInteger all_totalCount;/*****  总收藏数 *****/
+@property (nonatomic,strong)NSString *selectIndex;/*****  控制顶部选择商品或者是店铺收藏 *****/
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;/*****  左滑手势 *****/
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;/*****  右滑手势 *****/
+@property (nonatomic,assign)BOOL isEdit;/*****  编辑模式 *****/
 
 @end
 static NSString *const XLGoodsCollectionCellReuse=@"XLGoodsCollectionCell";
@@ -51,17 +61,29 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     _tempArrM=[[NSMutableArray alloc] init];
+     _FlagArrM=[[NSMutableArray alloc] init];
     [self SetUI];
 }
-
+/*****  <#desc#> *****/
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (SELECTGOODS) {
+        _scroll.contentOffset=CGPointMake(0, 0);
+    }else
+    {
+        _scroll.contentOffset=CGPointMake(kScreenWidth, 0);
+    }
+}
 /*****  布局主视图  *****/
 -(void)SetUI
 {
     [self initNormalNavi];
     [self initSearchNavi];
     [self initTableView];
-}
 
+    [self.view insertSubview:self.tabbarView atIndex:2000];
+    [self.view insertSubview:self.editNavi atIndex:2000];
+}
 /*****  初始化普通导航栏 *****/
 -(void)initNormalNavi
 {
@@ -118,7 +140,6 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     [self.normalNavi addSubview:sliderView];
 
 }
-
 /*****  初始化搜索导航栏 *****/
 -(void)initSearchNavi
 {
@@ -162,13 +183,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     [self.searchNavi addSubview:rightBtn];
 
 }
-
 /*****  初始化表视图 *****/
 -(void)initTableView
 {
     _scroll=[[UIScrollView alloc] initWithFrame:CGRectMake(0, KSafeAreaTopNaviHeight, kScreenWidth, kScreenHeight-KSafeAreaTopNaviHeight)];
     _scroll.scrollEnabled=NO;
+    _scroll.delegate=self;
     _scroll.userInteractionEnabled=YES;
+
    // _scroll.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:_scroll];
 
@@ -182,7 +204,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 //    [_scroll addGestureRecognizer:self.rightSwipeGestureRecognizer];
 
     UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
-    but.frame=CGRectMake(kScreen_Width-Width(25)-50, kScreenHeight-Height(127)-50, 50, 50);
+    but.frame=CGRectMake(kScreen_Width-Width(25)-50, kScreenHeight-Height(127)-50-KSafeAreaBottomHeight, 50, 50);
     but.titleLabel.font=KNSFONTM(12);
     but.titleLabel.numberOfLines=0;
     but.hidden=YES;
@@ -190,6 +212,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     but.titleLabel.textAlignment=NSTextAlignmentCenter;
     but.layer.cornerRadius=25;
     but.backgroundColor=RGBA(0, 0, 0, 0.6);
+    [but addTarget:self action:@selector(SelecetUseOrUnUse:) forControlEvents:UIControlEventTouchUpInside];
     [but setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight-KSafeAreaTopNaviHeight) style:UITableViewStyleGrouped];
@@ -214,7 +237,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     // [footer setBackgroundColor:[UIColor whiteColor]];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"正在加载..." forState:MJRefreshStateRefreshing];
-    [footer setTitle:@"暂无更多数据" forState:MJRefreshStateNoMoreData];
+    [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
     _tableView.mj_footer = footer;
 
     MJRefreshGifHeader *header=[MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
@@ -260,7 +283,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     // [footer setBackgroundColor:[UIColor whiteColor]];
     [footer setTitle:@"" forState:MJRefreshStateIdle];
     [footer setTitle:@"正在加载..." forState:MJRefreshStateRefreshing];
-    [footer setTitle:@"暂无更多数据" forState:MJRefreshStateNoMoreData];
+    [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
     _tableView2.mj_footer = footer;
 
     MJRefreshGifHeader *header=[MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
@@ -287,9 +310,9 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     }
 
 }
+/*****  编辑视图 *****/
 
 #pragma mark - 数据请求
-
 /*****  取消搜索 *****/
 -(void)cancleButtonClick:(UIButton *)sender
 {
@@ -299,6 +322,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
     _searchWord=@"";
     UITextField *textfield=[self.view viewWithTag:500];
+    textfield.text=@"";
     [textfield resignFirstResponder];
 
     if (SELECTGOODS) {
@@ -363,9 +387,92 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     SELECTGOODS?[self getGoodsData]:[self getShopsData];
 }
 
+/*****  失效商品数据 *****/
+-(void)getUnuseGoodsDatas
+{
+    /*
+     获取商品收藏失效列表
+     getCollectionInvalidList_mob.shtml
+     参数：sigen：
+     name：商品名
+     page：页数 从0开始每页递增1
+     */
+    NSDictionary *params=@{@"sigen":[kUserDefaults objectForKey:@"sigen"],@"name":_searchWord,@"page":[NSNumber numberWithInteger:self.goodsPage]};
+    NSString *url=[NSString stringWithFormat:@"%@getCollectionInvalidList_mob.shtml",URL_Str];
+    WKProgressHUD *hud=[WKProgressHUD showInView:self.view withText:nil animated:YES];
+
+    [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+
+        if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+            if (self.goodsPage == 0) {
+                [self.goodsDataSource removeAllObjects];
+                [_FlagArrM removeAllObjects];
+            }
+            self.goodsPage++;
+            self.all_totalCount = [responseObj[@"all_totalCount"] integerValue];
+            self.totalCount = [responseObj[@"totalCount"] integerValue];
+            for (NSDictionary *dic in responseObj[@"list"]) {
+                AllSingleShoppingModel *model = [[AllSingleShoppingModel alloc] init];
+                model.gid=[NSString stringWithFormat:@"%@",dic[@"gid"]];
+                model.collectionID=[NSString stringWithFormat:@"%@",dic[@"id"]];
+                model.scopeimg=[NSString stringWithFormat:@"%@",dic[@"logo"]];
+                model.name=[NSString stringWithFormat:@"%@",dic[@"name"]];
+                model.pay_integer=[NSString stringWithFormat:@"%@",dic[@"payIntegral"]];
+                model.pay_maney=[NSString stringWithFormat:@"%@",dic[@"payMoney"]];
+                model.statu=[NSString stringWithFormat:@"%@",@"1"];
+                [self.goodsDataSource addObject:model];
+                UIButton *but1=[self.view viewWithTag:600];
+                if (but1.selected) {
+                    [_FlagArrM addObject:@"1"];
+                }else
+                {
+                    [_FlagArrM addObject:@"0"];
+                }
+            }
+            if (self.goodsDataSource.count>=self.totalCount&&(self.totalCount!=0)) {
+                [_tableView.mj_header endRefreshing];
+                [_tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+            else
+            {
+                [_tableView.mj_header endRefreshing];
+                [_tableView.mj_footer endRefreshing];
+            }
+        }else
+        {
+
+        [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
+        }
+        [_tableView reloadData];
+        UIButton *searchBut = [self.view viewWithTag:100];
+        UIButton *editBut = [self.view viewWithTag:101];
+        if (_goodsDataSource.count>0) {
+            searchBut.hidden = NO;
+            editBut.hidden = NO;
+        }else
+        {
+            searchBut.hidden = YES;
+            editBut.hidden = YES;
+        }
+        [hud dismiss:YES];
+    } faildBlock:^(NSError *error) {
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
+        [TrainToast showWithText:error.localizedDescription duration:2.0];
+        [hud dismiss:YES];
+    }];
+
+}
+
 /*****  获取商品数据 *****/
 -(void)getGoodsData
 {
+    if (_isUnuse) {
+        [self getUnuseGoodsDatas];
+        return;
+    }
     NSDictionary *params=@{@"sigen":[kUserDefaults objectForKey:@"sigen"],@"type":_selectIndex,@"name":_searchWord,@"page":[NSNumber numberWithInteger:self.goodsPage]};
     NSString *url=[NSString stringWithFormat:@"%@getCollectionList_mob.shtml",URL_Str];
     WKProgressHUD *hud=[WKProgressHUD showInView:self.view withText:nil animated:YES];
@@ -375,6 +482,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
             if (self.goodsPage == 0) {
                 [self.goodsDataSource removeAllObjects];
+                [_FlagArrM removeAllObjects];
             }
             self.goodsPage++;
             self.invalid_totalCount = [responseObj[@"invalid_totalCount"] integerValue];
@@ -389,6 +497,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
                 model.pay_integer=[NSString stringWithFormat:@"%@",dic[@"payIntegral"]];
                 model.pay_maney=[NSString stringWithFormat:@"%@",dic[@"payMoney"]];
                 model.statu=[NSString stringWithFormat:@"%@",dic[@"status"]];
+                UIButton *but1=[self.view viewWithTag:600];
+                if (but1.selected) {
+                     [_FlagArrM addObject:@"1"];
+                }else
+                {
+                     [_FlagArrM addObject:@"0"];
+                }
+
                 [self.goodsDataSource addObject:model];
             }
 
@@ -439,17 +555,25 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         if ([responseObj[@"status"] isEqualToString:@"10000"]) {
             if (self.shopsPage==0) {
                 [self.shopsDataSource removeAllObjects];
+                [_FlagArrM removeAllObjects];
             }
             self.shopsPage++;
 
             for (NSDictionary *dic in responseObj[@"list"]) {
                 MerchantModel *model = [[MerchantModel alloc] init];
-                model.mid=[NSString stringWithFormat:@"%@",dic[@"gid"]];
+                model.mid=[NSString stringWithFormat:@"%@",dic[@"mid"]];
                 model.logo=[NSString stringWithFormat:@"%@",dic[@"logo"]];
                 model.storename=[NSString stringWithFormat:@"%@",dic[@"name"]];
                 model.status=[NSString stringWithFormat:@"%@",dic[@"status"]];
                 model.collectionId=[NSString stringWithFormat:@"%@",dic[@"id"]];
                 [self.shopsDataSource addObject:model];
+                UIButton *but1=[self.view viewWithTag:600];
+                if (but1.selected) {
+                    [_FlagArrM addObject:@"1"];
+                }else
+                {
+                    [_FlagArrM addObject:@"0"];
+                }
             }
 
             if (self.shopsDataSource.count >= [responseObj[@"totalCount"] integerValue]&&(self.shopsDataSource.count!=0)) {
@@ -489,24 +613,61 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
 }
 
+/*****  单个或批量取消商品、店铺收藏  *****/
+-(void)updateCollectionStatusRequestWithIds:(NSString *)ids success:(Success)success faild:(Failure)faild
+{
+   /*
+    updateCollectionStatus_mob.shtml
+    参数：sigen：
+    ids:收藏ID字符串（100,101,102）
+
+    返回参数：status：
+    message：
+    list：
+    totalCount：总数
+    all_totalCount：全部总数
+                            */
+    NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"ids":ids};
+    NSString *url=[NSString stringWithFormat:@"%@updateCollectionStatus_mob.shtml",URL_Str];
+    [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
+        success(responseObj);
+    } faildBlock:^(NSError *error) {
+        faild(error);
+    }];
+}
+
 #pragma mark - events
 
 /*****  编辑 *****/
 -(void)editButClick:(UIButton *)sender
 {
-    _isEdit=!_isEdit;
-    if (_isEdit) {
-        YLog(@"1234567890");
+    self.isEdit=YES;
+    [_FlagArrM removeAllObjects];
+    if (SELECTGOODS) {
+        for (int i=0;i<_goodsDataSource.count;i++) {
+            [_FlagArrM addObject:@"0"];
+        }
+        [_tableView reloadData];
+    }else
+    {
+        for (int i=0; i<_shopsDataSource.count;i++) {
+            [_FlagArrM addObject:@"0"];
+        }
+        [_tableView2 reloadData];
     }
+
+}
+/*****  退出编辑 *****/
+-(void)QurtBtnClick
+{
+    self.isEdit=NO;
     if (SELECTGOODS) {
         [_tableView reloadData];
     }else
     {
         [_tableView2 reloadData];
     }
-
 }
-
 /*****  监听改变的值 *****/
 -(void)changeValue:(UITextField *)TextField
 {
@@ -603,9 +764,116 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 /*****  退出当前控制器 *****/
 -(void)QurtBtnClick2
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    if (_isUnuse) {
+        [self SelecetUseOrUnUse:nil];
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:NO];
+    }
 }
 
+/*****  切换失效或者全部 *****/
+-(void)SelecetUseOrUnUse:(UIButton *)sender
+{
+  //  sender.selected=!sender.selected;
+    if (!_isUnuse) {
+        _isUnuse=YES;
+        [self refreshData];
+    }else
+    {
+        _isUnuse=NO;
+        [self refreshData];
+    }
+
+}
+/*****  编辑全选 *****/
+-(void)clickAllSelectedBut:(UIButton *)sender
+{
+    sender.selected=!sender.selected;
+    if (sender.selected) {
+        UIButton *but=[self.view viewWithTag:600];
+        [but setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+        for (int i=0; i<_FlagArrM.count; i++) {
+            [_FlagArrM replaceObjectAtIndex:i withObject:@"1"];
+        }
+    }else
+    {
+        UIButton *but=[self.view viewWithTag:600];
+        [but setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+        for (int i=0; i<_FlagArrM.count; i++) {
+            [_FlagArrM replaceObjectAtIndex:i withObject:@"0"];
+        }
+    }
+    if (SELECTGOODS) {
+        [_tableView reloadData];
+    }else
+    {
+        [_tableView2 reloadData];
+    }
+
+}
+
+/*****  批量取消收藏 *****/
+-(void)clickCancleCollection
+{
+    NSString *str=@"";
+    NSMutableArray *indexPaths=[[NSMutableArray alloc] init];
+    for (int i=0; i<_FlagArrM.count; i++) {
+        if ([_FlagArrM[i] isEqualToString:@"1"]) {
+            if (SELECTGOODS) {
+            AllSingleShoppingModel *model=self.goodsDataSource[i];
+            str=[str stringByAppendingString:model.collectionID];
+            str=[str stringByAppendingString:@","];
+            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+            }else
+            {
+            MerchantModel *model=self.shopsDataSource[i];
+            str=[str stringByAppendingString:model.collectionId];
+            str=[str stringByAppendingString:@","];
+            }
+        }
+    }
+    if (![str containsString:@","]) {
+        [TrainToast showWithText:@"您还没有选择要取消的商品" duration:2.0];
+        return;
+    }else
+    {
+        str=[str substringToIndex:str.length-1];
+    }
+
+    [self updateCollectionStatusRequestWithIds:str success:^(NSDictionary *responseObj) {
+        if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+
+            for (int i=0; i<_FlagArrM.count; i++) {
+                if ([_FlagArrM[i] isEqualToString:@"1"]) {
+                    if (SELECTGOODS) {
+                        [_FlagArrM removeObjectAtIndex:i];
+                        [self.goodsDataSource removeObjectAtIndex:i];
+
+                    }else
+                    {
+                        [_FlagArrM removeObjectAtIndex:i];
+                        [self.shopsDataSource removeObjectAtIndex:i];
+                    }
+                }
+            }
+            if (SELECTGOODS) {
+                [_tableView reloadData];
+            }else
+            {
+                [_tableView2 reloadData];
+            }
+            [self QurtBtnClick];
+        }
+        [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+    } faild:^(NSError *error) {
+        [TrainToast showWithText:error.localizedDescription duration:2.0];
+    }];
+
+
+
+
+}
 #pragma mark - tableViewDelegate
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -627,18 +895,29 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    BOOL isedit=NO;
+    if (_isEdit) {
+        isedit=[[_FlagArrM objectAtIndex:indexPath.row] isEqualToString:@"1"];
+    }
     if (SELECTGOODS) {
         XLGoodsCollectionCell *cell=[tableView dequeueReusableCellWithIdentifier:XLGoodsCollectionCellReuse];
+        cell.editing=NO;
         cell.dataModel=self.goodsDataSource[indexPath.row];
-        [cell.selectBut addTarget:self action:@selector(selectButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         cell.selectBut.tag=2000+indexPath.row;
+        NSString *img=isedit?@"13btn_selected":@"13btn_unselected";
+        [cell.selectBut setImage:KImage(img) forState:UIControlStateNormal];
         cell.isEdit=_isEdit;
         return cell;
     }else
     {
-
         XLShopsCollectionCell *cell=[tableView dequeueReusableCellWithIdentifier:XLShopsCollectionCellReuse];
         cell.dataModel=self.shopsDataSource[indexPath.row];
+        cell.editing=NO;
+        cell.selectBut.tag=2100+indexPath.row;
+        NSString *img=isedit?@"13btn_selected":@"13btn_unselected";
+        [cell.selectBut setImage:KImage(img) forState:UIControlStateNormal];
+        cell.isEdit=_isEdit;
         return cell;
     }
 }
@@ -661,29 +940,64 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (SELECTGOODS) {
-
-        AllSingleShoppingModel *model=self.goodsDataSource[indexPath.row];
-        if ([model.statu isEqualToString:@"1"]) {
-
+        XLGoodsCollectionCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+        if (_isEdit) {
+            NSString *str=[_FlagArrM objectAtIndex:indexPath.row];
+            if ([str isEqualToString:@"0"]) {
+                str=@"1";
+                 [cell.selectBut setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+            }else
+            {
+                str=@"0";
+                 [cell.selectBut setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+            }
+            [_FlagArrM replaceObjectAtIndex:indexPath.row withObject:str];
         }else
         {
-        YTGoodsDetailViewController *vc=[[YTGoodsDetailViewController alloc] init];
-        vc.gid=model.gid;
-        [self.navigationController pushViewController:vc animated:NO];
+
+            AllSingleShoppingModel *model=self.goodsDataSource[indexPath.row];
+            if ([model.statu isEqualToString:@"1"]) {
+
+            }else
+            {
+                YTGoodsDetailViewController *vc=[[YTGoodsDetailViewController alloc] init];
+                vc.gid=model.gid;
+                [self.navigationController pushViewController:vc animated:NO];
+            }
         }
     }else
     {
-        MerchantModel *model=self.shopsDataSource[indexPath.row];
-        MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
-        vc.mid=model.mid;
-        [self.navigationController pushViewController:vc animated:NO];
+        XLShopsCollectionCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+        if (_isEdit) {
+            NSString *str=[_FlagArrM objectAtIndex:indexPath.row];
+            if ([str isEqualToString:@"0"]) {
+                str=@"1";
+                [cell.selectBut setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+            }else
+            {
+                str=@"0";
+                [cell.selectBut setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+            }
+            [_FlagArrM replaceObjectAtIndex:indexPath.row withObject:str];
+        }
+        else
+        {
+            MerchantModel *model=self.shopsDataSource[indexPath.row];
+            MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
+            vc.mid=model.mid;
+            [self.navigationController pushViewController:vc animated:NO];
+        }
     }
 }
 
-
  -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isEdit) {
+        return NO;
+    }else
+    {
     return YES;
+    }
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -694,15 +1008,38 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (SELECTGOODS) {
-        [self.goodsDataSource removeObjectAtIndex:indexPath.row];
-        [_tableView deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+        AllSingleShoppingModel *model=self.goodsDataSource[indexPath.row];
+        [self updateCollectionStatusRequestWithIds:model.collectionID success:^(NSDictionary *responseObj) {
+
+            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                [self.goodsDataSource removeObjectAtIndex:indexPath.row];
+                [_tableView deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+
+        } faild:^(NSError *error) {
+            [TrainToast showWithText:error.localizedDescription duration:2.0];
+        }];
+
     }else
     {
-        [self.shopsDataSource removeObjectAtIndex:indexPath.row];
-        [_tableView2 deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+        MerchantModel *model=self.shopsDataSource[indexPath.row];
+        [self updateCollectionStatusRequestWithIds:model.collectionId success:^(NSDictionary *responseObj) {
+
+            if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                [self.shopsDataSource removeObjectAtIndex:indexPath.row];
+                [_tableView2 deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+
+            }
+            [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+
+
+        } faild:^(NSError *error) {
+            [TrainToast showWithText:error.localizedDescription duration:2.0];
+        }];
+
     }
 }
-
 
 #pragma mark - textFiledDelegate
 
@@ -735,6 +1072,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     [self getdatas];
     return YES;
 }
+
+#pragma mark - scrollviewDelegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    YLog(@"scrollview.point=%.2f,%@",scrollView.contentOffset.x,_selectIndex);
+}
+
 
 #pragma mark - getter and setter
 /*****  顶部选择框 *****/
@@ -789,6 +1134,17 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     return _searchNavi;
 }
 
+/*****  编辑模式导航栏 *****/
+-(UIView *)editNavi
+{
+    if (!_editNavi) {
+        _editNavi=[[XLNaviView alloc] initWithMessage:@"编辑" ImageName:@""];
+        _editNavi.hidden=YES;
+        _editNavi.delegate=self;
+    }
+    return _editNavi;
+}
+
 /*****  商品数据源 *****/
 -(NSMutableArray *)goodsDataSource
 {
@@ -828,6 +1184,20 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 }
 
 /*****  <#desc#> *****/
+-(void)setAll_totalCount:(NSInteger)all_totalCount
+{
+    _all_totalCount=all_totalCount;
+    UIButton *but=[self.view viewWithTag:400];
+    if (_all_totalCount>0) {
+        but.hidden=NO;
+        [but setTitle:[NSString stringWithFormat:@"%ld\n全部",_all_totalCount] forState:UIControlStateNormal];
+    }else
+    {
+        but.hidden=YES;
+    }
+}
+
+/*****  <#desc#> *****/
 -(void)setInvalid_totalCount:(NSInteger)invalid_totalCount
 {
     _invalid_totalCount=invalid_totalCount;
@@ -838,6 +1208,31 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     }else
     {
         but.hidden=YES;
+    }
+}
+
+/*****  编辑状态 *****/
+-(void)setIsEdit:(BOOL)isEdit
+{
+    _isEdit=isEdit;
+    if (isEdit) {
+        _editNavi.hidden=NO;
+        _tabbarView.hidden=NO;
+        UIButton *but=[self.view viewWithTag:400];
+        but.hidden=YES;
+        UIButton *but1=[self.view viewWithTag:600];
+        but1.selected=NO;
+        [but1 setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+
+    }else
+    {
+        _editNavi.hidden=YES;
+        _tabbarView.hidden=YES;
+        UIButton *but=[self.view viewWithTag:400];
+        but.hidden=NO;
+        UIButton *but1=[self.view viewWithTag:600];
+        but1.selected=NO;
+        [but1 setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
     }
 }
 
@@ -852,4 +1247,32 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [self goodsButtonClick:nil];
     }
 }
+
+/*****  <#desc#> *****/
+-(UIView *)tabbarView
+{
+    if (!_tabbarView) {
+        _tabbarView=[[UIView alloc] initWithFrame:CGRectMake(0, kScreenHeight-KSafeAreaBottomHeight-49, kScreenWidth, 49)];
+        _tabbarView.hidden=YES;
+        UIButton * but=[UIButton buttonWithType:UIButtonTypeCustom];
+        but.frame=CGRectMake(0, 0, Width(170), 49);
+        but.tag=600;
+        [but addTarget:self action:@selector(clickAllSelectedBut:) forControlEvents:UIControlEventTouchUpInside];
+        but.backgroundColor=RGB(215, 215, 215);
+        [but setTitleColor:RGB(51, 51, 51) forState:UIControlStateNormal];
+        [but setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+        [but setTitle:@"全选" forState:UIControlStateNormal];
+        [_tabbarView addSubview:but];
+
+        UIButton *but1=[UIButton buttonWithType:UIButtonTypeCustom];
+        but1.frame=CGRectMake(Width(170), 0, Width(205), 49);
+        but1.tag=601;
+        [but1 addTarget:self action:@selector(clickCancleCollection) forControlEvents:UIControlEventTouchUpInside];
+        but1.backgroundColor=RGB(255, 93, 94);
+        [but1 setTitle:@"取消收藏" forState:UIControlStateNormal];
+        [_tabbarView addSubview:but1];
+    }
+    return _tabbarView;
+}
+
 @end

@@ -33,17 +33,36 @@
     [self.shopsNameLab setTextColor:RGB(51, 51, 51)];
     [self.contentView addSubview:self.shopsNameLab];
 
+    self.selectBut=[[UIButton alloc] init];
+    self.selectBut.userInteractionEnabled=NO;
+    [self.contentView addSubview:self.selectBut];
+
 }
 
 -(void)layoutSubviews
 {
+    if (_isEdit) {
+
+    [self.selectBut setFrame:CGRectMake(Width(10), 0, 26, 100)];
+
+    [self.shopIV setFrame:CGRectMake(Width(15)+26, 15, 70, 70)];
+
+    [self.moreIV setFrame:CGRectMake(kScreen_Width-Width(15)-9, 42, 9, 16)];
+
+    [self.shopsNameLab setFrame:CGRectMake(Width(15)+70+Width(10)+26, 15, kScreen_Width-Width(40)-70-9-Width(5), 70)];
+
+    }else
+    {
+
+    [self.selectBut setFrame:CGRectZero];
+
 
     [self.shopIV setFrame:CGRectMake(Width(15), 15, 70, 70)];
 
     [self.moreIV setFrame:CGRectMake(kScreen_Width-Width(15)-9, 42, 9, 16)];
 
     [self.shopsNameLab setFrame:CGRectMake(Width(15)+70+Width(10), 15, kScreen_Width-Width(40)-70-9-Width(5), 70)];
-
+    }
 }
 
 -(void)setDataModel:(MerchantModel *)dataModel
@@ -66,6 +85,11 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)setIsEdit:(BOOL)isEdit
+{
+    _isEdit=isEdit;
 }
 
 @end

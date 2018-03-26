@@ -40,6 +40,7 @@
     [self.contentView addSubview:self.priceLab];
 
     self.selectBut=[[UIButton alloc] init];
+    self.selectBut.userInteractionEnabled=NO;
     [self.contentView addSubview:self.selectBut];
 
 
