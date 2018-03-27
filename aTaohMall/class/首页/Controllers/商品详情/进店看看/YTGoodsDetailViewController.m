@@ -331,10 +331,10 @@
 
 -(void)shouCangBtnClick:(UIButton *)sender
 {
-    ShouCangBut.userInteractionEnabled=NO;
+
     sender.selected=!sender.selected;
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
-
+        ShouCangBut.userInteractionEnabled=NO;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -393,6 +393,7 @@
     }else
     {
         ATHLoginViewController *VC=[[ATHLoginViewController alloc] init];
+
         [self.navigationController pushViewController:VC animated:NO];
     }
 }

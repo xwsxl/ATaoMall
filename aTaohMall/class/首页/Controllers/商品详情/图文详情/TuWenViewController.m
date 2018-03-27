@@ -542,10 +542,10 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
 
 -(void)shouCangBtnClick:(UIButton *)sender
 {
-    ShouCangBut.userInteractionEnabled=NO;
     sender.selected=!sender.selected;
 
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
+        ShouCangBut.userInteractionEnabled=NO;
 
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 

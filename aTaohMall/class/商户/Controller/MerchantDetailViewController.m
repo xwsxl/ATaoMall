@@ -270,9 +270,9 @@
 
 -(void)shouCangBtnClick:(UIButton *)sender
 {
-    ShouCangBut.userInteractionEnabled=NO;
     if (![[kUserDefaults stringForKey:@"sigen"] containsString:@"null"]&&[kUserDefaults stringForKey:@"sigen"].length>0) {
 
+        ShouCangBut.userInteractionEnabled=NO;
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
