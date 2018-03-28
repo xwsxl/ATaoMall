@@ -319,7 +319,6 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     self.normalNavi.hidden=NO;
     self.searchNavi.hidden=YES;
 
-
     _searchWord=@"";
     UITextField *textfield=[self.view viewWithTag:500];
     textfield.text=@"";
@@ -821,57 +820,39 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     for (int i=0; i<_FlagArrM.count; i++) {
         if ([_FlagArrM[i] isEqualToString:@"1"]) {
             if (SELECTGOODS) {
-            AllSingleShoppingModel *model=self.goodsDataSource[i];
-            str=[str stringByAppendingString:model.collectionID];
-            str=[str stringByAppendingString:@","];
-            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+                AllSingleShoppingModel *model=self.goodsDataSource[i];
+                str=[str stringByAppendingString:model.collectionID];
+                str=[str stringByAppendingString:@","];
+                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
             }else
             {
-            MerchantModel *model=self.shopsDataSource[i];
-            str=[str stringByAppendingString:model.collectionId];
-            str=[str stringByAppendingString:@","];
+                MerchantModel *model=self.shopsDataSource[i];
+                str=[str stringByAppendingString:model.collectionId];
+                str=[str stringByAppendingString:@","];
             }
         }
     }
     if (![str containsString:@","]) {
-        [TrainToast showWithText:@"您还没有选择要取消的商品" duration:2.0];
+        [TrainToast showWithText:@"您还没有选择要取消的商品？" duration:2.0];
         return;
     }else
     {
         str=[str substringToIndex:str.length-1];
     }
+    [UIAlertTools showAlertWithTitle:[NSString stringWithFormat:@"确定取消%ld件商品",indexPaths.count] message:@"" cancelTitle:@"取消" titleArray:@[@"确定"] viewController:self confirm:^(NSInteger buttonTag) {
+        if (buttonTag==0) {
+            [self updateCollectionStatusRequestWithIds:str success:^(NSDictionary *responseObj) {
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
 
-    [self updateCollectionStatusRequestWithIds:str success:^(NSDictionary *responseObj) {
-        if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-
-            for (int i=0; i<_FlagArrM.count; i++) {
-                if ([_FlagArrM[i] isEqualToString:@"1"]) {
-                    if (SELECTGOODS) {
-                        [_FlagArrM removeObjectAtIndex:i];
-                        [self.goodsDataSource removeObjectAtIndex:i];
-
-                    }else
-                    {
-                        [_FlagArrM removeObjectAtIndex:i];
-                        [self.shopsDataSource removeObjectAtIndex:i];
-                    }
+                    [self refreshData];
+                    [self QurtBtnClick];
                 }
-            }
-            if (SELECTGOODS) {
-                [_tableView reloadData];
-            }else
-            {
-                [_tableView2 reloadData];
-            }
-            [self QurtBtnClick];
+                [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+            } faild:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+            }];
         }
-        [TrainToast showWithText:responseObj[@"message"] duration:2.0];
-    } faild:^(NSError *error) {
-        [TrainToast showWithText:error.localizedDescription duration:2.0];
     }];
-
-
-
 
 }
 #pragma mark - tableViewDelegate
@@ -939,6 +920,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     if (SELECTGOODS) {
         XLGoodsCollectionCell *cell=[tableView cellForRowAtIndexPath:indexPath];
         if (_isEdit) {
@@ -952,6 +934,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
                  [cell.selectBut setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
             }
             [_FlagArrM replaceObjectAtIndex:indexPath.row withObject:str];
+            [self judgeAllSelect];
         }else
         {
 
@@ -979,20 +962,33 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
                 [cell.selectBut setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
             }
             [_FlagArrM replaceObjectAtIndex:indexPath.row withObject:str];
+            [self judgeAllSelect];
         }
         else
         {
-            MerchantModel *model=self.shopsDataSource[indexPath.row];
-            MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
-            vc.mid=model.mid;
-            [self.navigationController pushViewController:vc animated:NO];
+             MerchantModel *model=self.shopsDataSource[indexPath.row];
+            NSString *url=[NSString stringWithFormat:@"%@shopsIsState_mob.shtml",URL_Str];
+            [ATHRequestManager POST:url parameters:@{@"mid":model.mid} successBlock:^(NSDictionary *responseObj) {
+                YLog(@"%@",responseObj);
+                if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+                    MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
+                    vc.mid=model.mid;
+                    [self.navigationController pushViewController:vc animated:NO];
+                }else
+                {
+                    [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+                }
+            } faildBlock:^(NSError *error) {
+                [TrainToast showWithText:error.localizedDescription duration:2.0];
+            }];
+
         }
     }
 }
 
  -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isEdit) {
+    if (_isEdit||!self.searchNavi.hidden) {
         return NO;
     }else
     {
@@ -1012,8 +1008,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [self updateCollectionStatusRequestWithIds:model.collectionID success:^(NSDictionary *responseObj) {
 
             if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-                [self.goodsDataSource removeObjectAtIndex:indexPath.row];
-                [_tableView deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self refreshData];
             }
                 [TrainToast showWithText:responseObj[@"message"] duration:2.0];
 
@@ -1027,8 +1022,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [self updateCollectionStatusRequestWithIds:model.collectionId success:^(NSDictionary *responseObj) {
 
             if ([responseObj[@"status"] isEqualToString:@"10000"]) {
-                [self.shopsDataSource removeObjectAtIndex:indexPath.row];
-                [_tableView2 deleteRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self refreshData];
 
             }
             [TrainToast showWithText:responseObj[@"message"] duration:2.0];
@@ -1079,7 +1073,6 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 {
     YLog(@"scrollview.point=%.2f,%@",scrollView.contentOffset.x,_selectIndex);
 }
-
 
 #pragma mark - getter and setter
 /*****  顶部选择框 *****/
@@ -1273,6 +1266,24 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [_tabbarView addSubview:but1];
     }
     return _tabbarView;
+}
+
+#pragma mark - 代码复用
+/*****  判断全选按钮状态 *****/
+-(void)judgeAllSelect
+{
+     UIButton *but=[self.view viewWithTag:600];
+    for (int i=0; i<_FlagArrM.count; i++) {
+        if ([_FlagArrM[i] isEqualToString:@"0"]) {
+            but.selected=NO;
+            [but setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
+            break;
+        }
+        if (i==_FlagArrM.count-1) {
+            but.selected=YES;
+            [but setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+        }
+    }
 }
 
 @end

@@ -710,44 +710,38 @@ CartButton=[UIButton buttonWithType:UIButtonTypeCustom];
 {
 
     NSLog(@"进店看看");
-    
-    MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
-    
-//    vc.delegate=self;
-//    
-//    if ([self.Attribute_back isEqualToString:@"1"]) {
-//        
-//        vc.GetString=@"2";
-//        
-//    }else if ([self.Attribute_back isEqualToString:@"2"]){
-//        
-//        vc.GetString=@"3";
-//    }else if ([self.Attribute_back isEqualToString:@"3"]){
-//        
-//        vc.GetString=@"4";
-//    }else if ([self.Attribute_back isEqualToString:@"4"]){
-//        
-//        vc.GetString=@"5";
-//    }
-//    
-//    
-//    vc.type=@"1";//判断返回界面
-    
-    vc.mid=self.mid;
-    
-    vc.BackString = @"333";
-    
-    
-    vc.jindu=self.jindu;
-    
-    vc.weidu=self.weidu;
-    
-    vc.MapStartAddress = self.MapStartAddress;
-    
-    
-    [self.navigationController pushViewController:vc animated:NO];
-    
-    self.navigationController.navigationBar.hidden=YES;
+
+
+    NSString *url=[NSString stringWithFormat:@"%@shopsIsState_mob.shtml",URL_Str];
+    [ATHRequestManager POST:url parameters:@{@"mid":self.mid} successBlock:^(NSDictionary *responseObj) {
+        YLog(@"%@",responseObj);
+        if ([responseObj[@"status"] isEqualToString:@"10000"]) {
+            MerchantDetailViewController *vc=[[MerchantDetailViewController alloc] init];
+
+
+            vc.mid=self.mid;
+
+            vc.BackString = @"333";
+
+
+            vc.jindu=self.jindu;
+
+            vc.weidu=self.weidu;
+
+            vc.MapStartAddress = self.MapStartAddress;
+
+            [self.navigationController pushViewController:vc animated:NO];
+
+            self.navigationController.navigationBar.hidden=YES;
+        }else
+        {
+            [TrainToast showWithText:responseObj[@"message"] duration:2.0];
+        }
+    } faildBlock:^(NSError *error) {
+        [TrainToast showWithText:error.localizedDescription duration:2.0];
+    }];
+
+
     
     
     

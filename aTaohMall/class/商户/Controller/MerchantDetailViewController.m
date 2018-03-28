@@ -73,7 +73,7 @@
 
 @property (nonatomic,strong)NSString *ShouCangStr;
 
-@property (nonatomic, strong) NSTimer        *m_timer; //定时器
+//@property (nonatomic, strong) NSTimer        *m_timer; //定时器
 
 @end
 
@@ -82,39 +82,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self initNav];
+    [self initData];
+
+
+}
+
+-(void)getOpenData
+{
+
+
+}
+
+-(void)initData
+{
     //去除滑动返回
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    
+
     _dataArrM = [NSMutableArray new];
-    
+
     _headerArrM = [NSMutableArray new];
-    
+
     page=0;
     currentPageNo=1;
-    
-    
+
+
     self.Type = @"";
-    
-    [self initNav];
-    
+
+
+
     [self initCollectionView];
-    
-    
+
+
     [self initTabbar];
-    
-    
+
+
     [self GetDatas];
-    
+
     [self createTimer];
-    
-//    [self AddressData];
-    
+
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TimeStop3:) name:@"TimeStop666" object:nil];
     /*****  登录成功需要刷新数据获取收藏状态 *****/
     [KNotificationCenter addObserver:self selector:@selector(login) name:JMSHTLoginSuccessNoti object:nil];
-
 }
 
 -(void)login
@@ -124,8 +134,8 @@
 
 - (void)createTimer {
     
-    self.m_timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:_m_timer forMode:NSRunLoopCommonModes];
+//    self.m_timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+//    [[NSRunLoop currentRunLoop] addTimer:_m_timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)timerEvent {
