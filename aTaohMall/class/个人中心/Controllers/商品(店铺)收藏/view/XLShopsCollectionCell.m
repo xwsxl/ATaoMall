@@ -37,6 +37,11 @@
     self.selectBut.userInteractionEnabled=NO;
     [self.contentView addSubview:self.selectBut];
 
+    UIImageView *lineIV=[[UIImageView alloc] init];
+    lineIV.frame=CGRectMake(Width(15), 99, kScreen_Width-Width(15), 1);
+    [lineIV setImage:KImage(@"分割线-拷贝")];
+    [self.contentView addSubview:lineIV];
+
 }
 
 -(void)layoutSubviews

@@ -19,7 +19,7 @@
     self = [super init];
     if (self) {
         
-        self.autoShowEmptyView = YES;//默认自动显隐
+        self.autoShowEmptyView = NO;//默认自动显隐
         
         [self prepare];
     }
@@ -70,7 +70,7 @@
 + (instancetype)emptyActionViewWithImageStr:(NSString *)imageStr titleStr:(NSString *)titleStr detailStr:(NSString *)detailStr btnTitleStr:(NSString *)btnTitleStr btnClickBlock:(LYActionTapBlock)btnClickBlock{
     
     LYEmptyBaseView *emptyView = [[self alloc] init];
-    
+    emptyView.hidden=YES;
     [emptyView creatEmptyViewWithImageStr:imageStr titleStr:titleStr detailStr:detailStr btnTitleStr:btnTitleStr btnClickBlock:btnClickBlock];
     
     return emptyView;

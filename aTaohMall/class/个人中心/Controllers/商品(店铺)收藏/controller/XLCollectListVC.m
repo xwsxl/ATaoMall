@@ -223,15 +223,15 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _tableView.estimatedRowHeight=0;
     _tableView.estimatedSectionFooterHeight=0;
     _tableView.estimatedSectionHeaderHeight=0;
-    _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+  //  _tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
 
     [_tableView registerClass:[XLGoodsCollectionCell class] forCellReuseIdentifier:XLGoodsCollectionCellReuse];
     _tableView.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_collectionempty" titleStr:@"" detailStr:@"" btnTitleStr:@"还没有任何收藏呢，不如去首页逛逛~" btnClickBlock:^{
-
         self.tabBarController.selectedIndex=0;
         [self.navigationController popToRootViewControllerAnimated:NO];
 
     }];
+    _tableView.ly_emptyView.autoShowEmptyView=NO;
 
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     // [footer setBackgroundColor:[UIColor whiteColor]];
@@ -271,13 +271,14 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     _tableView2.estimatedRowHeight=0;
     _tableView2.estimatedSectionFooterHeight=0;
     _tableView2.estimatedSectionHeaderHeight=0;
-    _tableView2.separatorStyle=UITableViewCellSeparatorStyleNone;
+   // _tableView2.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
 
             self.tabBarController.selectedIndex=0;
             [self.navigationController popToRootViewControllerAnimated:NO];
 
     }];
+    _tableView2.ly_emptyView.autoShowEmptyView=NO;
     [_tableView2 registerClass:[XLShopsCollectionCell class] forCellReuseIdentifier:XLShopsCollectionCellReuse];
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     // [footer setBackgroundColor:[UIColor whiteColor]];
@@ -336,7 +337,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
             [self.navigationController popToRootViewControllerAnimated:NO];
 
         }];
-
+        [_tableView.ly_emptyView setAutoShowEmptyView:NO];
         [self goodsButtonClick:nil];
     }else
     {
@@ -346,14 +347,13 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
         [_tableView2.ly_emptyView removeFromSuperview];
         _tableView2.ly_emptyView=nil;
-
+        [_tableView2.ly_emptyView setAutoShowEmptyView:NO];
         _tableView2.ly_emptyView=[MyDIYEmpty emptyActionViewWithImageStr:@"13icon_storesempty" titleStr:@"" detailStr:@"" btnTitleStr:@"您还没有收藏过任何店铺！何不去首页逛逛~" btnClickBlock:^{
 
             self.tabBarController.selectedIndex=0;
             [self.navigationController popToRootViewControllerAnimated:NO];
 
         }];
-
         [self shopsButtonClick:nil];
     }
     [self getdatas];
@@ -445,6 +445,10 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [_tableView.mj_footer endRefreshing];
         }
         [_tableView reloadData];
+
+        if (self.goodsDataSource.count==0) {
+            [_tableView ly_showEmptyView];
+        }
         UIButton *searchBut = [self.view viewWithTag:100];
         UIButton *editBut = [self.view viewWithTag:101];
         if (_goodsDataSource.count>0) {
@@ -524,6 +528,10 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
             YLog(@"params=%@",params);
         }
         [_tableView reloadData];
+        if (self.goodsDataSource.count==0) {
+            [_tableView ly_showEmptyView];
+        }
+
         [hud dismiss:YES];
         UIButton *searchBut = [self.view viewWithTag:100];
         UIButton *editBut = [self.view viewWithTag:101];
@@ -588,8 +596,10 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         [_tableView2.mj_header endRefreshing];
         [_tableView2.mj_footer endRefreshing];
         }
-
         [_tableView2 reloadData];
+        if (self.shopsDataSource.count==0) {
+            [_tableView2 ly_showEmptyView];
+        }
         [hud dismiss:YES];
         if (!SELECTGOODS) {
             UIButton *searchBut = [self.view viewWithTag:100];
@@ -829,17 +839,30 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
                 MerchantModel *model=self.shopsDataSource[i];
                 str=[str stringByAppendingString:model.collectionId];
                 str=[str stringByAppendingString:@","];
+                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
             }
         }
     }
+    NSString *selectstr=@"";
+    NSString *xlstr=@"";
+    if (SELECTGOODS) {
+        selectstr=@"商品";
+        xlstr=@"件";
+    }else
+    {
+        selectstr=@"店铺";
+        xlstr=@"家";
+    }
+
     if (![str containsString:@","]) {
-        [TrainToast showWithText:@"您还没有选择要取消的商品？" duration:2.0];
+        [TrainToast showWithText:[NSString stringWithFormat:@"您还没有选择要取消的%@？",selectstr] duration:2.0];
         return;
     }else
     {
         str=[str substringToIndex:str.length-1];
     }
-    [UIAlertTools showAlertWithTitle:[NSString stringWithFormat:@"确定取消%ld件商品",indexPaths.count] message:@"" cancelTitle:@"取消" titleArray:@[@"确定"] viewController:self confirm:^(NSInteger buttonTag) {
+
+    [UIAlertTools showAlertWithTitle:[NSString stringWithFormat:@"确定取消%ld%@%@",indexPaths.count,xlstr,selectstr] message:@"" cancelTitle:@"取消" titleArray:@[@"确定"] viewController:self confirm:^(NSInteger buttonTag) {
         if (buttonTag==0) {
             [self updateCollectionStatusRequestWithIds:str success:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
