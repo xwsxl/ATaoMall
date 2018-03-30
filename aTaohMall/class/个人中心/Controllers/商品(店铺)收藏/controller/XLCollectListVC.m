@@ -636,7 +636,15 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     totalCount：总数
     all_totalCount：全部总数
                             */
-    NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"ids":ids};
+    UIButton *but=[self.view viewWithTag:600];
+
+    NSString *str=@"1";
+    if (but.selected) {
+        str=@"2";
+        ids=@"";
+    }
+
+    NSDictionary *params=@{@"sigen":[kUserDefaults stringForKey:@"sigen"],@"ids":ids,@"type":_selectIndex,@"status":str};
     NSString *url=[NSString stringWithFormat:@"%@updateCollectionStatus_mob.shtml",URL_Str];
     [ATHRequestManager POST:url parameters:params successBlock:^(NSDictionary *responseObj) {
         success(responseObj);
@@ -845,6 +853,7 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
     }
     NSString *selectstr=@"";
     NSString *xlstr=@"";
+
     if (SELECTGOODS) {
         selectstr=@"商品";
         xlstr=@"件";
@@ -862,7 +871,12 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
         str=[str substringToIndex:str.length-1];
     }
 
-    [UIAlertTools showAlertWithTitle:[NSString stringWithFormat:@"确定取消%ld%@%@",indexPaths.count,xlstr,selectstr] message:@"" cancelTitle:@"取消" titleArray:@[@"确定"] viewController:self confirm:^(NSInteger buttonTag) {
+    UIButton *but=[self.view viewWithTag:600];
+    NSString *alertTitle=[NSString stringWithFormat:@"确定取消%ld%@%@",indexPaths.count,xlstr,selectstr];
+    if (but.selected) {
+        alertTitle=[NSString stringWithFormat:@"确定取消全部%@",selectstr];
+    }
+    [UIAlertTools showAlertWithTitle:alertTitle message:@"" cancelTitle:@"取消" titleArray:@[@"确定"] viewController:self confirm:^(NSInteger buttonTag) {
         if (buttonTag==0) {
             [self updateCollectionStatusRequestWithIds:str success:^(NSDictionary *responseObj) {
                 if ([responseObj[@"status"] isEqualToString:@"10000"]) {
@@ -1242,10 +1256,28 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 
     }else
     {
+        UIButton *but=[self.view viewWithTag:400];
+        if (_isUnuse) {
+            if (_all_totalCount>0) {
+                but.hidden=NO;
+            }else
+            {
+                but.hidden=YES;
+            }
+        }else
+        {
+            if (_invalid_totalCount>0) {
+                but.hidden=NO;
+            }else
+            {
+                but.hidden=YES;
+            }
+
+        }
         _editNavi.hidden=YES;
         _tabbarView.hidden=YES;
-        UIButton *but=[self.view viewWithTag:400];
-        but.hidden=NO;
+//        UIButton *but=[self.view viewWithTag:400];
+//        but.hidden=NO;
         UIButton *but1=[self.view viewWithTag:600];
         but1.selected=NO;
         [but1 setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
@@ -1296,15 +1328,18 @@ static NSString *const XLShopsCollectionCellReuse=@"XLShopsCollectionCell";
 -(void)judgeAllSelect
 {
      UIButton *but=[self.view viewWithTag:600];
-    for (int i=0; i<_FlagArrM.count; i++) {
+
+     for (int i=0; i<_FlagArrM.count; i++) {
         if ([_FlagArrM[i] isEqualToString:@"0"]) {
             but.selected=NO;
             [but setImage:KImage(@"13btn_unselected") forState:UIControlStateNormal];
             break;
         }
         if (i==_FlagArrM.count-1) {
-            but.selected=YES;
-            [but setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+            if (_FlagArrM.count==_totalCount) {
+                but.selected=YES;
+                [but setImage:KImage(@"13btn_selected") forState:UIControlStateNormal];
+            }
         }
     }
 }
